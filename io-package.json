@@ -1,0 +1,69 @@
+{
+    "common": {
+        "name": "ham",
+        "version": "0.0.1",
+        "news": {
+            "0.0.1": {
+                "en": "initial adapter",
+                "de": "Initiale Version",
+                "ru": "Первоначальный адаптер",
+                "pt": "Versão inicial",
+                "fr": "Version initiale",
+                "nl": "Eerste release"
+            }
+        },
+        "title": "Homebridge accessories manager",
+        "titleLang": {
+            "en": "HikVision",
+            "de": "HikVision",
+            "ru": "HikVision",
+            "pt": "HikVision",
+            "nl": "HikVision",
+            "fr": "HikVision",
+            "it": "HikVision",
+            "es": "HikVision"
+        },
+        "desc": {
+            "en": "ioBroker HikVision Adapter",
+            "de": "ioBroker HikVision Adapter",
+            "ru": "ioBroker HikVision драйвер",
+            "pt": "Modelo de HikVision para o ioBroker",
+            "fr": "ioBroker HikVision modèle",
+            "nl": "ioBroker HikVision Adapter",
+            "it": "Adattatore HikVision ioBroker",
+            "es": "Adaptador HikVision ioBroker"
+        },
+        "authors": [
+            "Kirov Ilya <kirovilya@gmail.com>"
+        ],
+        "docs": {
+            "en": "docs/en/admin.md",
+            "ru": "docs/ru/admin.md",
+            "de": "docs/de/admin.md",
+            "es": "docs/es/admin.md",
+            "it": "docs/it/admin.md",
+            "fr": "docs/fr/admin.md",
+            "nl": "docs/nl/admin.md",
+            "pt": "docs/pt/admin.md"
+        },
+        "platform": "Javascript/Node.js",
+        "mode": "daemon",
+        "icon": "ham.png",
+        "materialize": true,
+        "enabled": true,
+        "extIcon": "https://raw.githubusercontent.com/kirovilya/ioBroker.hikvision/master/admin/hikvision.png",
+        "keywords": ["hikvision"],
+        "readme": "https://github.com/kirovilya/ioBroker.hikvision/blob/master/README.md",
+        "loglevel": "info",
+        "type": "security"
+    },
+    "native": {
+        "host": "",
+        "port": "",
+        "user": "",
+        "pass": ""
+    },
+    "objects": [
+
+    ]
+}
