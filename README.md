@@ -2,10 +2,10 @@
 # ioBroker.ham
 =================
 
-Connect Homebridge to ioBroker.
+Run Homebridge as ioBroker adapter.
 
 ## Description
-This is an adapter to communicate with Homedridge (Apple OpenSource SmartHome).
+This is an adapter to start internal Homedridge (Apple OpenSource SmartHome) server.
 It allows to control and get states from Homebridge.
 
 ## Changelog
