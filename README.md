@@ -1,5 +1,5 @@
 ![Logo](admin/ham.png)
-# ioBroker.ham
+# ioBroker Homebridge accessories manager
 =================
 
 Run Homebridge as ioBroker adapter.
