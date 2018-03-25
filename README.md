@@ -1,6 +1,16 @@
-![Logo](admin/hikvision.png)
-# ioBroker.hikvision
+![Logo](admin/ham.png)
+# ioBroker.ham
 =================
+
+Connect Homebridge to ioBroker.
+
+## Description
+This is an adapter to communicate with Homedridge (Apple OpenSource SmartHome).
+It allows to control and get states from Homebridge.
+
+## Changelog
+### 0.1.0 (2018.03.24) 
+* (kirovilya) initial commit
 
 ## License
 The MIT License (MIT)
