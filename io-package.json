@@ -14,24 +14,24 @@
         },
         "title": "Homebridge accessories manager",
         "titleLang": {
-            "en": "HikVision",
-            "de": "HikVision",
-            "ru": "HikVision",
-            "pt": "HikVision",
-            "nl": "HikVision",
-            "fr": "HikVision",
-            "it": "HikVision",
-            "es": "HikVision"
+            "en": "Homebridge accessories manager",
+            "de": "Homebridge accessories manager",
+            "ru": "Homebridge accessories manager",
+            "pt": "Homebridge accessories manager",
+            "nl": "Homebridge accessories manager",
+            "fr": "Homebridge accessories manager",
+            "it": "Homebridge accessories manager",
+            "es": "Homebridge accessories manager"
         },
         "desc": {
-            "en": "ioBroker HikVision Adapter",
-            "de": "ioBroker HikVision Adapter",
-            "ru": "ioBroker HikVision драйвер",
-            "pt": "Modelo de HikVision para o ioBroker",
-            "fr": "ioBroker HikVision modèle",
-            "nl": "ioBroker HikVision Adapter",
-            "it": "Adattatore HikVision ioBroker",
-            "es": "Adaptador HikVision ioBroker"
+            "en": "ioBroker Homebridge Adapter",
+            "de": "ioBroker Homebridge Adapter",
+            "ru": "ioBroker Homebridge драйвер",
+            "pt": "Modelo de Homebridge para o ioBroker",
+            "fr": "ioBroker Homebridge modèle",
+            "nl": "ioBroker Homebridge Adapter",
+            "it": "Adattatore Homebridge ioBroker",
+            "es": "Adaptador Homebridge ioBroker"
         },
         "authors": [
             "Kirov Ilya <kirovilya@gmail.com>"
@@ -51,9 +51,9 @@
         "icon": "ham.png",
         "materialize": true,
         "enabled": true,
-        "extIcon": "https://raw.githubusercontent.com/kirovilya/ioBroker.hikvision/master/admin/hikvision.png",
-        "keywords": ["hikvision"],
-        "readme": "https://github.com/kirovilya/ioBroker.hikvision/blob/master/README.md",
+        "extIcon": "https://raw.githubusercontent.com/kirovilya/ioBroker.ham/master/admin/ham.png",
+        "keywords": ["homebridge"],
+        "readme": "https://github.com/kirovilya/ioBroker.ham/blob/master/README.md",
         "loglevel": "info",
         "type": "security"
     },
