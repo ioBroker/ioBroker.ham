@@ -15,13 +15,17 @@ var inherits = require('util').inherits;
 // adapter will be restarted automatically every time as the configuration changed, e.g system.adapter.template.0
 var adapter = new utils.Adapter('ham');
 
-var User = require('/usr/lib/node_modules/homebridge/lib/user').User;
-User.setStoragePath('/home/pi/.homebridge');
-var hap = require("/usr/lib/node_modules/homebridge/node_modules/hap-nodejs");
-var version = require('/usr/lib/node_modules/homebridge/lib/version');
-var Server = require('/usr/lib/node_modules/homebridge/lib/server').Server;
-var Plugin = require('/usr/lib/node_modules/homebridge/lib/plugin').Plugin;
-var log = require('/usr/lib/node_modules/homebridge/lib/logger')._system;
+
+var homebridgeBasePath = "/usr/local/lib/node_modules/homebridge/";
+var homebridgeConfigPath = '/home/pi/.homebridge';
+
+var User = require(homebridgeBasePath + 'lib/user').User;
+User.setStoragePath(homebridgeConfigPath);
+var hap = require(homebridgeBasePath + 'node_modules/hap-nodejs');
+var version = require(homebridgeBasePath + 'lib/version');
+var Server = require(homebridgeBasePath + 'lib/server').Server;
+var Plugin = require(homebridgeBasePath + 'lib/plugin').Plugin;
+var log = require(homebridgeBasePath + 'lib/logger')._system;
 var server;
 
 // is called when adapter shuts down - callback has to be called under any circumstances!
@@ -72,9 +76,9 @@ adapter.on('message', function (obj) {
 });
 
 function updateState(dev_id, ch_id, st_id, name, value, common) {
-    let id = dev_id + '.' + ch_id + '.'+ st_id;    
+    let id = dev_id + '.' + ch_id + '.'+ st_id;
     let new_common = {
-        name: name, 
+        name: name,
         role: 'value',
         read: true,
         write: (common != undefined && common.write == undefined) ? false : true
@@ -144,7 +148,7 @@ function handleRegisterPlatformAccessories(accessories) {
 
         //   this._cachedPlatformAccessories.push(accessory);
     }
-    // 
+    //
     // this._bridge.addBridgedAccessories(hapAccessories);
     // this._updateCachedAccessories();
 }
@@ -197,7 +201,7 @@ function handlePublishCameraAccessories(accessories) {
 
   //   (function(name){
   //     hapAccessory.on('listening', function(port) {
-  
+
   //         log.info("%s is running on port %s.", name, port);
   //     })
   //   })(accessory.displayName);
@@ -351,7 +355,7 @@ override(MyBridge, function addBridgedAccessories(accessories) {
 Server.prototype._createBridge = function() {
     // pull out our custom Bridge settings from config.json, if any
     var bridgeConfig = this._config.bridge || {};
-  
+
     // Create our Bridge which will host all loaded Accessories
     return new MyBridge(bridgeConfig.name || 'Homebridge', hap.uuid.generate("HomeBridge"));
 }
