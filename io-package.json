@@ -1,9 +1,9 @@
 {
     "common": {
         "name": "ham",
-        "version": "0.0.1",
+        "version": "0.1.0",
         "news": {
-            "0.0.1": {
+            "0.1.0": {
                 "en": "initial adapter",
                 "de": "Initiale Version",
                 "ru": "Первоначальный адаптер",
@@ -34,7 +34,8 @@
             "es": "Adaptador Homebridge ioBroker"
         },
         "authors": [
-            "Kirov Ilya <kirovilya@gmail.com>"
+            "Kirov Ilya <kirovilya@gmail.com>",
+            "Apollon77 <ingo@fischer-ka.de"
         ],
         "docs": {
             "en": "docs/en/admin.md",
@@ -50,18 +51,32 @@
         "mode": "daemon",
         "icon": "ham.png",
         "materialize": true,
-        "enabled": true,
-        "extIcon": "https://raw.githubusercontent.com/kirovilya/ioBroker.ham/master/admin/ham.png",
+        "enabled": false,
+        "extIcon": "https://raw.githubusercontent.com/Apollon77/ioBroker.ham/master/admin/ham.png",
         "keywords": ["homebridge"],
-        "readme": "https://github.com/kirovilya/ioBroker.ham/blob/master/README.md",
+        "readme": "https://github.com/Apollon77/ioBroker.ham/blob/master/README.md",
         "loglevel": "info",
-        "type": "security"
+        "type": "iot-systems"
     },
     "native": {
-        "host": "",
-        "port": "",
-        "user": "",
-        "pass": ""
+        "useGlobalHomebridge": true,
+        "globalHomebridgeBasePath": "/usr/local/lib/node_modules/homebridge/",
+        "globalHomebridgeConfigPath": "/home/pi/.homebridge/",
+        "wrapperConfig": {
+            "description": "This is an example configuration file with one fake accessory and one fake platform. You can use this as a template for creating your own configuration file containing devices you actually own.",
+            "accessories": [
+                {
+                    "accessory": "WeMo",
+                    "name": "Coffee Maker"
+                }
+            ],
+            "platforms": [
+                {
+                    "platform" : "PhilipsHue",
+                    "name" : "Hue"
+                }
+            ]
+        }
     },
     "objects": [
 

@@ -6,28 +6,34 @@
 
 <script type="text/javascript" src="../../lib/js/jquery-3.2.1.min.js"></script>
 <script type="text/javascript" src="../../socket.io/socket.io.js"></script>
+<script type="text/javascript" src="../../lib/js/ace-1.2.0/ace.js"></script>
 
 <!-- these files always have to be included -->
 <script type="text/javascript" src="../../js/translate.js"></script>
 <script type="text/javascript" src="../../lib/js/materialize.js"></script>
 <script type="text/javascript" src="../../js/adapter-settings.js"></script>
 <script type="text/javascript" src="words.js"></script>
- <style>
-  .m .col .select-wrapper+label {
-   top: -26px;  
-  }
-     .m span{
-         font-size: 0.9em;
-     }
- </style>
+<style>
+    .m .col .select-wrapper+label {
+        top: -26px;
+    }
+    .m span {
+        font-size: 0.9em;
+    }
+    #wrapperConfig {
+        width: 100%;
+        height: calc(100% - 160px);
+    }
+</style>
 <!-- you have to define 2 functions in the global scope: -->
 <script type="text/javascript">
+    var editor;
 
     // the function loadSettings has to exist ...
     function load(settings, onChange) {
         // example: select elements with id=key and class=value and insert value
        if (!settings) return;
-        $('.value').each(function () {            
+        $('.value').each(function () {
             var $key = $(this);
             var id = $key.attr('id');
             if ($key.attr('type') === 'checkbox') {
@@ -44,6 +50,15 @@
                 });
             }
         });
+        editor = ace.edit('wrapperConfig');
+        editor.getSession().setMode('ace/mode/json');
+        editor.$blockScrolling = true;
+        editor.getSession().on('change', function() {
+            onChange();
+        });
+
+        editor.setValue(JSON.stringify(settings.wrapperConfig || '{}', null, 2));
+
         onChange(false);
         M.updateTextFields();  // function Materialize.updateTextFields(); to reinitialize all the Materialize labels on the page if you are dynamically adding inputs.
     }
@@ -61,6 +76,15 @@
                 obj[$this.attr('id')] = $this.val();
             }
         });
+        var _obj;
+        try {
+            _obj = JSON.parse(editor.getValue());
+        } catch (e) {
+            showError(e, _('Parse error'), 'error_outline');
+            return false;
+        }
+        obj.wrapperConfig = _obj;
+
         callback(obj);
     }
 </script>
@@ -73,30 +97,31 @@
          Learn more http://materializecss.com/forms.html-->
             <div class="row">
                 <div class="input-field col s6">
-                    <img src="hikvision.png" class="logo">
+                    <img src="ham.png" class="logo">
                 </div>
             </div>
             <div class="row">
                 <div class="input-field col s12 m6 l4 xl3">
-                    <input class="value" id="host" type="text">
-                    <label for="host">Host</label>
-                    <span class="translate">Camera host name</span>
+                    <input id="useGlobalHomebridge" type="checkbox" class="value" />
+                    <span for="useGlobalHomebridge" class="translate">useGlobalHomebridge</span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12 m6 l4 xl3">
+                    <input class="value" id="globalHomebridgeBasePath" type="text">
+                    <label for="globalHomebridgeBasePath">Global Homebridge Path</label>
+                    <span class="translate">Global Homebridge Path</span>
                 </div>
                 <div class="input-field col s12 m6 l4 xl3">
-                    <input type="number" class="value" id="port" />
-                    <label for="port" class="translate">Port</label>
-                    <!-- Important: label must come directly after input. Label is important. -->
-                    <span class="translate">Camera port number</span>
+                    <input class="value" id="globalHomebridgeConfigPath" type="text">
+                    <label for="globalHomebridgeConfigPath">Global Homebridge Config Directory Path</label>
+                    <span class="translate">Global Homebridge Config Directory Path</span>
                 </div>
-                <div class="input-field col s12 m6 l4 xl3">
-                    <input class="value" id="user" type="text">
-                    <label for="user">User</label>
-                    <span class="translate">Camera user name</span>
-                </div>
-                <div class="input-field col s12 m6 l4 xl3">
-                    <input class="value" id="pass" type="password">
-                    <label for="pass">Password</label>
-                    <span class="translate">Camera password</span>
+            </div>
+            <div class="row">
+                <div class="col s12">
+                    <label for="wrapperConfig" class="translate">wrapperConfig</label>
+                    <div id="wrapperConfig">Wrapper-Konfiguration (Non-Global-Homebridge)</div>
                 </div>
             </div>
         </div>
