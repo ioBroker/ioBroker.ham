@@ -2,20 +2,33 @@
 # ioBroker Homebridge accessories manager
 =================
 
-Run Homebridge as ioBroker adapter.
+Use Homebridge plugins in ioBroker or run a global installed Homebridge as ioBroker adapter.
+All States from Homebridge will be available in ioBroker too and can also be controlled there.
 
 ## Description
-This is an adapter to start internal Homedridge (Apple OpenSource SmartHome) server.
-It allows to control and get states from Homebridge.
+This adapter provides two different modes:
+
+If you already use Homebridge (Apple OpenSource SmartHome) to control your devices
+then you can use this existing Homebridge installation and start this Homebridge
+installation as ioBroker process. In this case the Homebridge server is started by ioBroker.
+Additionally all states from Homebridge are available as states in ioBroker and allows to
+control from ioBroker.
+
+The second mode (NOT YET IMPLEMENTED!!) will allow to just use Homebridge Plugins in iobroker.
+More information to come.
 
 ## Changelog
-### 0.1.0 (2018.03.24) 
+
+### 0.1.0 (2018.06.09)
+* (Apollon77) Update for working mode 1
+
+### 0.0.1 (2018.03.24)
 * (kirovilya) initial commit
 
 ## License
 The MIT License (MIT)
 
-Copyright (c) 2018 Kirov Ilya <kirovilya@gmail.com>
+Copyright (c) 2018 Apollon77 <ingo@fischer-ka.de>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
