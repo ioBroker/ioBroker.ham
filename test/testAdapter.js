@@ -85,7 +85,7 @@ describe('Test ' + adapterShortName + ' adapter', function() {
 
             config.native.useGlobalHomebridge = true;
             config.native.globalHomebridgeBasePath = process.env.NODE_GLOBAL_DIR + "/homebridge/";
-            config.native.globalHomebridgeConfigPath = "/home/pi/.homebridge/";
+            config.native.globalHomebridgeConfigPath = __dirname + "/homebridge/";
 
             setup.setAdapterConfig(config.common, config.native);
 
