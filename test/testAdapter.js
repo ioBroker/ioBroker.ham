@@ -83,7 +83,9 @@ describe('Test ' + adapterShortName + ' adapter', function() {
             config.common.enabled  = true;
             config.common.loglevel = 'debug';
 
-            //config.native.dbtype   = 'sqlite';
+            config.native.useGlobalHomebridge = true;
+            config.native.globalHomebridgeBasePath = process.env.NODE_GLOBAL_DIR + "/homebridge/";
+            config.native.globalHomebridgeConfigPath = "/home/pi/.homebridge/";
 
             setup.setAdapterConfig(config.common, config.native);
 

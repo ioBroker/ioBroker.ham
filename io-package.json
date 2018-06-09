@@ -59,7 +59,7 @@
         "type": "iot-systems"
     },
     "native": {
-        "useGlobalHomebridge": true,
+        "useGlobalHomebridge": false,
         "globalHomebridgeBasePath": "/usr/local/lib/node_modules/homebridge/",
         "globalHomebridgeConfigPath": "/home/pi/.homebridge/",
         "wrapperConfig": {
