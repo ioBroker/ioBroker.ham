@@ -16,6 +16,7 @@ before_script:
   - npm -v
   - npm install -g homebridge
   - npm install -g homebridge-http-webhooks
+  - npm install -g homebridge-sun-position
   - export NODE_GLOBAL_DIR=$(npm root -g)
   - npm install winston@2.3.1
   - 'npm install https://github.com/ioBroker/ioBroker.js-controller/tarball/master --production'
