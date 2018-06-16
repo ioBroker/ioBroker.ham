@@ -152,7 +152,7 @@ describe('Test ' + adapterShortName + ' Global adapter', function() {
         this.timeout(10000); // because of first install from npm
 
         states.getState(adapterShortName + '.0.Switch-name-1.Switch-name-1.On', function (err, state) {
-            expect(err).to.be.empty;
+            expect(err).to.exist;
             expect(state.val).to.be.false;
             done();
         });
@@ -168,11 +168,11 @@ describe('Test ' + adapterShortName + ' Global adapter', function() {
             setTimeout(function() {
                 expect(lastHTTPRequest).to.be.null;
                 states.getState(adapterShortName + '.0.Switch-name-1.Switch-name-1.On', function (err, state) {
-                    expect(err).to.be.empty;
+                    expect(err).to.exist;
                     expect(state.val).to.be.true;
                     done();
                 });
-            }, 2000);
+            }, 3000);
         });
 
     });
@@ -180,18 +180,17 @@ describe('Test ' + adapterShortName + ' Global adapter', function() {
     it('Test ' + adapterShortName + ' Wrapper: Test change via characteristic', function (done) {
         this.timeout(10000); // because of first install from npm
 
-        allChars['Switch name 1/Switch name 1/On'].setValue(false);
         states.setState(adapterShortName + '.0.Switch-name-1.Switch-name-1.On', {val: false, ack:false}, function (err) {
-            expect(err).to.be.empty;
+            expect(err).to.exist;
 
             setTimeout(function() {
                 expect(lastHTTPRequest).to.be.equal('/switch1?off');
                 states.getState(adapterShortName + '.0.Switch-name-1.Switch-name-1.On', function (err, state) {
-                    expect(err).to.be.empty;
+                    expect(err).to.exist;
                     expect(state.val).to.be.false;
                     done();
                 });
-            }, 2000);
+            }, 3000);
         });
     });
 
@@ -199,16 +198,16 @@ describe('Test ' + adapterShortName + ' Global adapter', function() {
         this.timeout(10000); // because of first install from npm
 
         states.setState(adapterShortName + '.0.Switch-name-1.Switch-name-1.On', {val: true, ack:false}, function (err) {
-            expect(err).to.be.empty;
+            expect(err).to.exist;
 
             setTimeout(function() {
                 expect(lastHTTPRequest).to.be.equal('/switch1?on');
                 states.getState(adapterShortName + '.0.Switch-name-1.Switch-name-1.On', function (err, state) {
-                    expect(err).to.be.empty;
+                    expect(err).to.exist;
                     expect(state.val).to.be.true;
                     done();
                 });
-            }, 2000);
+            }, 3000);
         });
     });
 
@@ -223,11 +222,11 @@ describe('Test ' + adapterShortName + ' Global adapter', function() {
             setTimeout(function() {
                 expect(lastHTTPRequest).to.be.null;
                 states.getState(adapterShortName + '.0.Switch-name-1.Switch-name-1.On', function (err, state) {
-                    expect(err).to.be.empty;
+                    expect(err).to.exist;
                     expect(state.val).to.be.false;
                     done();
                 });
-            }, 2000);
+            }, 3000);
         });
 
     });
@@ -237,6 +236,7 @@ describe('Test ' + adapterShortName + ' Global adapter', function() {
 
         setup.stopController(function (normalTerminated) {
             console.log('Adapter normal terminated: ' + normalTerminated);
+            httpServer.close();
             done();
         });
     });
