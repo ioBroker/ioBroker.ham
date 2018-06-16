@@ -2,6 +2,8 @@
 /*jslint node: true */
 var expect = require('chai').expect;
 var setup  = require(__dirname + '/lib/setup');
+var request = require('request');
+var http = require('http');
 
 var objects = null;
 var states  = null;
@@ -10,6 +12,21 @@ var onObjectChanged = null;
 var sendToID = 1;
 
 var adapterShortName = setup.adapterName.substring(setup.adapterName.indexOf('.')+1);
+
+var httpServer;
+var lastHTTPRequest = null;
+
+function setupHTTPServer(port, callback) {
+    httpServer = http.createServer(function (req, res) {
+        lastHTTPRequest = req.url;
+        console.log('HTTP Received: ' + lastHTTPRequest);
+        res.writeHead(200, {'Content-Type': 'text/plain'});
+        res.end('OK');
+    }).listen(port);
+    setTimeout(function() {
+        callback();
+    }, 5000);
+}
 
 function checkConnectionOfAdapter(cb, counter) {
     counter = counter || 0;
@@ -73,8 +90,8 @@ function sendTo(target, command, message, callback) {
     });
 }
 
-describe('Test ' + adapterShortName + ' adapter', function() {
-    before('Test ' + adapterShortName + ' adapter: Start js-controller', function (_done) {
+describe('Test ' + adapterShortName + ' Wrapper adapter', function() {
+    before('Test ' + adapterShortName + ' Wrapper adapter: Start js-controller', function (_done) {
         this.timeout(600000); // because of first install from npm
 
         setup.setupController(function () {
@@ -221,18 +238,20 @@ describe('Test ' + adapterShortName + ' adapter', function() {
 
             setup.setAdapterConfig(config.common, config.native);
 
-            setup.startController(true, function(id, obj) {}, function (id, state) {
-                    if (onStateChanged) onStateChanged(id, state);
-                },
-                function (_objects, _states) {
-                    objects = _objects;
-                    states  = _states;
-                    _done();
-                });
+            setupHTTPServer(9080, function() {
+                setup.startController(true, function(id, obj) {}, function (id, state) {
+                        if (onStateChanged) onStateChanged(id, state);
+                    },
+                    function (_objects, _states) {
+                        objects = _objects;
+                        states  = _states;
+                        _done();
+                    });
+            });
         });
     });
 
-    it('Test ' + adapterShortName + ' adapter: Check if adapter started', function (done) {
+    it('Test ' + adapterShortName + ' Wrapper adapter: Check if adapter started', function (done) {
         this.timeout(60000);
         checkConnectionOfAdapter(function (res) {
             if (res) console.log(res);
@@ -250,7 +269,7 @@ describe('Test ' + adapterShortName + ' adapter', function() {
         });
     });
 
-    it('Test ' + adapterShortName + ' adapter: Wait for npm installs', function (done) {
+    it('Test ' + adapterShortName + ' Wrapper adapter: Wait for npm installs', function (done) {
         this.timeout(60000);
 
         setTimeout(function() {
@@ -258,16 +277,91 @@ describe('Test ' + adapterShortName + ' adapter', function() {
         }, 30000);
     });
 
-/*
-    PUT YOUR OWN TESTS HERE USING
-    it('Testname', function ( done) {
-        ...
+    it('Test ' + adapterShortName + ' Wrapper: Verify Init', function (done) {
+        this.timeout(10000); // because of first install from npm
+
+        states.getState(adapterShortName + '.0.Switch-name-1.Switch-name-1.On', function (err, state) {
+            expect(err).to.be.empty;
+            expect(state.val).to.be.false;
+            done();
+        });
     });
 
-    You can also use "sendTo" method to send messages to the started adapter
-*/
+    it('Test ' + adapterShortName + ' Wrapper: Test Change from inside', function (done) {
+        this.timeout(10000); // because of first install from npm
 
-    after('Test ' + adapterShortName + ' adapter: Stop js-controller', function (done) {
+        request('http://localhost:61828/?accessoryId=switch1&state=true', function (error, response, body) {
+            expect(error).to.be.null;
+            expect(response && response.statusCode).to.be.equal(200);
+
+            setTimeout(function() {
+                expect(lastHTTPRequest).to.be.null;
+                states.getState(adapterShortName + '.0.Switch-name-1.Switch-name-1.On', function (err, state) {
+                    expect(err).to.be.empty;
+                    expect(state.val).to.be.true;
+                    done();
+                });
+            }, 2000);
+        });
+
+    });
+
+    it('Test ' + adapterShortName + ' Wrapper: Test change via characteristic', function (done) {
+        this.timeout(10000); // because of first install from npm
+
+        allChars['Switch name 1/Switch name 1/On'].setValue(false);
+        states.setState(adapterShortName + '.0.Switch-name-1.Switch-name-1.On', {val: false, ack:false}, function (err) {
+            expect(err).to.be.empty;
+
+            setTimeout(function() {
+                expect(lastHTTPRequest).to.be.equal('/switch1?off');
+                states.getState(adapterShortName + '.0.Switch-name-1.Switch-name-1.On', function (err, state) {
+                    expect(err).to.be.empty;
+                    expect(state.val).to.be.false;
+                    done();
+                });
+            }, 2000);
+        });
+    });
+
+    it('Test ' + adapterShortName + ' Wrapper: Test change via characteristic 2', function (done) {
+        this.timeout(10000); // because of first install from npm
+
+        states.setState(adapterShortName + '.0.Switch-name-1.Switch-name-1.On', {val: true, ack:false}, function (err) {
+            expect(err).to.be.empty;
+
+            setTimeout(function() {
+                expect(lastHTTPRequest).to.be.equal('/switch1?on');
+                states.getState(adapterShortName + '.0.Switch-name-1.Switch-name-1.On', function (err, state) {
+                    expect(err).to.be.empty;
+                    expect(state.val).to.be.true;
+                    done();
+                });
+            }, 2000);
+        });
+    });
+
+    it('Test ' + adapterShortName + ' Wrapper: Test Change from inside 2', function (done) {
+        this.timeout(10000); // because of first install from npm
+
+        lastHTTPRequest = null;
+        request('http://localhost:61828/?accessoryId=switch1&state=false', function (error, response, body) {
+            expect(error).to.be.null;
+            expect(response && response.statusCode).to.be.equal(200);
+
+            setTimeout(function() {
+                expect(lastHTTPRequest).to.be.null;
+                states.getState(adapterShortName + '.0.Switch-name-1.Switch-name-1.On', function (err, state) {
+                    expect(err).to.be.empty;
+                    expect(state.val).to.be.false;
+                    done();
+                });
+            }, 2000);
+        });
+
+    });
+
+    after('Test ' + adapterShortName + ' Wrapper adapter: Stop js-controller', function (done) {
         this.timeout(10000);
 
         setup.stopController(function (normalTerminated) {

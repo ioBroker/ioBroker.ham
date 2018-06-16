@@ -8,14 +8,24 @@ All States from Homebridge will be available in ioBroker too and can also be con
 ## Description
 This adapter provides two different modes:
 
+### Default (Wrapper) Mode
+In the default mode the adapter allows you to use homebridge Plugin Modules directly.
+You can explore all available plugins at the NPM website by [searching for the keyword `homebridge-plugin`](https://www.npmjs.com/search?q=homebridge-plugin).
+
+You simply add the list of modules to the Adapter configuration and provide the configuration 
+in the JSON-editor (see Plugin descriptions).
+After this all Homebridge objects will be created in ioBroker too and all writable objects can
+be changed too.
+
+### Global-Homebridge-Mode
 If you already use Homebridge (Apple OpenSource SmartHome) to control your devices
 then you can use this existing Homebridge installation and start this Homebridge
 installation as ioBroker process. In this case the Homebridge server is started by ioBroker.
 Additionally all states from Homebridge are available as states in ioBroker and allows to
 control from ioBroker.
 
-The second mode (NOT YET IMPLEMENTED!!) will allow to just use Homebridge Plugins in iobroker.
-More information to come.
+For this to work you need to provide the location of the systems global node-modules folder. For this call **npm root -g**. Additionally you need to privide the path of the homebridge configuration directory (usually .homebridge in the users folder).
+
 
 ## Changelog
 
