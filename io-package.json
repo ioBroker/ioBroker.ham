@@ -62,6 +62,7 @@
         "useGlobalHomebridge": false,
         "globalHomebridgeBasePath": "/usr/local/lib/node_modules/homebridge/",
         "globalHomebridgeConfigPath": "/home/pi/.homebridge/",
+        "libraries": "",
         "wrapperConfig": {
             "description": "This is an example configuration file with one fake accessory and one fake platform. You can use this as a template for creating your own configuration file containing devices you actually own.",
             "accessories": [
