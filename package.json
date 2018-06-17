@@ -1,5 +1,5 @@
 {
-    "version": "0.1.0",
+    "version": "0.2.0",
     "name": "iobroker.ham",
     "author": {
         "name": "Apollon77",
@@ -19,7 +19,7 @@
         }
     ],
     "dependencies": {
-        "homebridge-plugin-wrapper": "^0.4.2"
+        "homebridge-plugin-wrapper": "^0.4.3"
     },
     "description": "Homebridge accessories manager",
     "devDependencies": {

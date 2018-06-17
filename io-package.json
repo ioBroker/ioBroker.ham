@@ -1,8 +1,19 @@
 {
     "common": {
         "name": "ham",
-        "version": "0.1.0",
+        "version": "0.2.0",
         "news": {
+            "0.2.0": {
+                "en": "Public test version",
+                "de": "Öffentliche Testversion",
+                "ru": "Публичная тестовая версия",
+                "pt": "Versão de teste público",
+                "nl": "Openbare testversie",
+                "fr": "Version de test publique",
+                "it": "Versione di prova pubblica",
+                "es": "Versión de prueba pública",
+                "pl": "Publiczna wersja testowa"
+            },
             "0.1.0": {
                 "en": "initial adapter",
                 "de": "Initiale Version",
