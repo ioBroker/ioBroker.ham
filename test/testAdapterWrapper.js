@@ -283,7 +283,17 @@ describe('Test ' + adapterShortName + ' Wrapper adapter', function() {
         states.getState(adapterShortName + '.0.Switch-name-1.Switch-name-1.On', function (err, state) {
             expect(err).to.not.exist;
             expect(state.val).to.be.false;
-            done();
+
+            states.getState(adapterShortName + '.0.Sun.Sun.Model', function (err, state) {
+                expect(err).to.not.exist;
+                expect(state.val).to.be.equal('Sun Position');
+
+                states.getState(adapterShortName + '.0.Sun.Sun.Altitude', function (err, state) {
+                    expect(err).to.not.exist;
+                    expect(state.val).to.exist;
+                    done();
+                });
+            });
         });
     });
 
