@@ -18,16 +18,17 @@
         top: -26px;
     }
     .m span {
-        font-size: 0.9em;
+        /*font-size: 0.9em;*/
     }
     #wrapperConfig {
         width: 100%;
-        height: calc(100% - 160px);
+        height: calc(100% - 120px);
     }
 </style>
 <!-- you have to define 2 functions in the global scope: -->
 <script type="text/javascript">
     var editor;
+    var wrapperConfig;
 
     // the function loadSettings has to exist ...
     function load(settings, onChange) {
@@ -50,14 +51,36 @@
                 });
             }
         });
-        editor = ace.edit('wrapperConfig');
-        editor.getSession().setMode('ace/mode/json');
-        editor.$blockScrolling = true;
-        editor.getSession().on('change', function() {
-            onChange();
+        $('.tab-json').on('click', function (e) {
+            if (!editor) {
+                setTimeout(function () {
+                    if ($('#wrapperConfig').is(':visible')) {
+                        editor = ace.edit('wrapperConfig');
+                        editor.getSession().setMode('ace/mode/json');
+                        editor.$blockScrolling = true;
+                        editor.setValue(wrapperConfig);
+                        editor.getSession().on('change', function() {
+                            onChange();
+                        });
+                    }
+                }, 200);
+            }
         });
 
-        editor.setValue(JSON.stringify(settings.wrapperConfig || '{}', null, 2));
+        $('#useGlobalHomebridge').on('change', function () {
+            if ($(this).prop('checked')) {
+                $('.global').show();
+                $('.local').hide();
+                $('.tab-json').addClass('disabled');
+            } else {
+                $('.global').hide();
+                $('.local').show();
+                $('.tab-json').removeClass('disabled');
+            }
+        }).trigger('change');
+
+        wrapperConfig = JSON.stringify(settings.wrapperConfig || '{}', null, 2);
+
         list2chips('.libraries', settings.libraries || '', onChange);
 
         onChange(false);
@@ -104,9 +127,11 @@
             }
         });
         obj.libraries = chips2list('.libraries');
+        wrapperConfig = editor ? editor.getValue() : wrapperConfig;
+
         var _obj;
         try {
-            _obj = JSON.parse(editor.getValue());
+            _obj = JSON.parse(wrapperConfig);
         } catch (e) {
             showError(e, _('Parse error'), 'error_outline');
             return false;
@@ -121,41 +146,54 @@
     <!-- you have to put your config page in a div with id adapter-container -->
     <div class="m adapter-container">
         <div class="row">
-            <!-- Forms are the standard way to receive user inputted data.
-         Learn more http://materializecss.com/forms.html-->
-            <div class="row">
-                <div class="input-field col s6">
-                    <img src="ham.png" class="logo">
+            <div class="col s12">
+                <ul class="tabs">
+                    <li class="tab col s4"><a href="#tab-main"  class="translate active">Main settings</a></li>
+                    <li class="tab col s4 tab-json"><a href="#tab-json"    class="translate">Configuration file</a></li>
+                </ul>
+            </div>
+            <div id="tab-main" class="col s12 page">
+                <div class="row">
+                    <div class="col s6 m4 l2">
+                        <img src="ham.png" class="logo">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12 m6 l4 xl3">
+                        <input id="useGlobalHomebridge" type="checkbox" class="value" />
+                        <span for="useGlobalHomebridge" class="translate">useGlobalHomebridge</span>
+                    </div>
+                </div>
+                <div class="row global">
+                    <div class="input-field col s12 m6 l4 xl3">
+                        <input class="value" id="globalHomebridgeBasePath" type="text">
+                        <label for="globalHomebridgeBasePath">Global Homebridge Path</label>
+                        <span class="translate">Global Homebridge Path</span>
+                    </div>
+                    <div class="input-field col s12 m6 l4 xl3">
+                        <input class="value" id="globalHomebridgeConfigPath" type="text">
+                        <label for="globalHomebridgeConfigPath">Global Homebridge Config Directory Path</label>
+                        <span class="translate">Global Homebridge Config Directory Path</span>
+                    </div>
+                </div>
+                <div class="row local">
+                    <div class="col s12">
+                        <label class="translate">Additional npm modules:</label>
+                        <div class="chips libraries"></div>
+                    </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="input-field col s12 m6 l4 xl3">
-                    <input id="useGlobalHomebridge" type="checkbox" class="value" />
-                    <span for="useGlobalHomebridge" class="translate">useGlobalHomebridge</span>
+            <div id="tab-json" class="col s12 page">
+                <div class="row">
+                    <div class="col s6 m4 l2">
+                        <img src="ham.png" class="logo">
+                    </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="input-field col s12 m6 l4 xl3">
-                    <input class="value" id="globalHomebridgeBasePath" type="text">
-                    <label for="globalHomebridgeBasePath">Global Homebridge Path</label>
-                    <span class="translate">Global Homebridge Path</span>
-                </div>
-                <div class="input-field col s12 m6 l4 xl3">
-                    <input class="value" id="globalHomebridgeConfigPath" type="text">
-                    <label for="globalHomebridgeConfigPath">Global Homebridge Config Directory Path</label>
-                    <span class="translate">Global Homebridge Config Directory Path</span>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col s12">
-                    <label class="translate">Additional npm modules:</label>
-                    <div class="chips libraries"></div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col s12">
-                    <label for="wrapperConfig" class="translate">wrapperConfig</label>
-                    <div id="wrapperConfig">Wrapper-Konfiguration (Non-Global-Homebridge)</div>
+                <div class="row">
+                    <div class="col s12">
+                        <label for="wrapperConfig" class="translate">wrapperConfig</label>
+                        <div id="wrapperConfig">Wrapper-Konfiguration (Non-Global-Homebridge)</div>
+                    </div>
                 </div>
             </div>
         </div>
