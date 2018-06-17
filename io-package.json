@@ -1,8 +1,19 @@
 {
     "common": {
         "name": "ham",
-        "version": "0.2.1",
+        "version": "0.2.2",
         "news": {
+            "0.2.2": {
+                "en": "Fixes for JSON editor",
+                "de": "Korrekturen für den JSON-Editor",
+                "ru": "Исправления для редактора JSON",
+                "pt": "Correções para o editor JSON",
+                "nl": "Correcties voor JSON-editor",
+                "fr": "Corrections pour l'éditeur JSON",
+                "it": "Correzioni per l'editor JSON",
+                "es": "Correcciones para el editor JSON",
+                "pl": "Poprawki dla edytora JSON"
+            },
             "0.2.1": {
                 "en": "Public test version",
                 "de": "Öffentliche Testversion",
