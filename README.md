@@ -12,7 +12,7 @@ This adapter provides two different modes:
 In the default mode the adapter allows you to use homebridge Plugin Modules directly.
 You can explore all available plugins at the NPM website by [searching for the keyword `homebridge-plugin`](https://www.npmjs.com/search?q=homebridge-plugin).
 
-You simply add the list of modules to the Adapter configuration and provide the configuration 
+You simply add the list of modules to the Adapter configuration and provide the configuration
 in the JSON-editor (see Plugin descriptions).
 After this all Homebridge objects will be created in ioBroker too and all writable objects can
 be changed too.
@@ -33,6 +33,10 @@ For this to work you need to provide the location of the systems global node-mod
 
 
 ## Changelog
+
+### 0.2.0 (2018.06.17)
+* (Apollon77) Public test version with both modes
+* (Bluefox) Admin3
 
 ### 0.1.0 (2018.06.09)
 * (Apollon77) Update for working mode 1
