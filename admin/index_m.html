@@ -22,7 +22,19 @@
     }
     #wrapperConfig {
         width: 100%;
-        height: calc(100% - 120px);
+        height: 100%;
+    }
+    #tab-json>.row {
+        height: calc(100% - 20px);
+    }
+    #tab-json .col {
+        height: 100%;
+    }
+    .adapter-container>.row {
+        height: 100%;
+    }
+    .m .page {
+        height: calc(100% - 50px);
     }
 </style>
 <!-- you have to define 2 functions in the global scope: -->
@@ -184,17 +196,7 @@
                 </div>
             </div>
             <div id="tab-json" class="col s12 page">
-                <div class="row">
-                    <div class="col s6 m4 l2">
-                        <img src="ham.png" class="logo">
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col s12">
-                        <label for="wrapperConfig" class="translate">wrapperConfig</label>
-                        <div id="wrapperConfig">Wrapper-Konfiguration (Non-Global-Homebridge)</div>
-                    </div>
-                </div>
+                <div id="wrapperConfig">Wrapper-Konfiguration (Non-Global-Homebridge)</div>
             </div>
         </div>
     </div>
