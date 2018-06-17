@@ -19,7 +19,7 @@
         }
     ],
     "dependencies": {
-        "homebridge-plugin-wrapper": "^0.4.3"
+        "homebridge-plugin-wrapper": "^0.4.4"
     },
     "description": "Homebridge accessories manager",
     "devDependencies": {
