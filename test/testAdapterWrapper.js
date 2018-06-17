@@ -284,7 +284,7 @@ describe('Test ' + adapterShortName + ' Wrapper adapter', function() {
             expect(err).to.not.exist;
             expect(state.val).to.be.false;
 
-            states.getState(adapterShortName + '.0.Sun.Sun.Model', function (err, state) {
+            states.getState(adapterShortName + '.0.Sun.Accessory-Information.Model', function (err, state) {
                 expect(err).to.not.exist;
                 expect(state.val).to.be.equal('Sun Position');
 
