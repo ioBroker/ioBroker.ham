@@ -27,6 +27,11 @@ control from ioBroker.
 For this to work you need to provide the location of the systems global node-modules folder. For this call **npm root -g**. Additionally you need to privide the path of the homebridge configuration directory (usually .homebridge in the users folder).
 
 
+## TODO
+* Tests
+* More documentation?!
+
+
 ## Changelog
 
 ### 0.1.0 (2018.06.09)
