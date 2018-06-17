@@ -1,12 +1,12 @@
 {
-    "version": "0.2.0",
+    "version": "0.2.1",
     "name": "iobroker.ham",
     "author": {
         "name": "Apollon77",
         "email": "ingo@fischer-ka.de"
     },
     "bugs": {
-        "url": "https://github.com/Apollon77/ioBroker.ham/issues"
+        "url": "https://github.com/ioBroker/ioBroker.ham/issues"
     },
     "contributors": [
         {
@@ -28,7 +28,7 @@
         "mocha": "^4.1.0"
     },
     "optionalDependencies": {},
-    "homepage": "https://github.com/Apollon77/ioBroker.ham",
+    "homepage": "https://github.com/ioBroker/ioBroker.ham",
     "keywords": [
         "ioBroker",
         "Homebridge",
@@ -40,7 +40,7 @@
     "readmeFilename": "README.md",
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/Apollon77/ioBroker.ham.git"
+        "url": "git+https://github.com/ioBroker/ioBroker.ham.git"
     },
     "scripts": {
         "test": "node node_modules/mocha/bin/mocha --exit"

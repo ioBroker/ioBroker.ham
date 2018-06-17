@@ -1,9 +1,9 @@
 {
     "common": {
         "name": "ham",
-        "version": "0.2.0",
+        "version": "0.2.1",
         "news": {
-            "0.2.0": {
+            "0.2.1": {
                 "en": "Public test version",
                 "de": "Öffentliche Testversion",
                 "ru": "Публичная тестовая версия",
@@ -63,9 +63,9 @@
         "icon": "ham.png",
         "materialize": true,
         "enabled": false,
-        "extIcon": "https://raw.githubusercontent.com/Apollon77/ioBroker.ham/master/admin/ham.png",
+        "extIcon": "https://raw.githubusercontent.com/ioBroker/ioBroker.ham/master/admin/ham.png",
         "keywords": ["homebridge"],
-        "readme": "https://github.com/Apollon77/ioBroker.ham/blob/master/README.md",
+        "readme": "https://github.com/ioBroker/ioBroker.ham/blob/master/README.md",
         "loglevel": "info",
         "type": "iot-systems"
     },
