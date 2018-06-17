@@ -1,8 +1,19 @@
 {
     "common": {
         "name": "ham",
-        "version": "0.2.2",
+        "version": "0.2.3",
         "news": {
+            "0.2.3": {
+                "en": "Updates for Homebridge-Wrapper",
+                "de": "Updates für den Homebridge-Wrapper",
+                "ru": "Обновления для Homebridge-Wrapper",
+                "pt": "Atualizações para o Homebridge-Wrapper",
+                "nl": "Updates voor Homebridge-Wrapper",
+                "fr": "Mises à jour pour Homebridge-Wrapper",
+                "it": "Aggiornamenti per Homebridge-Wrapper",
+                "es": "Actualizaciones para Homebridge-Wrapper",
+                "pl": "Aktualizacje dla Wrappera Homebridge"
+            },
             "0.2.2": {
                 "en": "Fixes for JSON editor",
                 "de": "Korrekturen für den JSON-Editor",
