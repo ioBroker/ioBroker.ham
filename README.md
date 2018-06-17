@@ -34,7 +34,10 @@ For this to work you need to provide the location of the systems global node-mod
 
 ## Changelog
 
-### 0.2.0 (2018.06.17)
+### 0.2.2 (2018.06.17)
+* (Bluefox) Fixes for JSON editor in Firefox and Chrome
+
+### 0.2.0/0.2.1 (2018.06.17)
 * (Apollon77) Public test version with both modes
 * (Bluefox) Admin3
 
