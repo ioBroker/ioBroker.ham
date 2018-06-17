@@ -1,26 +1,26 @@
 /* jshint -W097 */
-// jshint strict:false
-/*jslint node: true */
-/*jslint esversion: 6 */
+/* jshint strict: false */
+/* jslint node: true */
+/* jslint esversion: 6 */
 'use strict';
 
-var nodeFS = require('fs');
-var child_process = require('child_process');
+const nodeFS  = require('fs');
+const child_process = require('child_process');
 // you have to require the utils module and call adapter function
-var utils = require(__dirname + '/lib/utils'); // Get common adapter utils
-var path = require('path');
-var dataDir = path.normalize(utils.controllerDir + path.sep + require(utils.controllerDir + path.sep + 'lib' + path.sep + 'tools').getDefaultDataDir());
+const utils   = require(__dirname + '/lib/utils'); // Get common adapter utils
+const path    = require('path');
+const dataDir = path.normalize(utils.controllerDir + path.sep + require(utils.controllerDir + path.sep + 'lib' + path.sep + 'tools').getDefaultDataDir());
 
 // you have to call the adapter function and pass a options object
 // name has to be set and has to be equal to adapters folder name and main file name excluding extension
 // adapter will be restarted automatically every time as the configuration changed, e.g system.adapter.template.0
-var adapter = new utils.Adapter('ham');
+const adapter = new utils.Adapter('ham');
 
-var homebridgeHandler;
-var attempts = {};
+let homebridgeHandler;
+const attempts = {};
 
 // is called when adapter shuts down - callback has to be called under any circumstances!
-adapter.on('unload', function (callback) {
+adapter.on('unload', callback => {
     try {
         adapter.log.info('cleaned everything up...');
         homebridgeHandler.end();
@@ -30,15 +30,11 @@ adapter.on('unload', function (callback) {
     }
 });
 
-process.on('SIGINT', function () {
-    homebridgeHandler.end();
-});
+process.on('SIGINT', () => homebridgeHandler.end());
 
-process.on('SIGTERM', function () {
-    homebridgeHandler.end();
-});
+process.on('SIGTERM', () => homebridgeHandler.end());
 
-process.on('uncaughtException', function (err) {
+process.on('uncaughtException', err => {
     if (adapter && adapter.log) {
         adapter.log.warn('Exception: ' + err);
     }
@@ -46,7 +42,7 @@ process.on('uncaughtException', function (err) {
 });
 
 // is called if a subscribed state changes
-adapter.on('stateChange', function (id, state) {
+adapter.on('stateChange', (id, state) => {
     // Warning, state can be null if it was deleted
     adapter.log.info('stateChange ' + id + ' ' + JSON.stringify(state));
 
@@ -62,7 +58,7 @@ adapter.on('stateChange', function (id, state) {
 function updateDev(dev_id, dev_name, dev_type, dev_uuid) {
     adapter.log.info('updateDev ' + dev_id + ': name = ' + dev_name + ' /type= ' + dev_type);
     // create dev
-    adapter.getObject(dev_id, function(err, obj) {
+    adapter.getObject(dev_id, (err, obj) => {
         if (!err && obj) {
             adapter.extendObject(dev_id, {
                 type: 'device',
@@ -89,10 +85,10 @@ function updateDev(dev_id, dev_name, dev_type, dev_uuid) {
 }
 
 function updateChannel(dev_id, ch_id, name, ch_uuid) {
-    var id = dev_id + '.' + ch_id;
+    const id = dev_id + '.' + ch_id;
     // create channel for dev
     adapter.log.info('updateChannel ' + id + ': name = ' + name);
-    adapter.getObject(id, function(err, obj) {
+    adapter.getObject(id, (err, obj) => {
         if (!err && obj) {
             adapter.extendObject(id, {
                 type: 'channel',
@@ -117,7 +113,7 @@ function updateChannel(dev_id, ch_id, name, ch_uuid) {
 }
 
 function updateState(dev_id, ch_id, st_id, name, value, common, st_uuid, callback) {
-    var id = dev_id + '.' + ch_id + '.'+ st_id;
+    const id = dev_id + '.' + ch_id + '.'+ st_id;
     if (!common) common = {};
     if (common.name === undefined) common.name = name;
     if (common.role === undefined) common.role = 'state';
@@ -127,7 +123,7 @@ function updateState(dev_id, ch_id, st_id, name, value, common, st_uuid, callbac
 
     adapter.log.info('updateState ' + id + ': value = ' + value + ' /common= ' + JSON.stringify(common));
 
-    adapter.getObject(id, function(err, obj) {
+    adapter.getObject(id, (err, obj) => {
         if (!err && obj) {
             adapter.extendObject(id, {
                 type: 'state',
@@ -153,7 +149,7 @@ function updateState(dev_id, ch_id, st_id, name, value, common, st_uuid, callbac
 
 
 function setState(dev_id, ch_id, st_id, value) {
-    var id = dev_id+'.'+ch_id+'.'+st_id;
+    const id = dev_id + '.' + ch_id + '.' + st_id;
     adapter.setState(id, value, true);
 }
 
@@ -164,12 +160,12 @@ adapter.on('ready', function () {
 });
 
 function loadExistingAccessories(callback) {
-    adapter.getDevices(function(err, res) {
+    adapter.getDevices((err, res) => {
         if (err) {
             adapter.log.error('Can not get all existing devices: ' + err);
             return;
         }
-        for (var i = 0; i < res.length; i++) {
+        for (let i = 0; i < res.length; i++) {
             if (res[i].native && res[i].native.UUID) {
                 adapter.log.debug('Remember existing Accessory ' + res[i].native.displayName + ' with UUID ' + res[i].native.UUID);
                 homebridgeHandler.registerExistingAccessory(res[i].native.UUID, res[i].native.displayName);
@@ -211,16 +207,11 @@ function main() {
     // in this template all states changes inside the adapters namespace are subscribed
     adapter.subscribeStates('*');
 
-    installLibraries(function() {
-        loadExistingAccessories(function() {
-            homebridgeHandler.start();
-        });
+    installLibraries(() => {
+        loadExistingAccessories(() => homebridgeHandler.start());
     });
 
 }
-
-
-
 
 function installNpm(npmLib, callback) {
     const path = __dirname;
@@ -237,14 +228,10 @@ function installNpm(npmLib, callback) {
     // because during installation npm packet will be deleted too, but some files must be loaded even during the install process.
     const child = child_process.exec(cmd);
 
-    child.stdout.on('data', function (buf) {
-        adapter.log.info(buf.toString('utf8'));
-    });
-    child.stderr.on('data', function (buf) {
-        adapter.log.error(buf.toString('utf8'));
-    });
+    child.stdout.on('data', buf => adapter.log.info(buf.toString('utf8')));
+    child.stderr.on('data', buf => adapter.log.error(buf.toString('utf8')));
 
-    child.on('exit', function (code /* , signal */) {
+    child.on('exit', (code /* , signal */) => {
         if (code) {
             adapter.log.error('Cannot install ' + npmLib + ': ' + code);
         }
@@ -273,9 +260,7 @@ function installLibraries(callback) {
                         continue;
                     }
 
-                    installNpm(libraries[lib], function () {
-                        installLibraries(callback);
-                    });
+                    installNpm(libraries[lib], () => installLibraries(callback));
                     allInstalled = false;
                     break;
                 }
