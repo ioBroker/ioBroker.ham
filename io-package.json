@@ -1,9 +1,9 @@
 {
     "common": {
         "name": "ham",
-        "version": "0.2.3",
+        "version": "0.2.4",
         "news": {
-            "0.2.3": {
+            "0.2.4": {
                 "en": "Updates for Homebridge-Wrapper",
                 "de": "Updates für den Homebridge-Wrapper",
                 "ru": "Обновления для Homebridge-Wrapper",
