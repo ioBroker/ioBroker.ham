@@ -176,7 +176,13 @@ function loadExistingAccessories(callback) {
     });
 }
 
-
+//Catch Homwbridge Console Logging
+console.log = function(logs) {
+    if (adapter && adapter.log && adapter.log.debug) {
+        adapter.log.debug(logs);
+    }
+    process.stdout.write(logs + '\n');
+};
 
 function main() {
     if (adapter.config.useGlobalHomebridge) {
