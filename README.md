@@ -34,6 +34,9 @@ For this to work you need to provide the location of the systems global node-mod
 
 ## Changelog
 
+### 0.2.4 (2018.06.18)
+* (Apollon77) Updates for Homebridge-Wrapper
+
 ### 0.2.3 (2018.06.17)
 * (Apollon77) Updates for Homebridge-Wrapper
 
