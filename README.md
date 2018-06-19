@@ -28,6 +28,12 @@ control from ioBroker.
 
 For this to work you need to provide the location of the systems global node-modules folder. For this call **npm root -g**. Additionally you need to privide the path of the homebridge configuration directory (usually .homebridge in the users folder).
 
+## Following adapters were tested in Default mode
+
+* homebridge-platform-wemo v1.0.1
+* homebridge-seasons v1.0.1 
+* homebridge-edomoticz v2.1.11 
+
 
 ## TODO
 * Tests
