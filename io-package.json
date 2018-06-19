@@ -1,8 +1,19 @@
 {
     "common": {
         "name": "ham",
-        "version": "0.2.6",
+        "version": "0.3.0",
         "news": {
+            "0.3.0": {
+                "en": "Support of ham plugins was added",
+                "de": "Unterstützung von Schinken-Plugins wurde hinzugefügt",
+                "ru": "Добавлена ​​поддержка плагинов ham",
+                "pt": "Suporte de plugins ham foi adicionado",
+                "nl": "Ondersteuning van ham-plug-ins is toegevoegd",
+                "fr": "Le support des plugins jambon a été ajouté",
+                "it": "È stato aggiunto il supporto per i plug-in ham",
+                "es": "Soporte de plugins de jamón fue agregado",
+                "pl": "Dodano obsługę wtyczek szynkowych"
+            },
             "0.2.6": {
                 "en": "Updates for Homebridge-Wrapper",
                 "de": "Updates für den Homebridge-Wrapper",
