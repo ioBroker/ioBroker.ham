@@ -1,5 +1,6 @@
 /* jshint -W097 */// jshint strict:false
 /*jslint node: true */
+'use strict';
 var expect = require('chai').expect;
 var setup  = require(__dirname + '/lib/setup');
 var request = require('request');
@@ -17,15 +18,13 @@ var httpServer;
 var lastHTTPRequest = null;
 
 function setupHTTPServer(port, callback) {
-    httpServer = http.createServer(function (req, res) {
+    httpServer = http.createServer((req, res) => {
         lastHTTPRequest = req.url;
         console.log('HTTP Received: ' + lastHTTPRequest);
         res.writeHead(200, {'Content-Type': 'text/plain'});
         res.end('OK');
     }).listen(port);
-    setTimeout(function() {
-        callback();
-    }, 5000);
+    setTimeout(() => callback(), 5000);
 }
 
 function checkConnectionOfAdapter(cb, counter) {
