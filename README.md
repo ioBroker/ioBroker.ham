@@ -39,8 +39,10 @@ For this to work you need to provide the location of the systems global node-mod
 * Tests
 * More documentation?!
 
-
 ## Changelog
+
+### 0.3.0 (2018.06.20)
+* (bluefox) Support of ham plugins was added
 
 ### 0.2.6 (2018.06.19)
 * (Apollon77) Updates for Homebridge-Wrapper
