@@ -17,6 +17,8 @@ in the JSON-editor (see Plugin descriptions).
 After this all Homebridge objects will be created in ioBroker too and all writable objects can
 be changed too.
 
+A link of successfully tried plugins with examples can be found here: https://forum.iobroker.net/viewtopic.php?f=20&t=15021
+
 ### Global-Homebridge-Mode
 If you already use Homebridge (Apple OpenSource SmartHome) to control your devices
 then you can use this existing Homebridge installation and start this Homebridge
@@ -26,6 +28,12 @@ control from ioBroker.
 
 For this to work you need to provide the location of the systems global node-modules folder. For this call **npm root -g**. Additionally you need to privide the path of the homebridge configuration directory (usually .homebridge in the users folder).
 
+## Following adapters were tested in Default mode
+
+* homebridge-platform-wemo v1.0.1 - Belkin WeMo Platform plugin
+* homebridge-seasons v1.0.1  - A plugin to display the current season of the year.
+* homebridge-edomoticz v2.1.11 - A fully-fledged up-to-date Plugin for Domoticz
+
 
 ## TODO
 * Tests
@@ -33,6 +41,9 @@ For this to work you need to provide the location of the systems global node-mod
 
 
 ## Changelog
+
+### 0.2.6 (2018.06.19)
+* (Apollon77) Updates for Homebridge-Wrapper
 
 ### 0.2.5 (2018.06.18)
 * (Apollon77) Catch all console logs from Homegridge and make available as debug log
