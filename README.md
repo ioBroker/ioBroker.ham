@@ -17,6 +17,8 @@ in the JSON-editor (see Plugin descriptions).
 After this all Homebridge objects will be created in ioBroker too and all writable objects can
 be changed too.
 
+A link of successfully tried plugins with examples can be found here: https://forum.iobroker.net/viewtopic.php?f=20&t=15021
+
 ### Global-Homebridge-Mode
 If you already use Homebridge (Apple OpenSource SmartHome) to control your devices
 then you can use this existing Homebridge installation and start this Homebridge
