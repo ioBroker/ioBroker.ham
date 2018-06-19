@@ -30,9 +30,9 @@ For this to work you need to provide the location of the systems global node-mod
 
 ## Following adapters were tested in Default mode
 
-* homebridge-platform-wemo v1.0.1
-* homebridge-seasons v1.0.1 
-* homebridge-edomoticz v2.1.11 
+* homebridge-platform-wemo v1.0.1 - Belkin WeMo Platform plugin
+* homebridge-seasons v1.0.1  - A plugin to display the current season of the year.
+* homebridge-edomoticz v2.1.11 - A fully-fledged up-to-date Plugin for Domoticz
 
 
 ## TODO
