@@ -11,7 +11,7 @@ const path    = require('path');
 
 // it is not an object.
 function createHam(options) {
-    const dataDir = path.normalize(path.join(utils.controllerDir, require(path.join(utils.controllerDir, 'lib', 'tools').getDefaultDataDir())));
+    const dataDir = path.normalize(path.join(utils.controllerDir, require(path.join(utils.controllerDir, 'lib', 'tools.js')).getDefaultDataDir()));
 
     // you have to call the adapter function and pass a options object
     // name has to be set and has to be equal to adapters folder name and main file name excluding extension
@@ -43,7 +43,7 @@ function createHam(options) {
         homebridgeHandler.end();
     });
 
-// is called if a subscribed state changes
+    // is called if a subscribed state changes
     adapter.on('stateChange', (id, state) => {
         // Warning, state can be null if it was deleted
         adapter.log.info('stateChange ' + id + ' ' + JSON.stringify(state));
@@ -176,12 +176,14 @@ function createHam(options) {
     }
 
     //Catch Homebridge Console Logging
-    console.log = function(logs) {
-        if (adapter && adapter.log && adapter.log.debug) {
-            adapter.log.debug(logs);
-        }
-        process.stdout.write(logs + '\n');
-    };
+    if (process.argv.indexOf('--logs') === -1 && process.argv.indexOf('-l') === -1) {
+        console.log = function (logs) {
+            if (adapter && adapter.log && adapter.log.debug) {
+                adapter.log.debug(logs);
+            }
+            process.stdout.write(logs + '\n');
+        };
+    }
 
     function main() {
         if (adapter.config.useGlobalHomebridge) {
