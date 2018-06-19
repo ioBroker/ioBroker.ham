@@ -208,7 +208,7 @@ function createHam(options) {
                 updateState: updateState,
                 setState: setState,
                 wrapperConfig: adapter.config.wrapperConfig,
-                ignoreAccessories: adapter.config.ignoreAccessories
+                ignoreInfoAccessoryServices: adapter.config.ignoreInfoAccessoryServices
             });
         }
 
