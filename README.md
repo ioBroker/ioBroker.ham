@@ -34,6 +34,9 @@ For this to work you need to provide the location of the systems global node-mod
 
 ## Changelog
 
+### 0.2.6 (2018.06.19)
+* (Apollon77) Updates for Homebridge-Wrapper
+
 ### 0.2.5 (2018.06.18)
 * (Apollon77) Catch all console logs from Homegridge and make available as debug log
 
