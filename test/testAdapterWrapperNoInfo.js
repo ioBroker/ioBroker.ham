@@ -96,7 +96,7 @@ describe('Test ' + adapterShortName + ' Wrapper adapter No-AccessoryInfo', () =>
             config.native.useGlobalHomebridge = false;
             config.native.globalHomebridgeConfigPath = __dirname + "/homebridge/";
             config.native.libraries = "homebridge-http-webhooks homebridge-sun-position";
-            config.native.ignoreInfoAccessoryServices = false;
+            config.native.ignoreInfoAccessoryServices = true;
             config.native.wrapperConfig = {
                 "accessories": [
             		{

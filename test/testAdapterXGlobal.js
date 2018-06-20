@@ -104,8 +104,8 @@ describe('Test ' + adapterShortName + ' Global adapter', () => {
             setup.setAdapterConfig(config.common, config.native);
 
             setupHTTPServer(9080, () => {
-                setup.startController(true, 
-                    (id, obj) => {}, 
+                setup.startController(true,
+                    (id, obj) => {},
                     (id, state) => onStateChanged && onStateChanged(id, state),
                     (_objects, _states) => {
                         objects = _objects;
