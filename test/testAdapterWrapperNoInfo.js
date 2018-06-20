@@ -83,8 +83,8 @@ function sendTo(target, command, message, callback) {
     });
 }
 
-describe('Test ' + adapterShortName + ' Wrapper adapter', () => {
-    before('Test ' + adapterShortName + ' Wrapper adapter: Start js-controller', function (_done) {
+describe('Test ' + adapterShortName + ' Wrapper adapter No-AccessoryInfo', () => {
+    before('Test ' + adapterShortName + ' Wrapper adapter No-AccessoryInfo: Start js-controller', function (_done) {
         this.timeout(600000); // because of first install from npm
 
         setup.setupController(() => {
@@ -248,7 +248,7 @@ describe('Test ' + adapterShortName + ' Wrapper adapter', () => {
         });
     });
 
-    it('Test ' + adapterShortName + ' Wrapper adapter: Check if adapter started', done => {
+    it('Test ' + adapterShortName + ' Wrapper adapter No-AccessoryInfo: Check if adapter started', done => {
         checkConnectionOfAdapter(res => {
             if (res) console.log(res);
             expect(res).not.to.be.equal('Cannot check connection');
@@ -265,7 +265,7 @@ describe('Test ' + adapterShortName + ' Wrapper adapter', () => {
         });
     }).timeout(60000);
 
-    it('Test ' + adapterShortName + ' Wrapper adapter: Wait for npm installs', done => {
+    it('Test ' + adapterShortName + ' Wrapper adapter No-AccessoryInfo: Wait for npm installs', done => {
         setTimeout(() => done(), 30000);
     }).timeout(60000);
 
@@ -350,7 +350,7 @@ describe('Test ' + adapterShortName + ' Wrapper adapter', () => {
         });
     }).timeout(10000);
 
-    after('Test ' + adapterShortName + ' Wrapper adapter: Stop js-controller', function (done) {
+    after('Test ' + adapterShortName + ' Wrapper adapter No-AccessoryInfo: Stop js-controller', function (done) {
         this.timeout(10000);
 
         setup.stopController(function (normalTerminated) {
