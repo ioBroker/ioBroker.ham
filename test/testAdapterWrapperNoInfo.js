@@ -276,7 +276,7 @@ describe('Test ' + adapterShortName + ' Wrapper adapter', () => {
 
             states.getState(adapterShortName + '.0.Sun.Accessory-Information.Model', (err, state) => {
                 expect(err).to.exist;
-                expect(state.val).to.not.exist;
+                expect(state.val).to.be.null;
 
                 states.getState(adapterShortName + '.0.Sun.Sun.Altitude', (err, state) => {
                     expect(err).to.not.exist;
