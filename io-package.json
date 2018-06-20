@@ -1,8 +1,19 @@
 {
     "common": {
         "name": "ham",
-        "version": "0.3.0",
+        "version": "0.3.1",
         "news": {
+            "0.3.1": {
+                "en": "Fixed a bug in global mode",
+                "de": "Ein Fehler im globalen Modus wurde behoben",
+                "ru": "Исправлена ​​ошибка в глобальном режиме",
+                "pt": "Corrigido um erro no modo global",
+                "nl": "Probleem opgelost in de globale modus",
+                "fr": "Correction d'un bug en mode global",
+                "it": "Risolto un bug in modalità globale",
+                "es": "Se corrigió un error en el modo global",
+                "pl": "Naprawiono błąd w trybie globalnym"
+            },
             "0.3.0": {
                 "en": "Support of ham plugins was added",
                 "de": "Unterstützung von Schinken-Plugins wurde hinzugefügt",
