@@ -41,6 +41,9 @@ For this to work you need to provide the location of the systems global node-mod
 
 ## Changelog
 
+### 0.3.1 (2018.06.20)
+* (kirovilya) Fixed a bug in global mode that values were not reported back to iOS devices
+
 ### 0.3.0 (2018.06.20)
 * (bluefox) Support of ham plugins was added
 
