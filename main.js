@@ -186,22 +186,27 @@ function createHam(options) {
     }
 
     function main() {
+        const usedLogger = {
+            info: adapter.log.debug,
+            debug: adapter.log.silly
+        };
         if (adapter.config.useGlobalHomebridge) {
             homebridgeHandler = require('./lib/global-handler');
             homebridgeHandler.init({
-                logger: adapter.log,
+                logger: usedLogger,
                 homebridgeBasePath: adapter.config.globalHomebridgeBasePath,
                 homebridgeConfigPath: adapter.config.globalHomebridgeConfigPath, // /Users/ingof/.homebridge/
                 updateDev: updateDev,
                 updateChannel: updateChannel,
                 updateState: updateState,
-                setState: setState
+                setState: setState,
+                ignoreInfoAccessoryServices: adapter.config.ignoreInfoAccessoryServices
             });
         }
         else {
             homebridgeHandler = require('./lib/wrapper-handler');
             homebridgeHandler.init({
-                logger: adapter.log,
+                logger: usedLogger,
                 homebridgeConfigPath: dataDir + adapter.namespace.replace('.', '_'), // /Users/ingof/.homebridge/
                 updateDev: updateDev,
                 updateChannel: updateChannel,
