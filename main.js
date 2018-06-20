@@ -188,7 +188,8 @@ function createHam(options) {
     function main() {
         const usedLogger = {
             info: adapter.log.debug,
-            debug: adapter.log.silly
+            debug: adapter.log.silly,
+            silly: adapter.log.silly
         };
         if (adapter.config.useGlobalHomebridge) {
             homebridgeHandler = require('./lib/global-handler');
