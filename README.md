@@ -33,6 +33,12 @@ For this to work you need to provide the location of the systems global node-mod
 * homebridge-platform-wemo v1.0.1 - Belkin WeMo Platform plugin
 * homebridge-seasons v1.0.1  - A plugin to display the current season of the year.
 * homebridge-edomoticz v2.1.11 - A fully-fledged up-to-date Plugin for Domoticz
+* homebridge-homee v0.2.4 - A fully-fledged up-to--date Plugin for Homee
+* homebridge-chamberlain v1.0.1 - plugin for Chamberlain garage door openers with MyQ
+* homebridge-doorbird v0.0.4 - Plugin for Doorbird
+* homebridge-ikea-tradfri-gateway v1.0.26 - Tradfri
+* homebridge-Fibaro-HC2 v2.1.5 - Fibaro HomeCenter integration
+* homebridge-dyson-link v2.2.2 - Dyson Link devices
 
 
 ## TODO
@@ -40,6 +46,9 @@ For this to work you need to provide the location of the systems global node-mod
 * More documentation?!
 
 ## Changelog
+
+### 0.4.0 (2018.06.21)
+* (Apollon77) option to poll values from the plugins added and other optimizations
 
 ### 0.3.1 (2018.06.20)
 * (kirovilya) Fixed a bug in global mode that values were not reported back to iOS devices
