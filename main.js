@@ -1,4 +1,5 @@
 /* jshint -W097 */
+/* jshint -W030 */
 /* jshint strict: false */
 /* jslint node: true */
 /* jslint esversion: 6 */
@@ -214,7 +215,8 @@ function createHam(options) {
                 updateState: updateState,
                 setState: setState,
                 wrapperConfig: adapter.config.wrapperConfig,
-                ignoreInfoAccessoryServices: adapter.config.ignoreInfoAccessoryServices
+                ignoreInfoAccessoryServices: adapter.config.ignoreInfoAccessoryServices,
+                characteristicPollingInterval: adapter.config.characteristicPollingInterval * 1000
             });
         }
 
@@ -222,7 +224,11 @@ function createHam(options) {
         adapter.subscribeStates('*');
 
         installLibraries(() => {
-            loadExistingAccessories(() => homebridgeHandler.start());
+            loadExistingAccessories(() => {
+                homebridgeHandler.start();
+
+                options.exitAfter && setTimeout(() => adapter && adapter.stop(), 10000);
+            });
         });
     }
 

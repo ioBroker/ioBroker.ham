@@ -97,6 +97,7 @@ describe('Test ' + adapterShortName + ' Wrapper adapter No-AccessoryInfo', () =>
             config.native.globalHomebridgeConfigPath = __dirname + "/homebridge/";
             config.native.libraries = "homebridge-http-webhooks homebridge-sun-position";
             config.native.ignoreInfoAccessoryServices = true;
+            config.native.characteristicPollingInterval = 30000;
             config.native.wrapperConfig = {
                 "accessories": [
             		{
@@ -344,11 +345,11 @@ describe('Test ' + adapterShortName + ' Wrapper adapter No-AccessoryInfo', () =>
                 states.getState(adapterShortName + '.0.Switch-name-1.Switch-name-1.On', (err, state) => {
                     expect(err).to.not.exist;
                     expect(state.val).to.be.false;
-                    done();
+                    setTimeout(() => done(), 40000);
                 });
             }, 2000);
         });
-    }).timeout(10000);
+    }).timeout(50000);
 
     after('Test ' + adapterShortName + ' Wrapper adapter No-AccessoryInfo: Stop js-controller', function (done) {
         this.timeout(10000);

@@ -12,4 +12,15 @@ systemDictionary = {
     "Module names": {                                "en": "Module names",                                    "de": "Modulnamen",                                      "ru": "Имена модулей",                                   "pt": "Nomes de módulos",                                "nl": "Module namen",                                    "fr": "Module names",                                    "it": "Nomi dei moduli",                                 "es": "Nombres de módulos",                              "pl": "Nazwy modułów"},
     "useGlobalHomebridge": {                         "en": "Use global Homebridge",                           "de": "Verwenden Sie globale Homebridge",                "ru": "Использовать глобальный Homebridge",              "pt": "Use Homebridge global",                           "nl": "Gebruik wereldwijde Homebridge",                  "fr": "useGlobalHomebridge",                             "it": "Usa Homebridge globale",                          "es": "Utilice Global Homebridge",                       "pl": "Użyj globalnego rozwiązania Homebridge"},
     "wrapperConfig": {                               "en": "Wrapper configuration",                           "de": "Wrapper-Konfiguration",                           "ru": "Конфигурация Wrapper",                            "pt": "Configuração do invólucro",                       "nl": "Wrapper-configuratie",                            "fr": "wrapperConfig",                                   "it": "Configurazione wrapper",                          "es": "Configuración del contenedor",                    "pl": "Konfiguracja opakowania"},
+    "Value Polling Interval": {
+        "en": "Value Polling Interval",
+        "de": "Wertabfrageintervall",
+        "ru": "Интервал опроса значений",
+        "pt": "Intervalo de Polling de Valor",
+        "nl": "Value Polling Interval",
+        "fr": "Intervalle d'interrogation de valeur",
+        "it": "Intervallo di polling del valore",
+        "es": "Intervalo de interrogación de valor",
+        "pl": "Okres odpytywania wartości"
+    }
 };

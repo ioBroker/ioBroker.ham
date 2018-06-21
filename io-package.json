@@ -1,8 +1,19 @@
 {
     "common": {
         "name": "ham",
-        "version": "0.3.1",
+        "version": "0.4.0",
         "news": {
+            "0.4.0": {
+                "en": "option to poll values from the plugins added and other optimisations",
+                "de": "Option zum Abrufen von Werten aus den hinzugefügten Plugins und anderen Optimierungen",
+                "ru": "возможность опроса значений из добавленных плагинов и других оптимизаций",
+                "pt": "opção para pesquisar valores dos plugins adicionados e outras otimizações",
+                "nl": "optie om waarden te peilen van de toegevoegde plug-ins en andere optimalisaties",
+                "fr": "option pour interroger les valeurs des plugins ajoutés et d'autres optimisations",
+                "it": "opzione per interrogare i valori dai plugin aggiunti e altre ottimizzazioni",
+                "es": "opción para sondear valores de los complementos agregados y otras optimizaciones",
+                "pl": "opcja odpytywania wartości z dodanych wtyczek i innych optymalizacji"
+            },
             "0.3.1": {
                 "en": "Fixed a bug in global mode",
                 "de": "Ein Fehler im globalen Modus wurde behoben",
@@ -141,6 +152,7 @@
         "globalHomebridgeConfigPath": "/home/pi/.homebridge/",
         "libraries": "",
         "ignoreInfoAccessoryServices": false,
+        "characteristicPollingInterval": 0,
         "wrapperConfig": {
             "description": "This is an example configuration file with one fake accessory and one fake platform. You can use this as a template for creating your own configuration file containing devices you actually own.",
             "accessories": [
