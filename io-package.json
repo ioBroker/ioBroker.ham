@@ -1,9 +1,9 @@
 {
     "common": {
         "name": "ham",
-        "version": "0.4.0",
+        "version": "0.4.1",
         "news": {
-            "0.4.0": {
+            "0.4.1": {
                 "en": "option to poll values from the plugins added and other optimisations",
                 "de": "Option zum Abrufen von Werten aus den hinzugefügten Plugins und anderen Optimierungen",
                 "ru": "возможность опроса значений из добавленных плагинов и других оптимизаций",
