@@ -189,6 +189,7 @@ function createHam(options) {
     function main() {
         const usedLogger = {
             info: adapter.log.debug,
+            warn: adapter.log.warn,
             debug: adapter.log.silly,
             silly: adapter.log.silly
         };
