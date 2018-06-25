@@ -1,8 +1,19 @@
 {
     "common": {
         "name": "ham",
-        "version": "0.4.1",
+        "version": "0.4.2",
         "news": {
+            "0.4.2": {
+                "en": "fix for global mode",
+                "de": "Fix für den globalen Modus",
+                "ru": "исправление для глобального режима",
+                "pt": "Correção para o modo global",
+                "nl": "herstellen voor de mondiale modus",
+                "fr": "corriger pour le mode global",
+                "it": "correzione per la modalità globale",
+                "es": "arreglar para el modo global",
+                "pl": "naprawić w trybie globalnym"
+            },
             "0.4.1": {
                 "en": "option to poll values from the plugins added and other optimisations",
                 "de": "Option zum Abrufen von Werten aus den hinzugefügten Plugins und anderen Optimierungen",

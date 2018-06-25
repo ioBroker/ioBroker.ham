@@ -47,6 +47,9 @@ For this to work you need to provide the location of the systems global node-mod
 
 ## Changelog
 
+### 0.4.2 (2018.06.25)
+* (Apollon77) Fix for global mode
+
 ### 0.4.1 (2018.06.21)
 * (Apollon77) option to poll values from the plugins added and other optimizations
 
