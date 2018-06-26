@@ -198,7 +198,7 @@ function createHam(options) {
             homebridgeHandler.init({
                 logger: usedLogger,
                 homebridgeBasePath: adapter.config.globalHomebridgeBasePath,
-                homebridgeConfigPath: adapter.config.globalHomebridgeConfigPath, // /Users/ingof/.homebridge/
+                homebridgeConfigPath: adapter.config.globalHomebridgeConfigPath,
                 updateDev: updateDev,
                 updateChannel: updateChannel,
                 updateState: updateState,
@@ -210,7 +210,7 @@ function createHam(options) {
             homebridgeHandler = require('./lib/wrapper-handler');
             homebridgeHandler.init({
                 logger: usedLogger,
-                homebridgeConfigPath: dataDir + adapter.namespace.replace('.', '_'), // /Users/ingof/.homebridge/
+                homebridgeConfigPath: dataDir + adapter.namespace.replace('.', '_'),
                 updateDev: updateDev,
                 updateChannel: updateChannel,
                 updateState: updateState,

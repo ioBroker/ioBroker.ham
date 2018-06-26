@@ -5,6 +5,7 @@ const expect = require('chai').expect;
 const setup  = require(__dirname + '/lib/setup');
 const request = require('request');
 const http = require('http');
+const fs = require('fs');
 
 let objects = null;
 let states  = null;
@@ -270,6 +271,7 @@ describe('Test ' + adapterShortName + ' Wrapper adapter With-AccessoryInfo', () 
     }).timeout(60000);
 
     it('Test ' + adapterShortName + ' Wrapper: Verify Init', done => {
+        expect(fs.existsSync(__dirname + '/homebridge/config.json')).to.be.true;
         states.getState(adapterShortName + '.0.Switch-name-1.Switch-name-1.On', (err, state) => {
             expect(err).to.not.exist;
             expect(state.val).to.be.false;

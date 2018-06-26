@@ -1,8 +1,19 @@
 {
     "common": {
         "name": "ham",
-        "version": "0.4.2",
+        "version": "0.4.3",
         "news": {
+            "0.4.3": {
+                "en": "Updates for Homebridge-Wrapper",
+                "de": "Updates für den Homebridge-Wrapper",
+                "ru": "Обновления для Homebridge-Wrapper",
+                "pt": "Atualizações para o Homebridge-Wrapper",
+                "nl": "Updates voor Homebridge-Wrapper",
+                "fr": "Mises à jour pour Homebridge-Wrapper",
+                "it": "Aggiornamenti per Homebridge-Wrapper",
+                "es": "Actualizaciones para Homebridge-Wrapper",
+                "pl": "Aktualizacje dla Wrappera Homebridge"
+            },
             "0.4.2": {
                 "en": "fix for global mode",
                 "de": "Fix für den globalen Modus",
@@ -154,18 +165,10 @@
         "ignoreInfoAccessoryServices": false,
         "characteristicPollingInterval": 0,
         "wrapperConfig": {
-            "description": "This is an example configuration file with one fake accessory and one fake platform. You can use this as a template for creating your own configuration file containing devices you actually own.",
+            "description": "Add configuration for your accessories or platforms according to the docs of the plugins.",
             "accessories": [
-                {
-                    "accessory": "WeMo",
-                    "name": "Coffee Maker"
-                }
             ],
             "platforms": [
-                {
-                    "platform" : "PhilipsHue",
-                    "name" : "Hue"
-                }
             ]
         }
     },
