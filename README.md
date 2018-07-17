@@ -30,15 +30,17 @@ For this to work you need to provide the location of the systems global node-mod
 
 ## Following adapters were tested in Default mode
 
-* homebridge-platform-wemo v1.0.1 - Belkin WeMo Platform plugin
-* homebridge-seasons v1.0.1  - A plugin to display the current season of the year.
-* homebridge-edomoticz v2.1.11 - A fully-fledged up-to-date Plugin for Domoticz
-* homebridge-homee v0.2.4 - A fully-fledged up-to--date Plugin for Homee
 * homebridge-chamberlain v1.0.1 - plugin for Chamberlain garage door openers with MyQ
 * homebridge-doorbird v0.0.4 - Plugin for Doorbird
-* homebridge-ikea-tradfri-gateway v1.0.26 - Tradfri
-* homebridge-Fibaro-HC2 v2.1.5 - Fibaro HomeCenter integration
 * homebridge-dyson-link v2.2.2 - Dyson Link devices
+* homebridge-edomoticz v2.1.11 - A fully-fledged up-to-date Plugin for Domoticz
+* homebridge-Fibaro-HC2 v2.1.5 - Fibaro HomeCenter integration
+* homebridge-homee v0.2.4 - A fully-fledged up-to--date Plugin for Homee
+* homebridge-ikea-tradfri-gateway v1.0.26 - Tradfri
+* homebridge-noolite v0.0.29 - Noolite via USB MTRF-64 or МТRF-64 modules
+* homebridge-platform-wemo v1.0.1 - Belkin WeMo Platform plugin
+* homebridge-seasons v1.0.1  - A plugin to display the current season of the year.
+* homebridge-vera v0.8.2 - VeraLink is an application for Z-Wave accessories from Vera (Node.js 8.11.3)
 
 
 ## TODO
