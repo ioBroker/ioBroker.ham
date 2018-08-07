@@ -1,8 +1,19 @@
 {
     "common": {
         "name": "ham",
-        "version": "0.4.3",
+        "version": "0.4.4",
         "news": {
+            "0.4.4": {
+                "en": "corrected automatic role determination and bugs fixed",
+                "de": "korrigierte automatische Rollenermittlung und behobene Fehler",
+                "ru": "исправлено автоматическое определение роли и исправлены ошибки",
+                "pt": "correção automática de função corrigida e bugs corrigidos",
+                "nl": "gecorrigeerde automatische rolbepaling en opgeloste bugs",
+                "fr": "correction automatique du rôle et correction des bugs",
+                "it": "Correzione della correzione automatica del ruolo e dei bug corretti",
+                "es": "se corrigió la determinación automática del rol y se corrigieron errores",
+                "pl": "naprawiono automatyczne ustalanie roli i naprawione błędy"
+            },
             "0.4.3": {
                 "en": "Updates for Homebridge-Wrapper",
                 "de": "Updates für den Homebridge-Wrapper",

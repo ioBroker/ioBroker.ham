@@ -49,6 +49,9 @@ For this to work you need to provide the location of the systems global node-mod
 
 ## Changelog
 
+### 0.4.4 (2018.08.07)
+* (Apollon77) corrected automatic role determination and bugs fixed
+
 ### 0.4.2 (2018.06.25)
 * (Apollon77) Fix for global mode
 
