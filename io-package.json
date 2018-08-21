@@ -1,8 +1,18 @@
 {
     "common": {
         "name": "ham",
-        "version": "0.4.4",
+        "version": "0.4.5",
         "news": {
+            "0.4.5": {
+                "en": "fixes and optimizations",
+                "de": "Korrekturen und Optimierungen",
+                "ru": "исправления и оптимизации",
+                "pt": "correções e otimizações",
+                "nl": "fixes en optimalisaties",
+                "fr": "correctifs et optimisations",
+                "it": "correzioni e ottimizzazioni",
+                "es": "correcciones y optimizaciones",
+                "pl": "poprawki i optymalizacje"            },
             "0.4.4": {
                 "en": "corrected automatic role determination and bugs fixed",
                 "de": "korrigierte automatische Rollenermittlung und behobene Fehler",
