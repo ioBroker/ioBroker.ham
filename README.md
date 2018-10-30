@@ -1,5 +1,8 @@
 ![Logo](admin/ham.png)
 # ioBroker Homebridge accessories manager
+
+[![Greenkeeper badge](https://badges.greenkeeper.io/ioBroker/ioBroker.ham.svg)](https://greenkeeper.io/)
+
 =================
 
 Use Homebridge plugins in ioBroker or run a global installed Homebridge as ioBroker adapter.
