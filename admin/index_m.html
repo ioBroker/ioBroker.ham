@@ -65,6 +65,7 @@
         // example: select elements with id=key and class=value and insert value
         if (!settings) return;
         if (settings.characteristicPollingInterval === undefined) settings.characteristicPollingInterval = 0;
+        if (settings.insecureAccess === undefined) settings.insecureAccess = false;
         $('.value').each(function () {
             var $key = $(this);
             var id = $key.attr('id');
@@ -181,6 +182,10 @@
                     <div class="input-field col s12 m6 l4 xl3">
                         <input id="useGlobalHomebridge" type="checkbox" class="value" />
                         <span for="useGlobalHomebridge" class="translate">useGlobalHomebridge</span>
+                    </div>
+                    <div class="input-field col s12 m6 l4 xl3">
+                        <input id="insecureAccess" type="checkbox" class="value" />
+                        <span for="insecureAccess" class="translate">Use insecure Homebridge mode</span>
                     </div>
                 </div>
                 <div class="row global">

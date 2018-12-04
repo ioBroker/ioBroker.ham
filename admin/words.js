@@ -22,5 +22,16 @@ systemDictionary = {
         "it": "Intervallo di polling del valore",
         "es": "Intervalo de interrogación de valor",
         "pl": "Okres odpytywania wartości"
+    },
+    "Use insecure Homebridge mode": {
+        "en": "Use insecure Homebridge mode",
+        "de": "Verwenden Sie den unsicheren Homebridge-Modus",
+        "ru": "Использовать небезопасный режим моста",
+        "pt": "Use o modo Homebridge inseguro",
+        "nl": "Gebruik de onveilige Homebridge-modus",
+        "fr": "Utilisez le mode Homebridge non sécurisé",
+        "it": "Utilizzare la modalità Homebridge non sicura",
+        "es": "Utilice el modo inseguro de Homebridge",
+        "pl": "Użyj niezabezpieczonego trybu Homebridge"
     }
 };

@@ -1,7 +1,7 @@
 {
     "common": {
         "name": "ham",
-        "version": "0.4.5",
+        "version": "1.0.0",
         "news": {
             "0.4.5": {
                 "en": "fixes and optimizations",
@@ -184,6 +184,7 @@
         "globalHomebridgeConfigPath": "/home/pi/.homebridge/",
         "libraries": "",
         "ignoreInfoAccessoryServices": false,
+        "insecureAccess": false,
         "characteristicPollingInterval": 0,
         "wrapperConfig": {
             "description": "Add configuration for your accessories or platforms according to the docs of the plugins.",
