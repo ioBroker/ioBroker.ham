@@ -204,6 +204,7 @@ function createHam(options) {
                 updateState: updateState,
                 setState: setState,
                 ignoreInfoAccessoryServices: adapter.config.ignoreInfoAccessoryServices,
+                characteristicPollingInterval: adapter.config.characteristicPollingInterval * 1000,
                 insecureAccess: adapter.config.insecureAccess || false
             });
         }

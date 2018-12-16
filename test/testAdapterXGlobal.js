@@ -100,6 +100,7 @@ describe('Test ' + adapterShortName + ' Global adapter', () => {
             config.native.useGlobalHomebridge = true;
             config.native.globalHomebridgeBasePath = process.env.NODE_GLOBAL_DIR + "/homebridge/";
             config.native.globalHomebridgeConfigPath = __dirname + "/homebridge/";
+            config.native.characteristicPollingInterval = 30;
 
             setup.setAdapterConfig(config.common, config.native);
 

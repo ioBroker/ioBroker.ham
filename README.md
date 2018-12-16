@@ -52,7 +52,10 @@ For this to work you need to provide the location of the systems global node-mod
 
 ## Changelog
 
-### 0.4.5 (2018.08.21)
+### 1.1.0 (2018.12.17)
+* (Apollon77) add polling interval to global mode
+
+### 1.0.0 (2018.08.21)
 * (Apollon77) issues fixed
 
 ### 0.4.4 (2018.08.07)
