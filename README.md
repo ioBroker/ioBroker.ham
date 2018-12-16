@@ -52,10 +52,11 @@ For this to work you need to provide the location of the systems global node-mod
 
 ## Changelog
 
-### 1.1.0 (2018.12.17)
+### 1.0.0 (WIP)
 * (Apollon77) add polling interval to global mode
+* (Apollon77) add option to use insecure flag in wrapper mode
 
-### 1.0.0 (2018.08.21)
+### 0.4.5 (2018.08.21)
 * (Apollon77) issues fixed
 
 ### 0.4.4 (2018.08.07)
