@@ -3,7 +3,7 @@ $package = 'OpenSSL102-choco'
 try {
 
   #default is to plop in c:\ -- yuck!
-  $installDir = Join-Path $Env:ProgramFiles 'OpenSSL'
+  $installDir = 'C:\OpenSSL-Win64\'
 
   $params = @{
     packageName = $package;
