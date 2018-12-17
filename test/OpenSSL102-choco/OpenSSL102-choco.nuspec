@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <metadata>
-    <id>OpenSSL102</id>
+    <id>OpenSSL102-choco</id>
     <title>OpenSSL - The Open Source SSL and TLS toolkit</title>
     <version>1.0.2</version>
     <authors>Shining Light Productions</authors>
