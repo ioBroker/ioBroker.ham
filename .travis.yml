@@ -13,7 +13,7 @@ before_install:
   - 'if [[ "$TRAVIS_OS_NAME" == "windows" ]]; then choco install vcbuildtools; fi'
   - 'if [[ "$TRAVIS_OS_NAME" == "windows" ]]; then npm config set msvs_version 2015 --global; fi'
   - 'if [[ "$TRAVIS_OS_NAME" == "windows" ]]; then cd test; cd OpenSSL102-choco; choco install OpenSSL102-choco.nuspec; cd ..; cd ..; fi'
-  - 'if [[ "$TRAVIS_OS_NAME" == "windows" ]]; then powershell "Get-ChildItem -Path C:\OpenSSL-Win64\"; fi'
+  - 'if [[ "$TRAVIS_OS_NAME" == "windows" ]]; then powershell "Get-ChildItem -Path C:\OpenSSL-Win64"; fi'
   - 'if [[ "$TRAVIS_OS_NAME" == "windows" ]]; then powershell "Get-ChildItem -Path C:\OpenSSL-Win64\lib"; fi'
 before_script:
   - export NPMVERSION=$(echo "$($(which npm) -v)"|cut -c1)
