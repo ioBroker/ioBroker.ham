@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "ham",
-        "version": "1.0.0",
+        "version": "1.0.1",
         "news": {
+            "1.0.1": {
+                "en": "Add Chinese support",
+                "de": "Chinesische Unterstützung hinzufügen",
+                "ru": "Добавить поддержку китайцев",
+                "pt": "Adicionar suporte chinês",
+                "nl": "Voeg Chinese ondersteuning toe",
+                "fr": "Ajouter un support chinois",
+                "it": "Aggiungi supporto cinese",
+                "es": "Añadir soporte chino",
+                "pl": "Dodaj chińskie wsparcie",
+                "zh-cn": "添加中文支持"
+            },
             "0.4.5": {
                 "en": "fixes and optimizations",
                 "de": "Korrekturen und Optimierungen",
@@ -141,7 +153,8 @@
             "nl": "Homebridge accessories manager",
             "fr": "Homebridge accessories manager",
             "it": "Homebridge accessories manager",
-            "es": "Homebridge accessories manager"
+            "es": "Homebridge accessories manager",
+            "zh-cn": "Homebridge外设管理器"
         },
         "desc": {
             "en": "ioBroker Homebridge Adapter",
@@ -151,7 +164,8 @@
             "fr": "ioBroker Homebridge modèle",
             "nl": "ioBroker Homebridge Adapter",
             "it": "Adattatore Homebridge ioBroker",
-            "es": "Adaptador Homebridge ioBroker"
+            "es": "Adaptador Homebridge ioBroker",
+            "zh-cn": "Homebridge接入适配器"
         },
         "authors": [
             "Kirov Ilya <kirovilya@gmail.com>",
