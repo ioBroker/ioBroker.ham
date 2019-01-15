@@ -52,6 +52,9 @@ For this to work you need to provide the location of the systems global node-mod
 
 ## Changelog
 
+### 1.0.1 (2019-01-16)
+* (SchumyHao) Add Chinese support
+
 ### 1.0.0 (WIP)
 * (Apollon77) add polling interval to global mode
 * (Apollon77) add option to use insecure flag in wrapper mode
