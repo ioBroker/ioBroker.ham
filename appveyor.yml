@@ -25,7 +25,7 @@ install:
   - npm install -g homebridge-sun-position
   - for /f "delims=" %%A in ('npm root -g') do set "NODE_GLOBAL_DIR=%%A"
   - npm install
-  - npm install winston@2.3.1
+  - npm install winston@3.2.1
   - 'npm install https://github.com/ioBroker/ioBroker.js-controller/tarball/master --production'
 test_script:
   - echo %cd%
