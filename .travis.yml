@@ -21,12 +21,12 @@ before_script:
   - npm install -g homebridge-http-webhooks
   - npm install -g homebridge-sun-position
   - export NODE_GLOBAL_DIR=$(npm root -g)
-  - npm install winston@2.3.1
+  - npm install winston@3.2.1
   - 'npm install https://github.com/ioBroker/ioBroker.js-controller/tarball/master --production'
 addons:
   apt:
     sources:
       - ubuntu-toolchain-r-test
     packages:
-      - g++-4.8
+      - g++-4.9
       - libavahi-compat-libdnssd-dev
