@@ -1,6 +1,6 @@
 ![Logo](admin/ham.png)
 # ioBroker Homebridge accessories manager
-
+![Number of Installations](http://iobroker.live/badges/ham-installed.svg) ![Number of Installations](http://iobroker.live/badges/ham-stable.svg) 
 [![Greenkeeper badge](https://badges.greenkeeper.io/ioBroker/ioBroker.ham.svg)](https://greenkeeper.io/)
 
 =================
