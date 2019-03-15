@@ -91,12 +91,29 @@
             if ($(this).prop('checked')) {
                 $('.global').show();
                 $('.local').hide();
-                $('.tab-json').addClass('disabled');
+                $('.editConfig').show();
+                if (!$('#enableEditorForGlobalHomebridge').prop('checked')) {
+                    $('.tab-json').addClass('disabled');
+                }else {
+                    $('.globalHomebridgeConfig').hide();
+                }
+                
             } else {
                 $('.global').hide();
                 $('.local').show();
                 $('.tab-json').removeClass('disabled');
+                $('.editConfig').hide();
             }
+        }).trigger('change');
+
+        $('#enableEditorForGlobalHomebridge').on('change', function () {
+            if ($(this).prop('checked')) {
+                $('.tab-json').removeClass('disabled');
+                $('.globalHomebridgeConfig').hide();
+            } else {
+                $('.tab-json').addClass('disabled');
+                $('.globalHomebridgeConfig').show();
+            } 
         }).trigger('change');
 
         wrapperConfig = JSON.stringify(settings.wrapperConfig || '{}', null, 2);
@@ -187,6 +204,10 @@
                         <input id="insecureAccess" type="checkbox" class="value" />
                         <span for="insecureAccess" class="translate">Use insecure Homebridge mode</span>
                     </div>
+                    <div class="input-field col s12 m6 l4 xl3 editConfig">
+                        <input id="enableEditorForGlobalHomebridge" type="checkbox" class="value" />
+                        <span for="enableEditorForGlobalHomebridge" class="translate">Enable editor tab in global mode</span>
+                    </div>
                 </div>
                 <div class="row global">
                     <div class="input-field col s12 m6 l4 xl3">
@@ -194,7 +215,7 @@
                         <label for="globalHomebridgeBasePath">Global Homebridge Path</label>
                         <span class="translate">Global Homebridge Path</span>
                     </div>
-                    <div class="input-field col s12 m6 l4 xl3">
+                    <div class="input-field col s12 m6 l4 xl3 globalHomebridgeConfig">
                         <input class="value" id="globalHomebridgeConfigPath" type="text">
                         <label for="globalHomebridgeConfigPath">Global Homebridge Config Directory Path</label>
                         <span class="translate">Global Homebridge Config Directory Path</span>

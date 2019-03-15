@@ -194,6 +194,18 @@ function createHam(options) {
             silly: adapter.log.silly
         };
         if (adapter.config.useGlobalHomebridge) {
+            if (adapter.config.enableEditorForGlobalHomebridge) {
+                // use ham cache dir like: iobroker-data/ham_0/
+                adapter.config.globalHomebridgeConfigPath = dataDir + adapter.namespace.replace('.', '_')
+                try {
+                    // some Plugins want to have config file
+                    // copy form https://github.com/Apollon77/homebridge-plugin-wrapper
+                    nodeFS.writeFileSync(adapter.config.globalHomebridgeConfigPath + path.sep + 'config.json', JSON.stringify(adapter.config.wrapperConfig));
+                }
+                catch (e) {
+                    adapter.log.warn(' Error writing ' + adapter.config.globalHomebridgeConfigPath + path.sep + 'config.json - Some Plugins may need that.');
+                }
+            }
             homebridgeHandler = require('./lib/global-handler');
             homebridgeHandler.init({
                 logger: usedLogger,
