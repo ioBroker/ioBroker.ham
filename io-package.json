@@ -172,16 +172,6 @@
             "Apollon77 <ingo@fischer-ka.de"
         ],
         "license": "MIT",
-        "docs": {
-            "en": "docs/en/admin.md",
-            "ru": "docs/ru/admin.md",
-            "de": "docs/de/admin.md",
-            "es": "docs/es/admin.md",
-            "it": "docs/it/admin.md",
-            "fr": "docs/fr/admin.md",
-            "nl": "docs/nl/admin.md",
-            "pt": "docs/pt/admin.md"
-        },
         "platform": "Javascript/Node.js",
         "mode": "daemon",
         "icon": "ham.png",
