@@ -169,7 +169,7 @@
         },
         "authors": [
             "Kirov Ilya <kirovilya@gmail.com>",
-            "Apollon77 <ingo@fischer-ka.de"
+            "Apollon77 <ingo@fischer-ka.de>"
         ],
         "license": "MIT",
         "platform": "Javascript/Node.js",
