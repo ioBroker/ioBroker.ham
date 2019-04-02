@@ -187,6 +187,8 @@
         "useGlobalHomebridge": false,
         "globalHomebridgeBasePath": "/usr/local/lib/node_modules/homebridge/",
         "globalHomebridgeConfigPath": "/home/pi/.homebridge/",
+        "useCustomHomebridgePluginPath": false,
+        "globalHomebridgePluginPath": "/usr/local/lib/node_modules/",
         "libraries": "",
         "ignoreInfoAccessoryServices": false,
         "insecureAccess": false,

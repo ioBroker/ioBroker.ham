@@ -199,6 +199,7 @@ function createHam(options) {
                 logger: usedLogger,
                 homebridgeBasePath: adapter.config.globalHomebridgeBasePath,
                 homebridgeConfigPath: adapter.config.globalHomebridgeConfigPath,
+                homebridgePluginPath: adapter.config.useCustomHomebridgePluginPath ? adapter.config.globalHomebridgePluginPath : null,
                 updateDev: updateDev,
                 updateChannel: updateChannel,
                 updateState: updateState,

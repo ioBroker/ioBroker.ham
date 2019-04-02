@@ -99,6 +99,14 @@
             }
         }).trigger('change');
 
+        $('#useCustomHomebridgePluginPath').on('change', function () {
+            if ($(this).prop('checked')) {
+                $('.globalHomebridgePlugin').show();
+            } else {
+                $('.globalHomebridgePlugin').hide();
+            }
+        }).trigger('change');
+        
         wrapperConfig = JSON.stringify(settings.wrapperConfig || '{}', null, 2);
 
         list2chips('.libraries', settings.libraries || '', onChange);
@@ -168,8 +176,8 @@
         <div class="row">
             <div class="col s12">
                 <ul class="tabs">
-                    <li class="tab col s4"><a href="#tab-main"  class="translate active">Main settings</a></li>
-                    <li class="tab col s4 tab-json"><a href="#tab-json"    class="translate">Configuration file</a></li>
+                    <li class="tab col s4"><a href="#tab-main"  class="translate active">Main Settings</a></li>
+                    <li class="tab col s4 tab-json"><a href="#tab-json" class="translate">Configuration File</a></li>
                 </ul>
             </div>
             <div id="tab-main" class="col s12 page">
@@ -189,15 +197,25 @@
                     </div>
                 </div>
                 <div class="row global">
-                    <div class="input-field col s12 m6 l4 xl3">
+                    <div class="input-field col s6">
                         <input class="value" id="globalHomebridgeBasePath" type="text">
-                        <label for="globalHomebridgeBasePath">Global Homebridge Path</label>
-                        <span class="translate">Global Homebridge Path</span>
+                        <label for="globalHomebridgeBasePath" class="translate">Global Homebridge Path</label>
+                        <!-- <span class="translate">Global Homebridge Path</span> -->
                     </div>
-                    <div class="input-field col s12 m6 l4 xl3">
+                    <div class="input-field col s6">
                         <input class="value" id="globalHomebridgeConfigPath" type="text">
-                        <label for="globalHomebridgeConfigPath">Global Homebridge Config Directory Path</label>
-                        <span class="translate">Global Homebridge Config Directory Path</span>
+                        <label for="globalHomebridgeConfigPath" class="translate">Global Homebridge Config Directory Path</label>
+                        <!-- <span class="translate">Global Homebridge Config Directory Path</span> -->
+                    </div>
+                </div>
+                <div class="row global">
+                    <div class="input-field col s4">
+                        <input id="useCustomHomebridgePluginPath" type="checkbox" class="value" />
+                        <span for="useCustomHomebridgePluginPath" class="translate">Use Custom Homebridge Plugin Path</span>
+                    </div>
+                    <div class="input-field col s8">
+                        <input id="globalHomebridgePluginPath" class="globalHomebridgePlugin value" type="text" />
+                        <label for="globalHomebridgePluginPath" class="globalHomebridgePlugin translate">Global Homebridge Plugin Directory Path</label>
                     </div>
                 </div>
                 <div class="row local">
@@ -209,8 +227,8 @@
                 <div class="row">
                     <div class="input-field col s4 ">
                         <input class="value" id="characteristicPollingInterval" type="number" min="0" max="1000000"/>
-                        <label for="characteristicPollingInterval">Value Polling Interval</label>
-                        <span class="translate">Value Polling Interval</span>
+                        <label for="characteristicPollingInterval" class="translate">Value Polling Interval</label>
+                        <!-- <span class="translate">Value Polling Interval</span> -->
                     </div>
                 </div>
             </div>
