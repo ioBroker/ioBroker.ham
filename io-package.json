@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "ham",
-        "version": "1.0.1",
+        "version": "1.0.2",
         "news": {
+            "1.0.2": {
+                "en": "Add custom Homebridge plugin path support in global mode",
+                "de": "Fügen Sie im globalen Modus eine benutzerdefinierte Homebridge-Plugin-Pfadunterstützung hinzu",
+                "ru": "Добавить пользовательскую поддержку пути плагина Homebridge в глобальном режиме",
+                "pt": "Adicionar suporte ao caminho do plug-in Homebridge personalizado no modo global",
+                "nl": "Voeg aangepaste Homebridge plug-in padondersteuning toe in de globale modus",
+                "fr": "Ajouter un support de chemin de plug-in Homebridge personnalisé en mode global",
+                "it": "Aggiungi il supporto del percorso del plugin Homebridge personalizzato in modalità globale",
+                "es": "Agregar soporte personalizado de ruta de complemento de Homebridge en modo global",
+                "pl": "Dodaj niestandardową obsługę ścieżki wtyczki Homebridge w trybie globalnym",
+                "zh-cn": "添加自定义插件路径支持"
+            },
             "1.0.1": {
                 "en": "Add Chinese support",
                 "de": "Chinesische Unterstützung hinzufügen",

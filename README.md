@@ -52,6 +52,9 @@ For this to work you need to provide the location of the systems global node-mod
 
 ## Changelog
 
+### 1.0.2 (2019-04-02)
+* (hang.yin) Add custom Homebridge plugin path support in global mode
+
 ### 1.0.1 (2019-01-16)
 * (SchumyHao) Add Chinese support
 
