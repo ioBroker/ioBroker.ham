@@ -224,12 +224,12 @@ function createHam(options) {
             });
         }
 
-        // in this template all states changes inside the adapters namespace are subscribed
-        adapter.subscribeStates('*');
-
         installLibraries(() => {
             loadExistingAccessories(() => {
                 homebridgeHandler.start();
+
+                // in this template all states changes inside the adapters namespace are subscribed
+                adapter.subscribeStates('*');
 
                 options.exitAfter && setTimeout(() => adapter && adapter.stop(), 10000);
             });
@@ -255,7 +255,7 @@ function createHam(options) {
         child.stderr.on('data', buf => adapter.log.error(buf.toString('utf8')));
 
         child.on('exit', (code /* , signal */) => {
-            if (code) {
+            if (code && code !== 1) {
                 adapter.log.error('Cannot install ' + npmLib + ': ' + code);
             }
             // command succeeded
@@ -271,7 +271,7 @@ function createHam(options) {
             for (let lib = 0; lib < libraries.length; lib++) {
                 if (libraries[lib] && libraries[lib].trim()) {
                     libraries[lib] = libraries[lib].trim();
-                    if (!nodeFS.existsSync(__dirname + '/node_modules/' + libraries[lib] + '/package.json')) {
+                    if (!nodeFS.existsSync(__dirname + '/node_modules/' + libraries[lib] + '/package.json') || adapter.config.updateLibraries) {
 
                         if (!attempts[libraries[lib]]) {
                             attempts[libraries[lib]] = 1;
@@ -289,6 +289,15 @@ function createHam(options) {
                     }
                 }
             }
+        }
+        if (adapter.config.updateLibraries) {
+            adapter.log.info('All NPM Modules got reinstalled/updated ... restarting ...');
+            adapter.extendForeignObject('system.adapter.' + adapter.namespace, {
+                native: {
+                    updateLibraries: false
+                }
+            });
+            return;
         }
         if (allInstalled) callback();
     }

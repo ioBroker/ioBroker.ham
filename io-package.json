@@ -1,7 +1,7 @@
 {
     "common": {
         "name": "ham",
-        "version": "1.0.1",
+        "version": "1.1.0",
         "news": {
             "1.0.1": {
                 "en": "Add Chinese support",
@@ -197,7 +197,8 @@
             ],
             "platforms": [
             ]
-        }
+        },
+        "updateLibraries": false
     },
     "objects": [
 

@@ -14,4 +14,16 @@ systemDictionary = {
     "Value Polling Interval": {                      "en": "Value Polling Interval (sec)",                    "de": "Wertabfrageintervall (sec)",                      "ru": "Интервал опроса значений (sec)",                  "pt": "Intervalo de Polling de Valor (sec)",             "nl": "Value Polling Interval (sec)",                    "fr": "Intervalle d'interrogation de valeur (sec)",      "it": "Intervallo di polling del valore (sec)",          "es": "Intervalo de interrogación de valor (sec)",       "pl": "Okres odpytywania wartości (sec)",                "zh-cn": "轮询间隔（秒）"},
     "useGlobalHomebridge": {                         "en": "Use global Homebridge",                           "de": "Verwenden Sie globale Homebridge",                "ru": "Использовать глобальный Homebridge",              "pt": "Use Homebridge global",                           "nl": "Gebruik wereldwijde Homebridge",                  "fr": "useGlobalHomebridge",                             "it": "Usa Homebridge globale",                          "es": "Utilice Global Homebridge",                       "pl": "Użyj globalnego rozwiązania Homebridge",          "zh-cn": "使用全局Homebridge"},
     "wrapperConfig": {                               "en": "Wrapper configuration",                           "de": "Wrapper-Konfiguration",                           "ru": "Конфигурация Wrapper",                            "pt": "Configuração do invólucro",                       "nl": "Wrapper-configuratie",                            "fr": "wrapperConfig",                                   "it": "Configurazione wrapper",                          "es": "Configuración del contenedor",                    "pl": "Konfiguracja opakowania",                         "zh-cn": "包装配置"},
+    "updateLibraries": {
+        "en": "Update Homebridge Plugins from NPM",
+        "de": "Aktualisieren Sie die Homebridge Plugins von NPM",
+        "ru": "Обновление плагинов Homebridge от NPM",
+        "pt": "Atualize Plugins Homebridge da NPM",
+        "nl": "Update Homebridge-plugins van NPM",
+        "fr": "Mettre à jour les plugins Homebridge à partir de NPM",
+        "it": "Aggiorna i plugin Homebridge da NPM",
+        "es": "Actualizar los complementos de Homebridge desde NPM",
+        "pl": "Zaktualizuj wtyczki Homebridge z NPM",
+        "zh-cn": "从NPM更新Homebridge插件"
+    }
 };

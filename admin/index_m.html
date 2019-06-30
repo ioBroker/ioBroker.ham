@@ -66,6 +66,7 @@
         if (!settings) return;
         if (settings.characteristicPollingInterval === undefined) settings.characteristicPollingInterval = 0;
         if (settings.insecureAccess === undefined) settings.insecureAccess = false;
+        if (settings.updateLibraries === undefined) settings.updateLibraries = false;
         $('.value').each(function () {
             var $key = $(this);
             var id = $key.attr('id');
@@ -204,6 +205,10 @@
                     <div class="col s12">
                         <label class="translate">Additional npm modules:</label>
                         <div class="chips libraries"></div>
+                    </div>
+                    <div class="input-field col s12 m6 l4 xl3">
+                        <input id="updateLibraries" type="checkbox" class="value" />
+                        <span for="updateLibraries" class="translate">updateLibraries</span>
                     </div>
                 </div>
                 <div class="row">

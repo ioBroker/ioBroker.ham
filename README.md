@@ -52,6 +52,10 @@ For this to work you need to provide the location of the systems global node-mod
 
 ## Changelog
 
+### 1.1.0 (2019-06-30) [WIP]
+* (Apollon77) Add option to update NPM modules in Admin
+* (Apollon77) Enhance NPM installation handling
+
 ### 1.0.1 (2019-01-16)
 * (SchumyHao) Add Chinese support
 

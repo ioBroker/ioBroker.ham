@@ -1,5 +1,5 @@
 {
-  "version": "1.0.1",
+  "version": "1.1.0",
   "name": "iobroker.ham",
   "author": {
     "name": "Apollon77",
@@ -24,9 +24,9 @@
   },
   "description": "Homebridge accessories manager",
   "devDependencies": {
-    "chai": "^4.1.2",
-    "gulp": "^4.0.0",
-    "mocha": "^6.1.0"
+    "chai": "^4.2.0",
+    "gulp": "^4.0.2",
+    "mocha": "^6.1.4"
   },
   "optionalDependencies": {},
   "homepage": "https://github.com/ioBroker/ioBroker.ham",
