@@ -185,6 +185,7 @@
     },
     "native": {
         "useGlobalHomebridge": false,
+        "useLocalHomebridge": false,
         "globalHomebridgeBasePath": "/usr/local/lib/node_modules/homebridge/",
         "globalHomebridgeConfigPath": "/home/pi/.homebridge/",
         "libraries": "",
@@ -198,7 +199,8 @@
             "platforms": [
             ]
         },
-        "updateLibraries": false
+        "updateLibraries": false,
+        "virtualCommandLine": ""
     },
     "objects": [
 

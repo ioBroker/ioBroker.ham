@@ -20,7 +20,8 @@
   ],
   "dependencies": {
     "homebridge-plugin-wrapper": "Apollon77/homebridge-plugin-wrapper",
-    "@iobroker/adapter-core": "^1.0.3"
+    "@iobroker/adapter-core": "^1.0.3",
+    "string-argv": "^0.3.0"
   },
   "description": "Homebridge accessories manager",
   "devDependencies": {

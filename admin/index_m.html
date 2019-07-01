@@ -67,6 +67,17 @@
         if (settings.characteristicPollingInterval === undefined) settings.characteristicPollingInterval = 0;
         if (settings.insecureAccess === undefined) settings.insecureAccess = false;
         if (settings.updateLibraries === undefined) settings.updateLibraries = false;
+        if (settings.useGlobalHomebridge === undefined) settings.useGlobalHomebridge = false;
+        if (settings.useLocalHomebridge === undefined) settings.useLocalHomebridge = false;
+
+        settings.homebridgeMode = 'wrapper';
+        if (settings.useGlobalHomebridge) {
+            settings.homebridgeMode = 'global';
+        }
+        else if (settings.useLocalHomebridge) {
+            settings.homebridgeMode = 'local';
+        }
+
         $('.value').each(function () {
             var $key = $(this);
             var id = $key.attr('id');
@@ -88,15 +99,17 @@
             initEditor(onChange);
         });
 
-        $('#useGlobalHomebridge').on('change', function () {
-            if ($(this).prop('checked')) {
-                $('.global').show();
-                $('.local').hide();
-                $('.tab-json').addClass('disabled');
-            } else {
-                $('.global').hide();
-                $('.local').show();
-                $('.tab-json').removeClass('disabled');
+        $('#homebridgeMode').on('change', function () {
+            switch ($(this).val()) {
+                case 'global':  $('.global').show();
+                                $('.local').hide();
+                                $('.tab-json').addClass('disabled');
+                                break;
+                case 'local':
+                case 'wrapper': $('.global').hide();
+                                $('.local').show();
+                                $('.tab-json').removeClass('disabled');
+                                break;
             }
         }).trigger('change');
 
@@ -159,6 +172,18 @@
         }
         obj.wrapperConfig = _obj;
 
+        switch (obj.homebridgeMode) {
+            case 'global':  obj.useGlobalHomebridge = true;
+                            obj.useLocalHomebridge = false;
+                            break;
+            case 'local':   obj.useGlobalHomebridge = false;
+                            obj.useLocalHomebridge = true;
+                            break;
+            case 'wrapper': obj.useGlobalHomebridge = false;
+                            obj.useLocalHomebridge = false;
+                            break;
+        }
+        delete obj.homebridgeMode;
         callback(obj);
     }
 </script>
@@ -170,7 +195,7 @@
             <div class="col s12">
                 <ul class="tabs">
                     <li class="tab col s4"><a href="#tab-main"  class="translate active">Main settings</a></li>
-                    <li class="tab col s4 tab-json"><a href="#tab-json"    class="translate">Configuration file</a></li>
+                    <li class="tab col s4 tab-json"><a href="#tab-json" class="translate">Configuration file</a></li>
                 </ul>
             </div>
             <div id="tab-main" class="col s12 page">
@@ -181,8 +206,12 @@
                 </div>
                 <div class="row">
                     <div class="input-field col s12 m6 l4 xl3">
-                        <input id="useGlobalHomebridge" type="checkbox" class="value" />
-                        <span for="useGlobalHomebridge" class="translate">useGlobalHomebridge</span>
+                        <select id="homebridgeMode" type="selection" class="value">
+                            <option value="wrapper" class="translate">selectOptionWrapper</option>
+                            <option value="global" class="translate">selectOptionGlobal</option>
+                            <option value="local" class="translate">selectOptionLocal</option>
+                        </select>
+                        <span for="homebridgeMode" class="translate">homebridgeMode</span>
                     </div>
                     <div class="input-field col s12 m6 l4 xl3">
                         <input id="insecureAccess" type="checkbox" class="value" />
@@ -216,6 +245,13 @@
                         <input class="value" id="characteristicPollingInterval" type="number" min="0" max="1000000"/>
                         <label for="characteristicPollingInterval">Value Polling Interval</label>
                         <span class="translate">Value Polling Interval</span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12 m6 l4 xl3">
+                        <input class="value" id="virtualCommandLine" type="text">
+                        <label for="virtualCommandLine">virtualCommandLine</label>
+                        <span class="translate">virtualCommandLine</span>
                     </div>
                 </div>
             </div>

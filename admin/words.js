@@ -25,5 +25,65 @@ systemDictionary = {
         "es": "Actualizar los complementos de Homebridge desde NPM",
         "pl": "Zaktualizuj wtyczki Homebridge z NPM",
         "zh-cn": "从NPM更新Homebridge插件"
+    },
+    "virtualCommandLine": {
+        "en": "Homebridge Command line parameters",
+        "de": "Homebridge Befehlszeilenparameter",
+        "ru": "Homebridge Параметры командной строки",
+        "pt": "Parâmetros da linha de comando do Homebridge",
+        "nl": "Homebridge opdrachtregelparameters",
+        "fr": "Paramètres de ligne de commande Homebridge",
+        "it": "Parametri della riga di comando di Homebridge",
+        "es": "Parámetros de línea de comandos de Homebridge",
+        "pl": "Parametry linii poleceń Homebridge",
+        "zh-cn": "Homebridge命令行参数"
+    },
+    "homebridgeMode": {
+        "en": "Homebridge Adapter Mode",
+        "de": "Homebridge-Adapter-Modus",
+        "ru": "Режим адаптера домашнего моста",
+        "pt": "Modo Adaptador Homebridge",
+        "nl": "Homebridge Adapter-modus",
+        "fr": "Mode adaptateur Homebridge",
+        "it": "Modalità adattatore Homebridge",
+        "es": "Modo de adaptador Homebridge",
+        "pl": "Tryb adaptera mostka domowego",
+        "zh-cn": "Homebridge适配器模式"
+    },
+    "selectOptionGlobal": {
+        "en": "Global Mode (start a compatible global installed Homebridge)",
+        "de": "Globaler Modus (Start eines kompatiblen global installierten Homebridge)",
+        "ru": "Глобальный режим (запуск совместимого глобального установленного Homebridge)",
+        "pt": "Modo Global (inicie um Homebridge global compatível e compatível)",
+        "nl": "Globale modus (start een compatibele, wereldwijd geïnstalleerde Homebridge)",
+        "fr": "Mode Global (démarrer un Homebridge global compatible installé)",
+        "it": "Modalità globale (avvia un Homebridge installato globale compatibile)",
+        "es": "Modo global (iniciar un homebridge global compatible instalado)",
+        "pl": "Tryb globalny (uruchom kompatybilny globalny zainstalowany Homebridge)",
+        "zh-cn": "全局模式（启动兼容的全球安装的Homebridge）"
+    },
+    "selectOptionWrapper": {
+        "en": "Wrapper Mode (just run Homebridge Plugins in ioBroker)",
+        "de": "Wrapper-Modus (nur Homebridge-Plugins in ioBroker ausführen)",
+        "ru": "Режим Wrapper (просто запустите плагины Homebridge в ioBroker)",
+        "pt": "Modo Wrapper (basta executar Plugins Homebridge no ioBroker)",
+        "nl": "Wrapper-modus (voer gewoon homebridge-plug-ins in ioBroker uit)",
+        "fr": "Mode Wrapper (il suffit de lancer les plugins Homebridge dans ioBroker)",
+        "it": "Modalità wrapper (basta eseguire i plugin Homebridge in ioBroker)",
+        "es": "Modo de contenedor (solo ejecute los complementos de Homebridge en ioBroker)",
+        "pl": "Tryb wrappera (wystarczy uruchomić wtyczki Homebridge w ioBroker)",
+        "zh-cn": "包装模式（只需在ioBroker中运行Homebridge插件）"
+    },
+    "selectOptionLocal": {
+        "en": "Local Mode (Install a local Homebridge in ioBroker as Bridge)",
+        "de": "Lokaler Modus (Installieren Sie eine lokale Homebridge in ioBroker als Bridge)",
+        "ru": "Локальный режим (установите локальный Homebridge в ioBroker как Bridge)",
+        "pt": "Modo Local (Instale um Homebridge local no ioBroker como Bridge)",
+        "nl": "Lokale modus (installeer een lokale Homebridge in ioBroker als Bridge)",
+        "fr": "Mode local (installer un Homebridge local dans ioBroker en tant que pont)",
+        "it": "Modalità locale (installa un Homebridge locale in ioBroker come Bridge)",
+        "es": "Modo local (instale un Homebridge local en ioBroker como puente)",
+        "pl": "Tryb lokalny (zainstaluj lokalny mostek domowy w ioBroker as Bridge)",
+        "zh-cn": "本地模式（在ioBroker中安装本地Homebridge作为Bridge）"
     }
 };

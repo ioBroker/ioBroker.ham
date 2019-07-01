@@ -9,6 +9,7 @@ const child_process = require('child_process');
 // you have to require the utils module and call adapter function
 const utils = require('@iobroker/adapter-core'); // Get common adapter utils
 const path    = require('path');
+const stringArgv = require('string-argv');
 
 // it is not an object.
 function createHam(options) {
@@ -20,7 +21,8 @@ function createHam(options) {
     const adapter = new utils.Adapter(options);
 
     let homebridgeHandler;
-    const attempts = {};
+    const npmLibrariesToInstall = [];
+    const installLocalHomebridgeVersion = '0.4.52';
 
     // is called when adapter shuts down - callback has to be called under any circumstances!
     adapter.on('unload', callback => {
@@ -193,12 +195,42 @@ function createHam(options) {
             debug: adapter.log.silly,
             silly: adapter.log.silly
         };
+        if (adapter.config.virtualCommandLine) {
+            stringArgv(adapter.config.virtualCommandLine).forEach(e => process.argv.push(e));
+        }
         if (adapter.config.useGlobalHomebridge) {
             homebridgeHandler = require('./lib/global-handler');
             homebridgeHandler.init({
                 logger: usedLogger,
                 homebridgeBasePath: adapter.config.globalHomebridgeBasePath,
                 homebridgeConfigPath: adapter.config.globalHomebridgeConfigPath,
+                updateDev: updateDev,
+                updateChannel: updateChannel,
+                updateState: updateState,
+                setState: setState,
+                ignoreInfoAccessoryServices: adapter.config.ignoreInfoAccessoryServices,
+                characteristicPollingInterval: adapter.config.characteristicPollingInterval * 1000,
+                insecureAccess: adapter.config.insecureAccess || false
+            });
+        }
+        else if (adapter.config.useLocalHomebridge) {
+            const configDir = dataDir + adapter.namespace.replace('.', '_');
+            try {
+                if (!nodeFs.existsSync(configDir)) {
+                    nodeFs.mkdirSync(configDir);
+                }
+                // some Plugins want to have config file
+                nodeFS.writeFileSync(path.join(configDir, 'config.json'), JSON.stringify(adapter.config.wrapperConfig));
+            }
+            catch (e) {
+                adapter.log.error('Error writing config file at ' + path.join(configDir, 'config.json') + ', but needed for local Mode to work! Exiting.');
+                return;
+            }
+            homebridgeHandler = require('./lib/global-handler');
+            homebridgeHandler.init({
+                logger: usedLogger,
+                homebridgeBasePath: __dirname + '/node_modules/homebridge/',
+                homebridgeConfigPath: configDir,
                 updateDev: updateDev,
                 updateChannel: updateChannel,
                 updateState: updateState,
@@ -224,14 +256,16 @@ function createHam(options) {
             });
         }
 
-        installLibraries(() => {
-            loadExistingAccessories(() => {
-                homebridgeHandler.start();
+        checkLocalMode(() => {
+            installAllLibraries(() => {
+                loadExistingAccessories(() => {
+                    homebridgeHandler.start();
 
-                // in this template all states changes inside the adapters namespace are subscribed
-                adapter.subscribeStates('*');
+                    // in this template all states changes inside the adapters namespace are subscribed
+                    adapter.subscribeStates('*');
 
-                options.exitAfter && setTimeout(() => adapter && adapter.stop(), 10000);
+                    options.exitAfter && setTimeout(() => adapter && adapter.stop(), 10000);
+                });
             });
         });
     }
@@ -257,49 +291,107 @@ function createHam(options) {
         child.on('exit', (code /* , signal */) => {
             if (code && code !== 1) {
                 adapter.log.error('Cannot install ' + npmLib + ': ' + code);
+                if (typeof callback === 'function') callback(new Error('Installation failed with code ' + code), npmLib);
+                return;
             }
             // command succeeded
-            if (typeof callback === 'function') callback(npmLib);
+            if (typeof callback === 'function') callback(null, npmLib);
         });
     }
 
+    function installNpmLibraryWithRetries(npmLib, callback, counter) {
+        if (counter === undefined) counter = 3;
+        if (counter === 0) {
+            callback && callback(new Error('Library ' + npmLib + ' not installed after 3 attempts'), npmLib);
+            return;
+        }
+        const libraryDir = npmLib.split('@')[0];
+        if (!nodeFS.existsSync(__dirname + '/node_modules/' + libraryDir + '/package.json') || adapter.config.updateLibraries) {
+
+            installNpm(npmLib, () => {
+                installNpmLibraryWithRetries(npmLib, callback, --counter)
+            });
+        }
+        else {
+            callback && callback(null, npmLib);
+        }
+    }
+
     function installLibraries(callback) {
-        let allInstalled = true;
+        if (! npmLibrariesToInstall.length) {
+            callback && callback();
+            return;
+        }
+
+        const lib = npmLibrariesToInstall[0];
+
+        installNpmLibraryWithRetries(lib, (err, npmLib) => {
+            if (err) {
+                adapter.log.error(err);
+            }
+            if (lib === npmLib) {
+                npmLibrariesToInstall.shift();
+                installLibraries(callback);
+            }
+        });
+    }
+
+    function installAllLibraries(callback) {
         if (adapter.config && adapter.config.libraries && !adapter.config.useGlobalHomebridge) {
-            const libraries = adapter.config.libraries.split(/[,;\s]+/);
+            adapter.config.libraries.split(/[,;\s]+/).forEach(e => npmLibrariesToInstall.push(e.trim()));
+        }
 
-            for (let lib = 0; lib < libraries.length; lib++) {
-                if (libraries[lib] && libraries[lib].trim()) {
-                    libraries[lib] = libraries[lib].trim();
-                    if (!nodeFS.existsSync(__dirname + '/node_modules/' + libraries[lib] + '/package.json') || adapter.config.updateLibraries) {
-
-                        if (!attempts[libraries[lib]]) {
-                            attempts[libraries[lib]] = 1;
-                        } else {
-                            attempts[libraries[lib]]++;
+        if (npmLibrariesToInstall.length) {
+            installLibraries(() => {
+                if (adapter.config.updateLibraries) {
+                    adapter.log.info('All NPM Modules got reinstalled/updated ... restarting ...');
+                    adapter.extendForeignObject('system.adapter.' + adapter.namespace, {
+                        native: {
+                            updateLibraries: false
                         }
-                        if (attempts[libraries[lib]] > 3) {
-                            adapter.log.error('Cannot install npm packet: ' + libraries[lib]);
-                            continue;
-                        }
-
-                        installNpm(libraries[lib], () => installLibraries(callback));
-                        allInstalled = false;
-                        break;
-                    }
+                    });
+                    return;
                 }
+                callback && callback();
+            });
+        }
+        callback && callback();
+    }
+
+    function checkLocalMode(callback) {
+        if (!adapter.config.useLocalHomebridge) {
+            callback && callback();
+            return;
+        }
+        let installHomebridge = false;
+
+        if (nodeFS.existsSync(__dirname + '/node_modules/homebridge/package.json')) {
+            let localHomebridgeVersion;
+            try {
+                localHomebridgeVersion = JSON.parse(nodeFS.readFileSync(__dirname + '/node_modules/homebridge/package.json'));
+            }
+            catch (err) {
+                localHomebridgeVersion = '0';
+            }
+            if (localHomebridgeVersion !== installLocalHomebridgeVersion) {
+                installHomebridge = true;
             }
         }
-        if (adapter.config.updateLibraries) {
-            adapter.log.info('All NPM Modules got reinstalled/updated ... restarting ...');
-            adapter.extendForeignObject('system.adapter.' + adapter.namespace, {
-                native: {
-                    updateLibraries: false
+        else {
+            installHomebridge = true;
+        }
+
+        if (installHomebridge || adapter.config.updateLibraries) {
+            installNpmLibraryWithRetries('homebridge@' + installLocalHomebridgeVersion, (err) => {
+                if (err) {
+                    adapter.log.error('Can not start in local Mode because Homebridge is not installed: ' + err);
+                    return;
                 }
+                callback && callback();
             });
             return;
         }
-        if (allInstalled) callback();
+        callback && callback();
     }
 
     return adapter;
