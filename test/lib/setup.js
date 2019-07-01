@@ -172,14 +172,14 @@ function checkIsControllerInstalled(cb, counter) {
             return;
         }
     } catch (err) {
-
+        console.log(err);
     }
 
     if (counter > 20) {
         console.log('checkIsControllerInstalled: Cannot install!');
         if (cb) cb('Cannot install');
     } else {
-        console.log('checkIsControllerInstalled: wait...');
+        console.log('checkIsControllerInstalled: wait... ' + counter);
         setTimeout(function() {
             checkIsControllerInstalled(cb, counter + 1);
         }, 1000);
