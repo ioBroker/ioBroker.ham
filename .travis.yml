@@ -22,7 +22,7 @@ before_script:
   - npm install -g homebridge-http-webhooks
   - npm install -g homebridge-sun-position
   - export NODE_GLOBAL_DIR=$(npm root -g)
-  - npm install winston@3.2.1
+  - npm install winston@2.3.1
   - 'npm install ioBroker/ioBroker.js-controller#1.5.x --production'
 addons:
   apt:
