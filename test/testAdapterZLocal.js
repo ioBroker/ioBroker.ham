@@ -104,11 +104,11 @@ describe('Test ' + adapterShortName + ' Local adapter', () => {
             config.native.wrapperConfig = {
                 "accessories": [
                     {
-                        "accessory" : "SunPosition",
-                        "name" : "Sun",
-                        "location" : {
-                            "lat" : 49.035924,
-                            "long" : 8.345736
+                        "accessory": "SunPosition",
+                        "name": "Sun",
+                        "location": {
+                            "lat": 49.035924,
+                            "long": 8.345736
                         }
                     }
                 ],
@@ -232,6 +232,7 @@ describe('Test ' + adapterShortName + ' Local adapter', () => {
                         ]
                     }
                 ]
+            };
 
             setup.setAdapterConfig(config.common, config.native);
 
