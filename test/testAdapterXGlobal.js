@@ -5,6 +5,7 @@ const expect = require('chai').expect;
 const setup  = require(__dirname + '/lib/setup');
 const request = require('request');
 const http = require('http');
+const path = require('path');
 
 let objects = null;
 let states  = null;
@@ -98,8 +99,8 @@ describe('Test ' + adapterShortName + ' Global adapter', () => {
             config.common.loglevel = 'debug';
 
             config.native.useGlobalHomebridge = true;
-            config.native.globalHomebridgeBasePath = process.env.NODE_GLOBAL_DIR + "/homebridge/";
-            config.native.globalHomebridgeConfigPath = __dirname + "/homebridge/";
+            config.native.globalHomebridgeBasePath = path.join(process.env.NODE_GLOBAL_DIR, 'homebridge');
+            config.native.globalHomebridgeConfigPath = path.join(__dirname, '/homebridge/');
             config.native.characteristicPollingInterval = 30;
 
             setup.setAdapterConfig(config.common, config.native);

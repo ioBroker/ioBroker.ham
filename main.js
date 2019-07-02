@@ -35,15 +35,15 @@ function createHam(options) {
         }
     });
 
-    process.on('SIGINT', () => homebridgeHandler.end());
+    process.on('SIGINT', () => homebridgeHandler && homebridgeHandler.end());
 
-    process.on('SIGTERM', () => homebridgeHandler.end());
+    process.on('SIGTERM', () => homebridgeHandler && homebridgeHandler.end());
 
     process.on('uncaughtException', err => {
         if (adapter && adapter.log) {
             adapter.log.warn('Exception: ' + err);
         }
-        homebridgeHandler.end();
+        homebridgeHandler && homebridgeHandler.end();
     });
 
     // is called if a subscribed state changes
