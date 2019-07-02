@@ -21,10 +21,6 @@ install:
   - bonjoursdksetup.exe /quiet
   - del bonjoursdksetup.exe
   - 'set BONJOUR_SDK_HOME=C:\Program Files\Bonjour SDK'
-  - npm install -g homebridge
-  - npm install -g homebridge-http-webhooks
-  - npm install -g homebridge-sun-position
-  - for /f "delims=" %%A in ('npm root -g') do set "NODE_GLOBAL_DIR=%%A"
   - npm install
   - npm install winston@3.2.1
   - 'npm install https://github.com/ioBroker/ioBroker.js-controller/tarball/master --production'
@@ -32,5 +28,21 @@ test_script:
   - echo %cd%
   - node --version
   - npm --version
-  - npm test
+  - node node_modules\mocha\bin\mocha test\testPackageFiles.js --exit
+  - node node_modules\mocha\bin\mocha test\testAdapterWrapperNoInfo.js --exit
+  - node node_modules\mocha\bin\mocha test\testAdapterWrapperWithInfo.js --exit
+  - rm tmp\node_modules\iobroker.ham\node_modules\homebridge-http-webhooks -r -fo
+  - rm tmp\node_modules\iobroker.ham\node_modules\homebridge-sun-position -r -fo
+  - node node_modules\mocha\bin\mocha test\testAdapterZLocal.js --exit
+  - ps: dir -dir tmp\node_modules\iobroker.ham\node_modules
+  - rm tmp\node_modules\iobroker.ham\node_modules\homebridge-http-webhooks -r -fo
+  - rm tmp\node_modules\iobroker.ham\node_modules\homebridge-sun-position -r -fo
+  - rm tmp\node_modules\iobroker.ham\node_modules\homebridge-http-webhooks -r -fo
+  - rm tmp\node_modules\iobroker.ham\node_modules\homebridge -r -fo
+  - npm install -g homebridge@0.4.50
+  - npm install -g homebridge-http-webhooks
+  - npm install -g homebridge-sun-position
+  - for /f "delims=" %%A in ('npm root -g') do set "NODE_GLOBAL_DIR=%%A"
+  - ps: dir -dir %NODE_GLOBAL_DIR%
+  - node node_modules\mocha\bin\mocha test\testAdapterXGlobal.js --exit
 build: 'off'
