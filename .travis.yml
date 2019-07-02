@@ -25,11 +25,11 @@ before_script:
   - npm install winston@2.3.1
   - 'npm install ioBroker/ioBroker.js-controller#1.5.x --production'
 script:
-  - node node_modules/mocha/bin/mocha testAdapterWrapperNoInfo.js --exit
-  - node node_modules/mocha/bin/mocha testAdapterWrapperWithInfo.js --exit
-  - node node_modules/mocha/bin/mocha testAdapterXGlobal.js --exit
-  - node node_modules/mocha/bin/mocha testAdapterZLocal.js --exit
-  - node node_modules/mocha/bin/mocha testPackageFiles.js --exit
+  - node node_modules/mocha/bin/mocha test/testAdapterWrapperNoInfo.js --exit
+  - node node_modules/mocha/bin/mocha test/testAdapterWrapperWithInfo.js --exit
+  - node node_modules/mocha/bin/mocha test/testAdapterXGlobal.js --exit
+  - node node_modules/mocha/bin/mocha test/testAdapterZLocal.js --exit
+  - node node_modules/mocha/bin/mocha test/testPackageFiles.js --exit
 addons:
   apt:
     sources:
