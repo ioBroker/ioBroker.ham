@@ -102,6 +102,15 @@ describe('Test ' + adapterShortName + ' Local adapter', () => {
             config.native.ignoreInfoAccessoryServices = true;
             config.native.characteristicPollingInterval = 30;
             config.native.wrapperConfig = {
+                "bridge": {
+                    "name": "Test-Bridge",
+                    "username": "EE:22:3D:E3:CE:30",
+                    "port": 61826,
+                    "pin": "031-45-156"
+                },
+
+                "description": "This is an example configuration file with one fake accessory and one fake platform. You can use this as a template for creating your own configuration file containing devices you actually own.",
+
                 "accessories": [
                     {
                         "accessory": "SunPosition",
