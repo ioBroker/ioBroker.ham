@@ -22,7 +22,7 @@ function createHam(options) {
 
     let homebridgeHandler;
     const npmLibrariesToInstall = [];
-    const installLocalHomebridgeVersion = '0.4.52';
+    const installLocalHomebridgeVersion = '0.4.50';
 
     // is called when adapter shuts down - callback has to be called under any circumstances!
     adapter.on('unload', callback => {
@@ -287,7 +287,7 @@ function createHam(options) {
         const child = child_process.exec(cmd);
 
         child.stdout.on('data', buf => adapter.log.info(buf.toString('utf8')));
-        child.stderr.on('data', buf => adapter.log.error(buf.toString('utf8')));
+        child.stderr.on('data', buf => adapter.log.info(buf.toString('utf8')));
 
         child.on('exit', (code /* , signal */) => {
             if (code && code !== 1) {
