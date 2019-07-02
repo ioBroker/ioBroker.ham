@@ -229,8 +229,8 @@ function createHam(options) {
                             // some Plugins want to have config file
                             nodeFS.writeFileSync(path.join(configDir, 'config.json'), JSON.stringify(adapter.config.wrapperConfig));
                         }
-                        catch (e) {
-                            adapter.log.error('Error writing config file at ' + path.join(configDir, 'config.json') + ', but needed for local Mode to work! Exiting.');
+                        catch (err) {
+                            adapter.log.error('Error writing config file at ' + path.join(configDir, 'config.json') + ', but needed for local Mode to work! Exiting: ' + err);
                             return;
                         }
                         homebridgeHandler = require('./lib/global-handler');
