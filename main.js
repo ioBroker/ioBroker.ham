@@ -205,6 +205,7 @@ function createHam(options) {
                     // in this template all states changes inside the adapters namespace are subscribed
                     adapter.subscribeStates('*');
 
+                    const configDir = dataDir + adapter.namespace.replace('.', '_');
                     if (adapter.config.useGlobalHomebridge) {
                         homebridgeHandler = require('./lib/global-handler');
                         homebridgeHandler.init({
@@ -221,10 +222,9 @@ function createHam(options) {
                         });
                     }
                     else if (adapter.config.useLocalHomebridge) {
-                        const configDir = dataDir + adapter.namespace.replace('.', '_');
                         try {
-                            if (!nodeFs.existsSync(configDir)) {
-                                nodeFs.mkdirSync(configDir);
+                            if (!nodeFS.existsSync(configDir)) {
+                                nodeFS.mkdirSync(configDir);
                             }
                             // some Plugins want to have config file
                             nodeFS.writeFileSync(path.join(configDir, 'config.json'), JSON.stringify(adapter.config.wrapperConfig));
@@ -251,7 +251,7 @@ function createHam(options) {
                         homebridgeHandler = require('./lib/wrapper-handler');
                         homebridgeHandler.init({
                             logger: usedLogger,
-                            homebridgeConfigPath: dataDir + adapter.namespace.replace('.', '_'),
+                            homebridgeConfigPath: configDir,
                             updateDev: updateDev,
                             updateChannel: updateChannel,
                             updateState: updateState,
