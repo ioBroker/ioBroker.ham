@@ -8,7 +8,7 @@ const nodeFS  = require('fs');
 const child_process = require('child_process');
 // you have to require the utils module and call adapter function
 const utils = require('@iobroker/adapter-core'); // Get common adapter utils
-const path    = require('path');
+const path = require('path');
 const stringArgv = require('string-argv');
 
 // it is not an object.
@@ -272,17 +272,17 @@ function createHam(options) {
     }
 
     function installNpm(npmLib, callback) {
-        const path = __dirname;
+        const localPath = __dirname;
         if (typeof npmLib === 'function') {
             callback = npmLib;
             npmLib = undefined;
         }
 
-        if (!nodeFS.existsSync(path.join(path, 'node_modules'))) {
-            nodeFS.mkdirSync(path.join(path, 'node_modules'));
+        if (!nodeFS.existsSync(path.join(localPath, 'node_modules'))) {
+            nodeFS.mkdirSync(path.join(localPath, 'node_modules'));
         }
 
-        const cmd = 'npm install ' + npmLib + ' --production --prefix "' + path + '"';
+        const cmd = 'npm install ' + npmLib + ' --production --prefix "' + localPath + '" -g';
         adapter.log.info(cmd + ' (System call)');
         // Install node modules as system call
 
