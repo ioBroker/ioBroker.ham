@@ -207,6 +207,7 @@ function createHam(options) {
 
                     const configDir = dataDir + adapter.namespace.replace('.', '_');
                     if (adapter.config.useGlobalHomebridge) {
+                        adapter.log.debug('Use Global Homebridge Path: ' + adapter.config.globalHomebridgeBasePath);
                         homebridgeHandler = require('./lib/global-handler');
                         homebridgeHandler.init({
                             logger: usedLogger,
