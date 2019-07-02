@@ -99,7 +99,7 @@ describe('Test ' + adapterShortName + ' Local adapter', () => {
 
             config.native.useLocalHomebridge = true;
             config.native.libraries = "homebridge-http-webhooks homebridge-sun-position";
-            config.native.ignoreInfoAccessoryServices = true;
+            config.native.ignoreInfoAccessoryServices = false;
             config.native.characteristicPollingInterval = 30;
             config.native.wrapperConfig = {
                 "bridge": {
