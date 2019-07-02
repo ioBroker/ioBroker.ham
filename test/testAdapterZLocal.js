@@ -279,8 +279,8 @@ describe('Test ' + adapterShortName + ' Local adapter', () => {
     }).timeout(60000);
 
     it('Test ' + adapterShortName + ' Wrapper adapter: Wait for init', done => {
-        setTimeout(() => done(), 20000);
-    }).timeout(60000);
+        setTimeout(() => done(), 60000);
+    }).timeout(70000);
 
     it('Test ' + adapterShortName + ' Wrapper: Verify Init', done => {
         states.getState(adapterShortName + '.0.Switch-name-1.Switch-name-1.On', (err, state) => {

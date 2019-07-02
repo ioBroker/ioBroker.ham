@@ -27,6 +27,7 @@ script:
   - rm -rf tmp/node_modules/iobroker.ham/node_modules/homebridge-http-webhooks
   - rm -rf tmp/node_modules/iobroker.ham/node_modules/homebridge-sun-position
   - node node_modules/mocha/bin/mocha test/testAdapterZLocal.js --exit
+  - find tmp/node_modules/iobroker.ham/node_modules -type d
   - rm -rf tmp/node_modules/iobroker.ham/node_modules/homebridge-http-webhooks
   - rm -rf tmp/node_modules/iobroker.ham/node_modules/homebridge-sun-position
   - rm -rf tmp/node_modules/iobroker.ham/node_modules/homebridge-http-webhooks
@@ -35,6 +36,7 @@ script:
   - npm install -g homebridge-http-webhooks
   - npm install -g homebridge-sun-position
   - export NODE_GLOBAL_DIR=$(npm root -g)
+  - find $NODE_GLOBAL_DIR -type d
   - node node_modules/mocha/bin/mocha test/testAdapterXGlobal.js --exit
 addons:
   apt:
