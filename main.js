@@ -358,6 +358,7 @@ function createHam(options) {
                 adapter.log.info('All Libraries installed/updated');
                 callback && callback();
             });
+            return;
         }
         adapter.log.info('No additional Libraries to install ...');
         callback && callback();
