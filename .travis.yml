@@ -24,6 +24,12 @@ before_script:
   - export NODE_GLOBAL_DIR=$(npm root -g)
   - npm install winston@2.3.1
   - 'npm install ioBroker/ioBroker.js-controller#1.5.x --production'
+script:
+  - node node_modules/mocha/bin/mocha testAdapterWrapperNoInfo.js --exit
+  - node node_modules/mocha/bin/mocha testAdapterWrapperWithInfo.js --exit
+  - node node_modules/mocha/bin/mocha testAdapterXGlobal.js --exit
+  - node node_modules/mocha/bin/mocha testAdapterZLocal.js --exit
+  - node node_modules/mocha/bin/mocha testPackageFiles.js --exit
 addons:
   apt:
     sources:
