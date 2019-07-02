@@ -278,6 +278,10 @@ function createHam(options) {
             npmLib = undefined;
         }
 
+        if (!nodeFS.existsSync(path.join(path, 'node_modules'))) {
+            nodeFS.mkdirSync(path.join(path, 'node_modules'));
+        }
+
         const cmd = 'npm install ' + npmLib + ' --production --prefix "' + path + '"';
         adapter.log.info(cmd + ' (System call)');
         // Install node modules as system call
