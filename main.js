@@ -307,7 +307,7 @@ function createHam(options) {
             return;
         }
         const libraryDir = npmLib.split('@')[0];
-        if (!nodeFS.existsSync(__dirname + '/node_modules/' + libraryDir + '/package.json') || adapter.config.updateLibraries) {
+        if (!nodeFS.existsSync(__dirname + '/node_modules/' + libraryDir + '/package.json') || (adapter.config.updateLibraries && counter === 3)) {
 
             installNpm(npmLib, () => {
                 installNpmLibraryWithRetries(npmLib, callback, --counter)
@@ -325,6 +325,7 @@ function createHam(options) {
         }
 
         const lib = npmLibrariesToInstall[0];
+        adapter.log.info('Install/Update ' + lib);
 
         installNpmLibraryWithRetries(lib, (err, npmLib) => {
             if (err) {
@@ -343,6 +344,7 @@ function createHam(options) {
         }
 
         if (npmLibrariesToInstall.length) {
+            adapter.log.info('Install/Update the following Libraries: ' + npmLibrariesToInstall.join(', '));
             installLibraries(() => {
                 if (adapter.config.updateLibraries) {
                     adapter.log.info('All NPM Modules got reinstalled/updated ... restarting ...');
@@ -353,9 +355,11 @@ function createHam(options) {
                     });
                     return;
                 }
+                adapter.log.info('All Libraries installed/updated');
                 callback && callback();
             });
         }
+        adapter.log.info('No additional Libraries to install ...');
         callback && callback();
     }
 
@@ -383,10 +387,14 @@ function createHam(options) {
         }
 
         if (installHomebridge || adapter.config.updateLibraries) {
+            adapter.log.info('Need to install/update homebridge@' + installLocalHomebridgeVersion);
             installNpmLibraryWithRetries('homebridge@' + installLocalHomebridgeVersion, (err) => {
                 if (err) {
                     adapter.log.error('Can not start in local Mode because Homebridge is not installed: ' + err);
                     return;
+                }
+                else {
+                    adapter.log.debug('Install/Update homebridge done');
                 }
                 callback && callback();
             });
