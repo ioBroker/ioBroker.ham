@@ -196,7 +196,7 @@ function createHam(options) {
             silly: adapter.log.silly
         };
         if (adapter.config.virtualCommandLine) {
-            stringArgv(adapter.config.virtualCommandLine).forEach(e => process.argv.push(e));
+            stringArgv.parseArgsStringToArgv(adapter.config.virtualCommandLine).forEach(e => process.argv.push(e));
         }
 
         checkLocalMode(() => {
