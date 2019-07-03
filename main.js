@@ -233,7 +233,7 @@ function createHam(options) {
                     homebridgeHandler = require('./lib/global-handler');
                     homebridgeHandler.init({
                         logger: usedLogger,
-                        homebridgeBasePath: __dirname + '/node_modules/homebridge/',
+                        homebridgeBasePath: path.join(__dirname, 'node_modules', 'homebridge'),
                         homebridgeConfigPath: configDir,
                         updateDev: updateDev,
                         updateChannel: updateChannel,
