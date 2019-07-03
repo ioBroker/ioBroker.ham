@@ -201,68 +201,68 @@ function createHam(options) {
 
         checkLocalMode(() => {
             installAllLibraries(() => {
+                const configDir = dataDir + adapter.namespace.replace('.', '_');
+                if (adapter.config.useGlobalHomebridge) {
+                    adapter.log.debug('Use Global Homebridge Path: ' + adapter.config.globalHomebridgeBasePath);
+                    homebridgeHandler = require('./lib/global-handler');
+                    homebridgeHandler.init({
+                        logger: usedLogger,
+                        homebridgeBasePath: adapter.config.globalHomebridgeBasePath,
+                        homebridgeConfigPath: adapter.config.globalHomebridgeConfigPath,
+                        updateDev: updateDev,
+                        updateChannel: updateChannel,
+                        updateState: updateState,
+                        setState: setState,
+                        ignoreInfoAccessoryServices: adapter.config.ignoreInfoAccessoryServices,
+                        characteristicPollingInterval: adapter.config.characteristicPollingInterval * 1000,
+                        insecureAccess: adapter.config.insecureAccess || false
+                    });
+                }
+                else if (adapter.config.useLocalHomebridge) {
+                    try {
+                        if (!nodeFS.existsSync(configDir)) {
+                            nodeFS.mkdirSync(configDir);
+                        }
+                        // some Plugins want to have config file
+                        nodeFS.writeFileSync(path.join(configDir, 'config.json'), JSON.stringify(adapter.config.wrapperConfig));
+                    }
+                    catch (err) {
+                        adapter.log.error('Error writing config file at ' + path.join(configDir, 'config.json') + ', but needed for local Mode to work! Exiting: ' + err);
+                        return;
+                    }
+                    homebridgeHandler = require('./lib/global-handler');
+                    homebridgeHandler.init({
+                        logger: usedLogger,
+                        homebridgeBasePath: __dirname + '/node_modules/homebridge/',
+                        homebridgeConfigPath: configDir,
+                        updateDev: updateDev,
+                        updateChannel: updateChannel,
+                        updateState: updateState,
+                        setState: setState,
+                        ignoreInfoAccessoryServices: adapter.config.ignoreInfoAccessoryServices,
+                        characteristicPollingInterval: adapter.config.characteristicPollingInterval * 1000,
+                        insecureAccess: adapter.config.insecureAccess || false
+                    });
+                }
+                else {
+                    homebridgeHandler = require('./lib/wrapper-handler');
+                    homebridgeHandler.init({
+                        logger: usedLogger,
+                        homebridgeConfigPath: configDir,
+                        updateDev: updateDev,
+                        updateChannel: updateChannel,
+                        updateState: updateState,
+                        setState: setState,
+                        wrapperConfig: adapter.config.wrapperConfig,
+                        ignoreInfoAccessoryServices: adapter.config.ignoreInfoAccessoryServices,
+                        characteristicPollingInterval: adapter.config.characteristicPollingInterval * 1000,
+                        insecureAccess: adapter.config.insecureAccess || false
+                    });
+                }
+
                 loadExistingAccessories(() => {
                     // in this template all states changes inside the adapters namespace are subscribed
                     adapter.subscribeStates('*');
-
-                    const configDir = dataDir + adapter.namespace.replace('.', '_');
-                    if (adapter.config.useGlobalHomebridge) {
-                        adapter.log.debug('Use Global Homebridge Path: ' + adapter.config.globalHomebridgeBasePath);
-                        homebridgeHandler = require('./lib/global-handler');
-                        homebridgeHandler.init({
-                            logger: usedLogger,
-                            homebridgeBasePath: adapter.config.globalHomebridgeBasePath,
-                            homebridgeConfigPath: adapter.config.globalHomebridgeConfigPath,
-                            updateDev: updateDev,
-                            updateChannel: updateChannel,
-                            updateState: updateState,
-                            setState: setState,
-                            ignoreInfoAccessoryServices: adapter.config.ignoreInfoAccessoryServices,
-                            characteristicPollingInterval: adapter.config.characteristicPollingInterval * 1000,
-                            insecureAccess: adapter.config.insecureAccess || false
-                        });
-                    }
-                    else if (adapter.config.useLocalHomebridge) {
-                        try {
-                            if (!nodeFS.existsSync(configDir)) {
-                                nodeFS.mkdirSync(configDir);
-                            }
-                            // some Plugins want to have config file
-                            nodeFS.writeFileSync(path.join(configDir, 'config.json'), JSON.stringify(adapter.config.wrapperConfig));
-                        }
-                        catch (err) {
-                            adapter.log.error('Error writing config file at ' + path.join(configDir, 'config.json') + ', but needed for local Mode to work! Exiting: ' + err);
-                            return;
-                        }
-                        homebridgeHandler = require('./lib/global-handler');
-                        homebridgeHandler.init({
-                            logger: usedLogger,
-                            homebridgeBasePath: __dirname + '/node_modules/homebridge/',
-                            homebridgeConfigPath: configDir,
-                            updateDev: updateDev,
-                            updateChannel: updateChannel,
-                            updateState: updateState,
-                            setState: setState,
-                            ignoreInfoAccessoryServices: adapter.config.ignoreInfoAccessoryServices,
-                            characteristicPollingInterval: adapter.config.characteristicPollingInterval * 1000,
-                            insecureAccess: adapter.config.insecureAccess || false
-                        });
-                    }
-                    else {
-                        homebridgeHandler = require('./lib/wrapper-handler');
-                        homebridgeHandler.init({
-                            logger: usedLogger,
-                            homebridgeConfigPath: configDir,
-                            updateDev: updateDev,
-                            updateChannel: updateChannel,
-                            updateState: updateState,
-                            setState: setState,
-                            wrapperConfig: adapter.config.wrapperConfig,
-                            ignoreInfoAccessoryServices: adapter.config.ignoreInfoAccessoryServices,
-                            characteristicPollingInterval: adapter.config.characteristicPollingInterval * 1000,
-                            insecureAccess: adapter.config.insecureAccess || false
-                        });
-                    }
 
                     homebridgeHandler.start();
 

@@ -53,10 +53,10 @@ For this to work you need to provide the location of the systems global node-mod
 ## Changelog
 
 ### 1.1.0 (2019-06-30) [WIP]
-* (Apollon77) Add option to update NPM modules in Admin
+* (Apollon77) Add option to update NPM modules in Admin. Reinstall will happen after saving settings
 * (Apollon77) Enhance NPM installation handling
 * (Apollon77) Allow to specify special version of homebridge NPM packages using name@version
-* (Apollon77) Allow to specify homebridge command line options. They will be added to the command line arguments (Some plugins need that or special features are only availabel with it)
+* (Apollon77) Allow to specify homebridge command line options. They will be added to the command line arguments (Some plugins need that or special features are only available with it)
 * (Apollon77) Add "Local" mode that installs an own homebridge and run it as bridge
 
 ### 1.0.1 (2019-01-16)

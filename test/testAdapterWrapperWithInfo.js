@@ -98,6 +98,7 @@ describe('Test ' + adapterShortName + ' Wrapper adapter With-AccessoryInfo', () 
             //config.native.globalHomebridgeConfigPath = __dirname + "/homebridge/";
             config.native.libraries = "homebridge-http-webhooks homebridge-sun-position";
             config.native.ignoreInfoAccessoryServices = false;
+            config.native.updateLibraries = true;
             config.native.wrapperConfig = {
                 "accessories": [
             		{
