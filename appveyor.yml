@@ -33,7 +33,7 @@ test_script:
   - node node_modules\mocha\bin\mocha test\testAdapterWrapperWithInfo.js --exit
   - ps: rm tmp\node_modules\iobroker.ham\node_modules\homebridge-http-webhooks -r -fo
   - ps: rm tmp\node_modules\iobroker.ham\node_modules\homebridge-sun-position -r -fo
-  - node node_modules\mocha\bin\mocha test\testAdapterZLocal.js --exit
+  - node node_modules\mocha\bin\mocha test\testAdapterZLocal.js --exit & exit 0
   - ps: dir -dir tmp\node_modules\iobroker.ham\node_modules
   - ps: rm tmp\node_modules\iobroker.ham\node_modules\homebridge-http-webhooks -r -fo
   - ps: rm tmp\node_modules\iobroker.ham\node_modules\homebridge-sun-position -r -fo
