@@ -18,8 +18,8 @@ before_script:
   - export NPMVERSION=$(echo "$($(which npm) -v)"|cut -c1)
   - 'if [[ $NPMVERSION == 5 ]]; then npm install -g npm@5; fi'
   - npm -v
-  - npm install winston@2.3.1
-  - 'npm install ioBroker/ioBroker.js-controller#1.5.x --production'
+  - npm install winston@3.2.1
+  - 'npm install https://github.com/ioBroker/ioBroker.js-controller/tarball/master --production'
 script:
   - node node_modules/mocha/bin/mocha test/testPackageFiles.js --exit
   - node node_modules/mocha/bin/mocha test/testAdapterWrapperNoInfo.js --exit
@@ -27,7 +27,6 @@ script:
   - rm -rf tmp/node_modules/iobroker.ham/node_modules/homebridge-http-webhooks
   - rm -rf tmp/node_modules/iobroker.ham/node_modules/homebridge-sun-position
   - node node_modules/mocha/bin/mocha test/testAdapterZLocal.js --exit
-  - find tmp/node_modules/iobroker.ham/node_modules -type d
   - rm -rf tmp/node_modules/iobroker.ham/node_modules/homebridge-http-webhooks
   - rm -rf tmp/node_modules/iobroker.ham/node_modules/homebridge-sun-position
   - rm -rf tmp/node_modules/iobroker.ham/node_modules/homebridge-http-webhooks
@@ -36,7 +35,6 @@ script:
   - npm install -g homebridge-http-webhooks
   - npm install -g homebridge-sun-position
   - export NODE_GLOBAL_DIR=$(npm root -g)
-  - find $NODE_GLOBAL_DIR -type d
   - node node_modules/mocha/bin/mocha test/testAdapterXGlobal.js --exit
 addons:
   apt:
