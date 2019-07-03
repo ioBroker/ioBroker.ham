@@ -38,7 +38,7 @@ test_script:
   - ps: dir -dir tmp\node_modules\iobroker.ham\node_modules\homebridge\node_modules
   - ps: rm tmp\node_modules\iobroker.ham\node_modules\homebridge-http-webhooks -r -fo
   - ps: rm tmp\node_modules\iobroker.ham\node_modules\homebridge-sun-position -r -fo
-  - ps: rm tmp\node_modules\iobroker.ham\node_modules\homebridge -r -fo & exit 0
+  - ps: rm tmp\node_modules\iobroker.ham\node_modules\homebridge -r -fo
   - npm install -g homebridge@0.4.50
   - npm install -g homebridge-http-webhooks
   - npm install -g homebridge-sun-position
