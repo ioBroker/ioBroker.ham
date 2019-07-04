@@ -201,9 +201,17 @@ function createHam(options) {
 
         checkLocalMode(() => {
             installAllLibraries(() => {
-                const configDir = dataDir + adapter.namespace.replace('.', '_');
+                const configDir = path.join(dataDir, adapter.namespace.replace('.', '_'));
                 if (adapter.config.useGlobalHomebridge) {
                     adapter.log.debug('Use Global Homebridge Path: ' + adapter.config.globalHomebridgeBasePath);
+                    let nodePathEnv = process.env.NODE_PATH;
+                    if (!nodePathEnv) {
+                        nodePathEnv = adapter.config.globalHomebridgeBasePath;
+                    }
+                    else {
+                        nodePathEnv = adapter.config.globalHomebridgeBasePath + (process.platform === 'win32' ? ';' : ':') + nodePathEnv;
+                    }
+                    process.env.NODE_PATH = nodePathEnv;
                     homebridgeHandler = require('./lib/global-handler');
                     homebridgeHandler.init({
                         logger: usedLogger,
@@ -369,11 +377,38 @@ function createHam(options) {
         callback && callback();
     }
 
+    function deleteFolderRecursive(path) {
+        if (fs.existsSync(path)) {
+            fs.readdirSync(path).forEach(function(file){
+                const curPath = path.join(path, file);
+                if (fs.lstatSync(curPath).isDirectory()) { // recurse
+                    deleteFolderRecursive(curPath);
+                } else { // delete file
+                    fs.unlinkSync(curPath);
+                }
+            });
+            fs.rmdirSync(path);
+        }
+    }
+
     function checkLocalMode(callback) {
         if (!adapter.config.useLocalHomebridge) {
             callback && callback();
             return;
         }
+        if (fs.existsSync(path.join(dataDir, adapter.namespace.replace('.', '_'), 'config.json'))) {
+            try {
+                const formerConfig = require(path.join(dataDir, adapter.namespace.replace('.', '_'), 'config.json'));
+                if (formerConfig && formerConfig.bridge && formerConfig.bridge.username && adapter.config.wrapperConfig && adapter.config.wrapperConfig.bridge && adapter.config.wrapperConfig.bridge.username && adapter.config.wrapperConfig.bridge.username !== formerConfig.bridge.username) {
+                    adapter.log.info('remove homebridge cache directory because Bridge username changed!');
+                    deleteFolderRecursive(path.join(dataDir, adapter.namespace.replace('.', '_')));
+                }
+            }
+            catch (err) {
+                adapter.log.error('Error while checking former homebridge config: ' + err);
+            }
+        }
+
         let installHomebridge = false;
 
         if (nodeFS.existsSync(__dirname + '/node_modules/homebridge/package.json')) {
