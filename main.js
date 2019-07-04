@@ -27,8 +27,9 @@ function createHam(options) {
     // is called when adapter shuts down - callback has to be called under any circumstances!
     adapter.on('unload', callback => {
         try {
-            adapter.log.info('cleaned everything up...');
-            homebridgeHandler.end();
+            console.log('cleaned everything up...');
+            adapter && adapter.log && adapter.log.info('cleaned everything up...');
+            homebridgeHandler && homebridgeHandler.end();
             callback();
         } catch (e) {
             callback();
