@@ -99,7 +99,7 @@ describe('Test ' + adapterShortName + ' Global adapter', () => {
             config.common.loglevel = 'debug';
 
             config.native.useGlobalHomebridge = true;
-            config.native.globalHomebridgeBasePath = path.join(process.env.NODE_GLOBAL_DIR, 'homebridge');
+            config.native.globalHomebridgeBasePath = process.env.NODE_GLOBAL_DIR;
             config.native.globalHomebridgeConfigPath = path.join(__dirname, '/homebridge/');
             config.native.characteristicPollingInterval = 30;
 

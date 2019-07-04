@@ -211,6 +211,7 @@ function createHam(options) {
                     else {
                         nodePathEnv = adapter.config.globalHomebridgeBasePath + (process.platform === 'win32' ? ';' : ':') + nodePathEnv;
                     }
+                    nodePathEnv = path.join(adapter.config.globalHomebridgeBasePath, '..') + (process.platform === 'win32' ? ';' : ':') + nodePathEnv;
                     process.env.NODE_PATH = nodePathEnv;
                     homebridgeHandler = require('./lib/global-handler');
                     homebridgeHandler.init({
