@@ -379,16 +379,16 @@ function createHam(options) {
     }
 
     function deleteFolderRecursive(path) {
-        if (fs.existsSync(path)) {
-            fs.readdirSync(path).forEach(function(file){
+        if (nodeFS.existsSync(path)) {
+            nodeFS.readdirSync(path).forEach(function(file){
                 const curPath = path.join(path, file);
-                if (fs.lstatSync(curPath).isDirectory()) { // recurse
+                if (nodeFS.lstatSync(curPath).isDirectory()) { // recurse
                     deleteFolderRecursive(curPath);
                 } else { // delete file
-                    fs.unlinkSync(curPath);
+                    nodeFS.unlinkSync(curPath);
                 }
             });
-            fs.rmdirSync(path);
+            nodeFS.rmdirSync(path);
         }
     }
 
@@ -397,7 +397,7 @@ function createHam(options) {
             callback && callback();
             return;
         }
-        if (fs.existsSync(path.join(dataDir, adapter.namespace.replace('.', '_'), 'config.json'))) {
+        if (nodeFS.existsSync(path.join(dataDir, adapter.namespace.replace('.', '_'), 'config.json'))) {
             try {
                 const formerConfig = require(path.join(dataDir, adapter.namespace.replace('.', '_'), 'config.json'));
                 if (formerConfig && formerConfig.bridge && formerConfig.bridge.username && adapter.config.wrapperConfig && adapter.config.wrapperConfig.bridge && adapter.config.wrapperConfig.bridge.username && adapter.config.wrapperConfig.bridge.username !== formerConfig.bridge.username) {
