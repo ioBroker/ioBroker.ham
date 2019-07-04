@@ -6,7 +6,7 @@ var path          = require('path');
 var child_process = require('child_process');
 var rootDir       = path.normalize(__dirname + '/../../');
 var pkg           = require(rootDir + 'package.json');
-var debug         = typeof v8debug === 'object';
+var debug         = true; //typeof v8debug === 'object';
 pkg.main = pkg.main || 'main.js';
 
 var adapterName = path.normalize(rootDir).replace(/\\/g, '/').split('/');
