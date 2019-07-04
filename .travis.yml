@@ -24,9 +24,9 @@ script:
   - ls -la iobroker-data/
   - node node_modules/mocha/bin/mocha test/testPackageFiles.js --exit
   - node node_modules/mocha/bin/mocha test/testAdapterWrapperNoInfo.js --exit
-  - find . -type d
+  - ls -la tmp/node_modules/iobroker.ham/main.js
   - node node_modules/mocha/bin/mocha test/testAdapterWrapperWithInfo.js --exit
-  - find . -type d
+  - ls -la tmp/node_modules/iobroker.ham/main.js
   - rm -rf tmp/node_modules/iobroker.ham/node_modules/homebridge-http-webhooks
   - rm -rf tmp/node_modules/iobroker.ham/node_modules/homebridge-sun-position
   - node node_modules/mocha/bin/mocha test/testAdapterZLocal.js --exit
