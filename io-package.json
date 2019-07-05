@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "ham",
-        "version": "1.1.0",
+        "version": "1.1.1",
         "news": {
+            "1.1.1": {
+                "en": "used homebridge to 0.4.50 updated, local mode added, plugin updates possible, install special plugin versions added, specify command line options added",
+                "de": "Homebridge auf 0.4.50 aktualisiert, lokaler Modus hinzugefügt, Plugin-Updates möglich, Installation spezieller Plugin-Versionen hinzugefügt, Befehlszeilenoptionen hinzugefügt",
+                "ru": "используется homebridge до версии 0.4.50, добавлен локальный режим, возможно обновление плагинов, добавлены специальные версии плагинов, указаны опции командной строки",
+                "pt": "usou o homebridge para 0.4.50 atualizado, modo local adicionado, atualizações de plug-in possíveis, instalar versões de plug-ins especiais adicionadas, especificar opções de linha de comando adicionadas",
+                "nl": "gebruikte homebridge naar 0.4.50 bijgewerkt, lokale modus toegevoegd, plug-in updates mogelijk, installeer speciale plug-in versies toegevoegd, specificeer commandoregel-opties toegevoegd",
+                "fr": "homebridge utilisé à la version 0.4.50 mise à jour, mode local ajouté, mises à jour de plugins possibles, installation de versions de plugins spéciales ajoutées, spécification d'options de ligne de commande ajoutées",
+                "it": "usato homebridge a 0.4.50 aggiornato, modalità locale aggiunta, aggiornamenti di plugin possibili, installazione di versioni di plugin speciali aggiunte, specificate le opzioni di riga di comando aggiunte",
+                "es": "usó homebridge a 0.4.50 actualizado, se agregó el modo local, es posible que se actualicen los complementos, instale versiones especiales del complemento agregado, especifique las opciones de línea de comandos agregadas",
+                "pl": "użyto homebridge do wersji 0.4.50, dodano tryb lokalny, możliwe aktualizacje wtyczek, zainstalowano specjalne wersje wtyczek, dodano opcje wiersza poleceń",
+                "zh-cn": "使用homebridge更新0.4.50，添加本地模式，插件更新可能，安装添加的特殊插件版本，指定添加的命令行选项"
+            },
             "1.0.1": {
                 "en": "Add Chinese support",
                 "de": "Chinesische Unterstützung hinzufügen",

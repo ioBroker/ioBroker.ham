@@ -52,7 +52,7 @@ For this to work you need to provide the location of the systems global node-mod
 
 ## Changelog
 
-### 1.1.0 (2019-06-30) [WIP]
+### 1.1.1 (2019-07-05)
 * (Apollon77) Add option to update NPM modules in Admin. Reinstall will happen after saving settings
 * (Apollon77) Enhance NPM installation handling
 * (Apollon77) Allow to specify special version of homebridge NPM packages using name@version
