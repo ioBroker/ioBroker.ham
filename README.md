@@ -52,6 +52,9 @@ For this to work you need to provide the location of the systems global node-mod
 
 ## Changelog
 
+### 1.1.2 (2019-07-08)
+* (Apollon77) Allow more then 149 accessories in wrapper mode
+
 ### 1.1.1 (2019-07-05)
 * (Apollon77) Add option to update NPM modules in Admin. Reinstall will happen after saving settings
 * (Apollon77) Enhance NPM installation handling

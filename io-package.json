@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "ham",
-        "version": "1.1.1",
+        "version": "1.1.2",
         "news": {
+            "1.1.2": {
+                "en": "more then 149 accessories allowed in wrapper mode",
+                "de": "Mehr als 149 Zubehörteile sind im Wrapper-Modus zulässig",
+                "ru": "в режиме обертки разрешено более 149 аксессуаров",
+                "pt": "mais de 149 acessórios permitidos no modo wrapper",
+                "nl": "meer dan 149 accessoires toegestaan in wrapper-modus",
+                "fr": "plus de 149 accessoires autorisés en mode wrapper",
+                "it": "più di 149 accessori consentiti in modalità wrapper",
+                "es": "más de 149 accesorios permitidos en modo envoltorio",
+                "pl": "więcej niż 149 akcesoriów dozwolonych w trybie owijania",
+                "zh-cn": "包装模式允许超过149个配件"
+            },
             "1.1.1": {
                 "en": "used homebridge to 0.4.50 updated, local mode added, plugin updates possible, install special plugin versions added, specify command line options added",
                 "de": "Homebridge auf 0.4.50 aktualisiert, lokaler Modus hinzugefügt, Plugin-Updates möglich, Installation spezieller Plugin-Versionen hinzugefügt, Befehlszeilenoptionen hinzugefügt",
