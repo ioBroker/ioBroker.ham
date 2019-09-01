@@ -164,7 +164,7 @@ function checkIsControllerInstalled(cb, counter) {
     try {
         var f = fs.readFileSync(dataDir + 'objects.json');
         var objects = JSON.parse(f.toString());
-        if (objects['system.user.admin']) {
+        if (objects['system.certificates']) {
             console.log('checkIsControllerInstalled: installed!');
             setTimeout(function () {
                 if (cb) cb();
@@ -172,14 +172,14 @@ function checkIsControllerInstalled(cb, counter) {
             return;
         }
     } catch (err) {
-        console.log(err);
+
     }
 
     if (counter > 20) {
         console.log('checkIsControllerInstalled: Cannot install!');
         if (cb) cb('Cannot install');
     } else {
-        console.log('checkIsControllerInstalled: wait... ' + counter);
+        console.log('checkIsControllerInstalled: wait...');
         setTimeout(function() {
             checkIsControllerInstalled(cb, counter + 1);
         }, 1000);
