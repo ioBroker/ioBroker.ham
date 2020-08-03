@@ -113,7 +113,7 @@ jobs:
           npm install -g homebridge@1.1.1
           npm install -g homebridge-http-webhooks
           npm install -g homebridge-sun-position
-          export NODE_GLOBAL_DIR=$(npm root -g)
+          for /f "delims=" %%A in ('npm root -g') do set "NODE_GLOBAL_DIR=%%A"
           node node_modules/mocha/bin/mocha test/testAdapterXGlobal.js --exit
 
 #      - name: Run unit tests
