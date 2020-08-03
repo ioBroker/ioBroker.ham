@@ -104,13 +104,17 @@ jobs:
           export NODE_GLOBAL_DIR=$(npm root -g)
           node node_modules/mocha/bin/mocha test/testAdapterXGlobal.js --exit
 
-      - name: Run GlobalMode tests (windows)
+      - name: Run GlobalMode tests (windows) Pre-Cleanup
         if: startsWith(runner.OS, 'windows')
-        shell: powershell
         run: |
           rm tmp\node_modules\iobroker.ham\node_modules\homebridge-http-webhooks -r -fo
           rm tmp\node_modules\iobroker.ham\node_modules\homebridge-sun-position -r -fo
           rm tmp\node_modules\iobroker.ham\node_modules\homebridge -r -fo
+
+      - name: Run GlobalMode tests (windows)
+        if: startsWith(runner.OS, 'windows')
+        shell: cmd
+        run: |
           npm install -g homebridge@1.1.1
           npm install -g homebridge-http-webhooks
           npm install -g homebridge-sun-position
