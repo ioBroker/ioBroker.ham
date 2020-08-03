@@ -279,7 +279,7 @@ describe('Test ' + adapterShortName + ' Wrapper adapter No-AccessoryInfo', () =>
 
             states.getState(adapterShortName + '.0.Sun.Accessory-Information.Model', (err, state) => {
                 expect(err).to.be.null;
-                expect(state).to.be.undefined;
+                expect(state).to.be.null;
 
                 states.getState(adapterShortName + '.0.Sun.Sun.Altitude', (err, state) => {
                     expect(err).to.not.exist;
