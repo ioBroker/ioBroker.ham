@@ -20,9 +20,7 @@ install:
   - bonjoursdksetup.exe /quiet
   - del bonjoursdksetup.exe
   - 'set BONJOUR_SDK_HOME=C:\Program Files\Bonjour SDK'
-  - npm install
-  - npm install winston@3.2.1
-  - 'npm install https://github.com/ioBroker/ioBroker.js-controller/tarball/master --production'
+  - npm ci
 test_script:
   - echo %cd%
   - node --version
