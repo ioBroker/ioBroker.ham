@@ -8,12 +8,12 @@ const nodeFS  = require('fs');
 const child_process = require('child_process');
 // you have to require the utils module and call adapter function
 const utils = require('@iobroker/adapter-core'); // Get common adapter utils
-const path = require('path');
+const nodePath = require('path');
 const stringArgv = require('string-argv');
 
 // it is not an object.
 function createHam(options) {
-    const dataDir = path.normalize(path.join(utils.controllerDir, require(path.join(utils.controllerDir, 'lib', 'tools.js')).getDefaultDataDir()));
+    const dataDir = nodePath.normalize(nodePath.join(utils.controllerDir, require(nodePath.join(utils.controllerDir, 'lib', 'tools.js')).getDefaultDataDir()));
 
     // you have to call the adapter function and pass a options object
     // name has to be set and has to be equal to adapters folder name and main file name excluding extension
@@ -201,7 +201,7 @@ function createHam(options) {
 
         checkLocalMode(() => {
             installAllLibraries(() => {
-                const configDir = path.join(dataDir, adapter.namespace.replace('.', '_'));
+                const configDir = nodePath.join(dataDir, adapter.namespace.replace('.', '_'));
                 if (adapter.config.useGlobalHomebridge) {
                     adapter.log.debug('Use Global Homebridge Path: ' + adapter.config.globalHomebridgeBasePath);
                     let nodePathEnv = process.env.NODE_PATH;
@@ -211,7 +211,7 @@ function createHam(options) {
                     else {
                         nodePathEnv = adapter.config.globalHomebridgeBasePath + (process.platform === 'win32' ? ';' : ':') + nodePathEnv;
                     }
-                    nodePathEnv = path.join(adapter.config.globalHomebridgeBasePath, '..') + (process.platform === 'win32' ? ';' : ':') + nodePathEnv;
+                    nodePathEnv = nodePath.join(adapter.config.globalHomebridgeBasePath, '..') + (process.platform === 'win32' ? ';' : ':') + nodePathEnv;
                     process.env.NODE_PATH = nodePathEnv;
                     homebridgeHandler = require('./lib/global-handler');
                     homebridgeHandler.init({
@@ -233,16 +233,16 @@ function createHam(options) {
                             nodeFS.mkdirSync(configDir);
                         }
                         // some Plugins want to have config file
-                        nodeFS.writeFileSync(path.join(configDir, 'config.json'), JSON.stringify(adapter.config.wrapperConfig));
+                        nodeFS.writeFileSync(nodePath.join(configDir, 'config.json'), JSON.stringify(adapter.config.wrapperConfig));
                     }
                     catch (err) {
-                        adapter.log.error('Error writing config file at ' + path.join(configDir, 'config.json') + ', but needed for local Mode to work! Exiting: ' + err);
+                        adapter.log.error('Error writing config file at ' + nodePath.join(configDir, 'config.json') + ', but needed for local Mode to work! Exiting: ' + err);
                         return;
                     }
                     homebridgeHandler = require('./lib/global-handler');
                     homebridgeHandler.init({
                         logger: usedLogger,
-                        homebridgeBasePath: path.join(__dirname, 'node_modules', 'homebridge'),
+                        homebridgeBasePath: nodePath.join(__dirname, 'node_modules', 'homebridge'),
                         homebridgeConfigPath: configDir,
                         updateDev: updateDev,
                         updateChannel: updateChannel,
@@ -288,8 +288,8 @@ function createHam(options) {
             npmLib = undefined;
         }
 
-        if (!nodeFS.existsSync(path.join(localPath, 'node_modules'))) {
-            nodeFS.mkdirSync(path.join(localPath, 'node_modules'));
+        if (!nodeFS.existsSync(nodePath.join(localPath, 'node_modules'))) {
+            nodeFS.mkdirSync(nodePath.join(localPath, 'node_modules'));
         }
 
         const cmd = 'npm install ' + npmLib + ' --production --prefix "' + localPath + '"';
@@ -381,7 +381,7 @@ function createHam(options) {
     function deleteFolderRecursive(path) {
         if (nodeFS.existsSync(path)) {
             nodeFS.readdirSync(path).forEach(function(file){
-                const curPath = path.join(path, file);
+                const curPath = nodePath.join(path, file);
                 if (nodeFS.lstatSync(curPath).isDirectory()) { // recurse
                     deleteFolderRecursive(curPath);
                 } else { // delete file
@@ -397,12 +397,12 @@ function createHam(options) {
             callback && callback();
             return;
         }
-        if (nodeFS.existsSync(path.join(dataDir, adapter.namespace.replace('.', '_'), 'config.json'))) {
+        if (nodeFS.existsSync(nodePath.join(dataDir, adapter.namespace.replace('.', '_'), 'config.json'))) {
             try {
-                const formerConfig = require(path.join(dataDir, adapter.namespace.replace('.', '_'), 'config.json'));
+                const formerConfig = require(nodePath.join(dataDir, adapter.namespace.replace('.', '_'), 'config.json'));
                 if (formerConfig && formerConfig.bridge && formerConfig.bridge.username && adapter.config.wrapperConfig && adapter.config.wrapperConfig.bridge && adapter.config.wrapperConfig.bridge.username && adapter.config.wrapperConfig.bridge.username !== formerConfig.bridge.username) {
                     adapter.log.info('remove homebridge cache directory because Bridge username changed!');
-                    deleteFolderRecursive(path.join(dataDir, adapter.namespace.replace('.', '_')));
+                    deleteFolderRecursive(nodePath.join(dataDir, adapter.namespace.replace('.', '_')));
                 }
             }
             catch (err) {
