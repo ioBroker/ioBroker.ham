@@ -69,8 +69,33 @@ jobs:
       - name: Install Dependencies
         run: npm ci
 
-      - name: Run local tests
-        run: npm test
+      - name: Run package tests
+        run: node node_modules/mocha/bin/mocha test/testPackageFiles.js --exit
+
+      - name: Run WrapperNoInfo tests
+        run: node node_modules/mocha/bin/mocha test/testAdapterWrapperNoInfo.js --exit
+
+      - name: Run WrapperWithInfo tests
+        run: node node_modules/mocha/bin/mocha test/testAdapterWrapperWithInfo.js --exit
+
+      - name: Run LocalMode tests
+        run: |
+          rm -rf tmp/node_modules/iobroker.ham/node_modules/homebridge-http-webhooks
+          rm -rf tmp/node_modules/iobroker.ham/node_modules/homebridge-sun-position
+          node node_modules/mocha/bin/mocha test/testAdapterZLocal.js --exit
+
+      - name: Run GlobalMode tests
+        run: |
+          rm -rf tmp/node_modules/iobroker.ham/node_modules/homebridge-http-webhooks
+          rm -rf tmp/node_modules/iobroker.ham/node_modules/homebridge-sun-position
+          rm -rf tmp/node_modules/iobroker.ham/node_modules/homebridge-http-webhooks
+          rm -rf tmp/node_modules/iobroker.ham/node_modules/homebridge
+          npm install -g homebridge@1.1.1
+          npm install -g homebridge-http-webhooks
+          npm install -g homebridge-sun-position
+          export NODE_GLOBAL_DIR=$(npm root -g)
+          node node_modules/mocha/bin/mocha test/testAdapterXGlobal.js --exit
+
 #      - name: Run unit tests
 #        run: npm run test:unit
 #      - name: Run integration tests # (linux/osx)
