@@ -491,7 +491,7 @@ function startAdapter(objects, states, callback) {
                 });
             } else {
                 // start controller
-                pid = child_process.fork('node_modules/' + pkg.name + '/' + pkg.main, ['--console', (process.env.TRAVIS && process.env.TRAVIS === 'true') ? 'debug' : 'silly'], {
+                pid = child_process.fork('node_modules/' + pkg.name + '/' + pkg.main, ['--console', ((process.env.TRAVIS && process.env.TRAVIS === 'true') || (process.env.APPVEYOR && process.env.APPVEYOR === 'True')) ? 'debug' : 'silly'], {
                     cwd:   rootDir + 'tmp',
                     stdio: [0, 1, 2, 'ipc']
                 });

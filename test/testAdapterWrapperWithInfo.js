@@ -92,7 +92,7 @@ describe('Test ' + adapterShortName + ' Wrapper adapter With-AccessoryInfo', () 
             const config = setup.getAdapterConfig();
             // enable adapter
             config.common.enabled  = true;
-            config.common.loglevel = (process.env.TRAVIS && process.env.TRAVIS === 'true') ? 'info' : 'debug';
+            config.common.loglevel = ((process.env.TRAVIS && process.env.TRAVIS === 'true') || (process.env.APPVEYOR && process.env.APPVEYOR === 'True')) ? 'info' : 'debug';
 
             config.native.useGlobalHomebridge = false;
             //config.native.globalHomebridgeConfigPath = __dirname + "/homebridge/";
