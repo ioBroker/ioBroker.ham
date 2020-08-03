@@ -31,7 +31,8 @@
     "@alcalzone/release-script": "^1.4.1",
     "chai": "^4.2.0",
     "gulp": "^4.0.2",
-    "mocha": "^8.1.0"
+    "mocha": "^8.1.0",
+    "request": "^2.88.2"
   },
   "optionalDependencies": {},
   "homepage": "https://github.com/ioBroker/ioBroker.ham",
