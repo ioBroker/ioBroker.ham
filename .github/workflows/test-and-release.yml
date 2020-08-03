@@ -106,6 +106,7 @@ jobs:
 
       - name: Run GlobalMode tests (windows)
         if: startsWith(runner.OS, 'windows')
+        shell: powershell
         run: |
           rm tmp\node_modules\iobroker.ham\node_modules\homebridge-http-webhooks -r -fo
           rm tmp\node_modules\iobroker.ham\node_modules\homebridge-sun-position -r -fo

@@ -118,7 +118,7 @@ For this to work you need to provide the location of the systems global node-mod
 ## License
 The MIT License (MIT)
 
-Copyright (c) 2018-2019 Apollon77 <ingo@fischer-ka.de>
+Copyright (c) 2018-2020 Apollon77 <ingo@fischer-ka.de>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

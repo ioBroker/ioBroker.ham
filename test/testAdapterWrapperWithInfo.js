@@ -267,7 +267,7 @@ describe('Test ' + adapterShortName + ' Wrapper adapter With-AccessoryInfo', () 
     }).timeout(60000);
 
     it('Test ' + adapterShortName + ' Wrapper adapter With-AccessoryInfo: Wait for npm installs', done => {
-        setTimeout(() => done(), 30000);
+        setTimeout(() => done(), 59000);
     }).timeout(60000);
 
     it('Test ' + adapterShortName + ' Wrapper: Verify Init', done => {

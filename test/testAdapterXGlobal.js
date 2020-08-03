@@ -139,7 +139,7 @@ describe('Test ' + adapterShortName + ' Global adapter', () => {
     }).timeout(60000);
 
     it('Test ' + adapterShortName + ' Wrapper adapter: Wait for init', done => {
-        setTimeout(() => done(), 20000);
+        setTimeout(() => done(), 59000);
     }).timeout(60000);
 
     it('Test ' + adapterShortName + ' Wrapper: Verify Init', done => {
