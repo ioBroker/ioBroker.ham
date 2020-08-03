@@ -26,7 +26,6 @@ script:
 #  - node node_modules/mocha/bin/mocha test/testAdapterZLocal.js --exit
 #  - rm -rf tmp/node_modules/iobroker.ham/node_modules/homebridge-http-webhooks
 #  - rm -rf tmp/node_modules/iobroker.ham/node_modules/homebridge-sun-position
-#  - rm -rf tmp/node_modules/iobroker.ham/node_modules/homebridge-http-webhooks
 #  - rm -rf tmp/node_modules/iobroker.ham/node_modules/homebridge
 #  - npm install -g homebridge@1.1.1
 #  - npm install -g homebridge-http-webhooks
