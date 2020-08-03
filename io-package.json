@@ -1,7 +1,7 @@
 {
     "common": {
         "name": "ham",
-        "version": "1.1.2",
+        "version": "2.0.0",
         "news": {
             "1.1.2": {
                 "en": "more then 149 accessories allowed in wrapper mode",

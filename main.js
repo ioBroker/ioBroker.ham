@@ -292,7 +292,7 @@ function createHam(options) {
             nodeFS.mkdirSync(nodePath.join(localPath, 'node_modules'));
         }
 
-        const cmd = 'npm install ' + npmLib + ' --production --prefix "' + localPath + '" --force';
+        const cmd = 'npm install ' + npmLib + ' --production --prefix "' + localPath + '"';
         adapter.log.info(cmd + ' (System call)');
         // Install node modules as system call
 
