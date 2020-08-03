@@ -4,7 +4,8 @@ tasks
 node_modules
 .idea
 .git
-/node_modules
+node_modules
 test
 .travis.yml
 appveyor.yml
+package-lock.json
