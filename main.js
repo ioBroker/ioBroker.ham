@@ -292,13 +292,16 @@ function createHam(options) {
             nodeFS.mkdirSync(nodePath.join(localPath, 'node_modules'));
         }
 
-        const cmd = 'npm install ' + npmLib + ' --production --prefix "' + localPath + '"';
+        const cmd = 'npm install ' + npmLib + ' --production';
         adapter.log.info(cmd + ' (System call)');
         // Install node modules as system call
 
         // System call used for update of js-controller itself,
         // because during installation npm packet will be deleted too, but some files must be loaded even during the install process.
-        const child = child_process.exec(cmd);
+        const child = child_process.exec(cmd, {
+            cwd: localPath,
+            windowsHide: true
+        });
 
         child.stdout.on('data', buf => adapter.log.info(buf.toString('utf8')));
         child.stderr.on('data', buf => adapter.log.info(buf.toString('utf8')));
