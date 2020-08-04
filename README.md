@@ -53,7 +53,7 @@ For this to work you need to provide the location of the systems global node-mod
 ## Changelog
 
 ### __WORK IN PROGRESS__
-* (Apollon77) BREAKING: ONLY WORKS WITH HOMEBRIDGE 1.1.x+ AND Node JS >=10.17.0!!
+* (Apollon77) BREAKING: ONLY WORKS WITH HOMEBRIDGE 1.1.x+ AND Node JS >=10.17.0!! Make sure plugins support it AND homebridge is updated to 1.1.x when you use the Global Mode!
 
 ### 1.1.2 (2019-07-08)
 * (Apollon77) Allow more then 149 accessories in wrapper mode
