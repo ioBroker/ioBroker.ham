@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "ham",
-        "version": "2.0.0",
+        "version": "3.0.0",
         "news": {
+            "3.0.0": {
+                "en": "BREAKING: ONLY WORKS WITH HOMEBRIDGE 1.1.x+ AND Node JS >=10.17.0!! Make sure plugins support it AND homebridge is updated to 1.1.x when you use the Global Mode!",
+                "de": "BREAKING: FUNKTIONIERT NUR MIT HOMEBRIDGE 1.1.x + UND Node JS> = 10.17.0 !! Stellen Sie sicher, dass Plugins dies unterstützen UND Homebridge auf 1.1.x aktualisiert wird, wenn Sie den globalen Modus verwenden!",
+                "ru": "BREAKING: ТОЛЬКО РАБОТАЕТ С HOMEBRIDGE 1.1.x + И НОДОМ JS> = 10.17.0 !! Убедитесь, что плагины поддерживают это, и homebridge обновляется до 1.1.x при использовании глобального режима!",
+                "pt": "QUEBRA: FUNCIONA SOMENTE COM O HOMEBRIDGE 1.1.x + E o nó JS> = 10.17.0 !! Certifique-se de que os plugins o suportem E o homebridge seja atualizado para 1.1.x quando você usar o Modo Global!",
+                "nl": "BREAKING: WERKT ALLEEN MET HOMEBRIDGE 1.1.x + EN Node JS> = 10.17.0 !! Zorg ervoor dat plug-ins het ondersteunen EN dat homebridge wordt bijgewerkt naar 1.1.x wanneer je de Global Mode gebruikt!",
+                "fr": "RUPTURE: FONCTIONNE UNIQUEMENT AVEC HOMEBRIDGE 1.1.x + ET Node JS> = 10.17.0 !! Assurez-vous que les plugins le prennent en charge ET que homebridge est mis à jour vers 1.1.x lorsque vous utilisez le mode global!",
+                "it": "ROTTURA: FUNZIONA SOLO CON HOMEBRIDGE 1.1.x + E Nodo JS> = 10.17.0 !! Assicurati che i plugin lo supportino E homebridge sia aggiornato alla 1.1.x quando usi la Modalità Globale!",
+                "es": "ROMPIENDO: SOLO FUNCIONA CON HOMEBRIDGE 1.1.x + Y Nodo JS> = 10.17.0 !! ¡Asegúrese de que los complementos lo admitan y que homebridge se actualice a 1.1.x cuando use el modo global!",
+                "pl": "ŁAMANIE: DZIAŁA TYLKO Z HOMEBRIDGE 1.1.x + I Węzłem JS> = 10.17.0 !! Upewnij się, że wtyczki go obsługują ORAZ mostek główny jest aktualizowany do wersji 1.1.x podczas korzystania z trybu globalnego!",
+                "zh-cn": "BREAKING：仅适用于HOMEBRIDGE 1.1.x +和Node JS> = 10.17.0！确保插件支持它，并且在使用全局模式时将homebridge更新为1.1.x！"
+            },
             "1.1.2": {
                 "en": "more then 149 accessories allowed in wrapper mode",
                 "de": "Mehr als 149 Zubehörteile sind im Wrapper-Modus zulässig",
@@ -48,7 +60,8 @@
                 "fr": "correctifs et optimisations",
                 "it": "correzioni e ottimizzazioni",
                 "es": "correcciones y optimizaciones",
-                "pl": "poprawki i optymalizacje"            },
+                "pl": "poprawki i optymalizacje"
+            },
             "0.4.4": {
                 "en": "corrected automatic role determination and bugs fixed",
                 "de": "korrigierte automatische Rollenermittlung und behobene Fehler",
@@ -202,7 +215,9 @@
         "materialize": true,
         "enabled": false,
         "extIcon": "https://raw.githubusercontent.com/ioBroker/ioBroker.ham/master/admin/ham.png",
-        "keywords": ["homebridge"],
+        "keywords": [
+            "homebridge"
+        ],
         "readme": "https://github.com/ioBroker/ioBroker.ham/blob/master/README.md",
         "loglevel": "info",
         "type": "iot-systems"
@@ -218,15 +233,11 @@
         "characteristicPollingInterval": 0,
         "wrapperConfig": {
             "description": "Add configuration for your accessories or platforms according to the docs of the plugins.",
-            "accessories": [
-            ],
-            "platforms": [
-            ]
+            "accessories": [],
+            "platforms": []
         },
         "updateLibraries": false,
         "virtualCommandLine": ""
     },
-    "objects": [
-
-    ]
+    "objects": []
 }
