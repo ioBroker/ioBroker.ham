@@ -19,7 +19,7 @@ install:
   - bonjoursdksetup.exe /quiet
   - del bonjoursdksetup.exe
   - 'set BONJOUR_SDK_HOME=C:\Program Files\Bonjour SDK'
-  - npm ci
+  - npm install
 test_script:
   - echo %cd%
   - node --version
