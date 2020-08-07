@@ -52,7 +52,7 @@ For this to work you need to provide the location of the systems global node-mod
 
 ## Changelog
 
-### __WORK IN PROGRESS__
+### 3.0.1 (2020-08-08)
 * (Apollon77) set a very high limit (again) on allowed accessories and services because irrelevant 
 
 ### 3.0.0 (2020-08-04)

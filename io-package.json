@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "ham",
-        "version": "3.0.0",
+        "version": "3.0.1",
         "news": {
+            "3.0.1": {
+                "en": "set a very high limit (again) on allowed accessories and services because irrelevant",
+                "de": "Setzen Sie (erneut) eine sehr hohe Grenze für zulässiges Zubehör und Serviceleistungen, da diese irrelevant sind",
+                "ru": "установить очень высокий предел (снова) на разрешенные аксессуары и услуги, потому что они неактуальны",
+                "pt": "definir um limite muito alto (novamente) em acessórios e serviços permitidos porque irrelevante",
+                "nl": "stel (opnieuw) een zeer hoge limiet in voor toegestane accessoires en services omdat ze niet relevant zijn",
+                "fr": "fixer une limite très élevée (à nouveau) sur les accessoires et services autorisés, car non pertinents",
+                "it": "impostare un limite molto alto (di nuovo) sugli accessori e servizi ammessi perché irrilevanti",
+                "es": "establecer un límite muy alto (nuevamente) en los accesorios y servicios permitidos porque son irrelevantes",
+                "pl": "ustawić (ponownie) bardzo wysoki limit dozwolonych akcesoriów i usług, ponieważ są one nieistotne",
+                "zh-cn": "再次对允许的附件和服务设置非常高的限制，因为这无关紧要"
+            },
             "3.0.0": {
                 "en": "BREAKING: ONLY WORKS WITH HOMEBRIDGE 1.1.x+ AND Node JS >=10.17.0!! Make sure plugins support it AND homebridge is updated to 1.1.x when you use the Global Mode!",
                 "de": "BREAKING: FUNKTIONIERT NUR MIT HOMEBRIDGE 1.1.x + UND Node JS> = 10.17.0 !! Stellen Sie sicher, dass Plugins dies unterstützen UND Homebridge auf 1.1.x aktualisiert wird, wenn Sie den globalen Modus verwenden!",
