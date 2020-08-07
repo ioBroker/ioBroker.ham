@@ -52,6 +52,9 @@ For this to work you need to provide the location of the systems global node-mod
 
 ## Changelog
 
+### __WORK IN PROGRESS__
+* (Apollon77) set a very high limit (again) on allowed accessories and services because irrelevant 
+
 ### 3.0.0 (2020-08-04)
 * (Apollon77) BREAKING: ONLY WORKS WITH HOMEBRIDGE 1.1.x+ AND Node JS >=10.17.0!! Make sure plugins support it AND homebridge is updated to 1.1.x when you use the Global Mode!
 

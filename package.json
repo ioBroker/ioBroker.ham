@@ -22,7 +22,7 @@
     "node": ">=10.17.0"
   },
   "dependencies": {
-    "homebridge-plugin-wrapper": "^2.0.0",
+    "homebridge-plugin-wrapper": "^2.0.1",
     "@iobroker/adapter-core": "^2.3.1",
     "string-argv": "^0.3.1"
   },
