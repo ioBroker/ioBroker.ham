@@ -22,16 +22,16 @@
     "node": ">=10.17.0"
   },
   "dependencies": {
-    "homebridge-plugin-wrapper": "^2.0.1",
+    "homebridge-plugin-wrapper": "^2.0.3",
     "@iobroker/adapter-core": "^2.3.1",
     "string-argv": "^0.3.1"
   },
   "description": "Homebridge accessories manager",
   "devDependencies": {
-    "@alcalzone/release-script": "^1.4.1",
+    "@alcalzone/release-script": "^1.8.1",
     "chai": "^4.2.0",
     "gulp": "^4.0.2",
-    "mocha": "^8.1.0",
+    "mocha": "^8.2.1",
     "request": "^2.88.2"
   },
   "optionalDependencies": {},
