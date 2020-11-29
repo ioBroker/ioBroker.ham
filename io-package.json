@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "ham",
-        "version": "3.0.1",
+        "version": "3.0.2",
         "news": {
+            "3.0.2": {
+                "en": "update homebridge in wrapper to 1.1.6 (latest as of today)",
+                "de": "Update der Homebridge im Wrapper auf 1.1.6 (Stand heute)",
+                "ru": "обновите homebridge в оболочке до версии 1.1.6 (последней на сегодня)",
+                "pt": "atualize o homebridge no wrapper para 1.1.6 (o mais recente a partir de hoje)",
+                "nl": "update homebridge in wrapper naar 1.1.6 (laatste vanaf vandaag)",
+                "fr": "mettre à jour homebridge dans le wrapper vers la version 1.1.6 (dernière en date d'aujourd'hui)",
+                "it": "aggiorna homebridge in wrapper alla 1.1.6 (ultimo a partire da oggi)",
+                "es": "actualice el Homebridge en el contenedor a 1.1.6 (el último a partir de hoy)",
+                "pl": "zaktualizuj homebridge w opakowaniu do wersji 1.1.6 (najnowsze na dziś)",
+                "zh-cn": "将包装器中的homebridge更新为1.1.6（今天为最新）"
+            },
             "3.0.1": {
                 "en": "set a very high limit (again) on allowed accessories and services because irrelevant",
                 "de": "Setzen Sie (erneut) eine sehr hohe Grenze für zulässiges Zubehör und Serviceleistungen, da diese irrelevant sind",
