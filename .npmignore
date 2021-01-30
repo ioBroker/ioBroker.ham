@@ -1,3 +1,8 @@
+.*
+node_modules/
+nbproject/
+*.code-workspace
+Thumbs.db
 gulpfile.js
 admin/i18n
 tasks
@@ -8,4 +13,14 @@ node_modules
 test
 .travis.yml
 appveyor.yml
+
+# React sources for the Admin UI
+admin/src/
+
+# Type checking configuration
+tsconfig.json
+tsconfig.*.json
+
+# Sourcemaps
+*.map
 package-lock.json

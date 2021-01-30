@@ -1,9 +1,15 @@
 ![Logo](admin/ham.png)
 # ioBroker Homebridge accessories manager
-![Number of Installations](http://iobroker.live/badges/ham-installed.svg) ![Number of Installations](http://iobroker.live/badges/ham-stable.svg) 
+[![NPM version](https://img.shields.io/npm/v/iobroker.ham.svg)](https://www.npmjs.com/package/iobroker.ham)
+[![Downloads](https://img.shields.io/npm/dm/iobroker.ham.svg)](https://www.npmjs.com/package/iobroker.ham)
+![Number of Installations (latest)](https://iobroker.live/badges/ham-installed.svg)
+![Number of Installations (stable)](https://iobroker.live/badges/ham-stable.svg)
+[![Dependency Status](https://img.shields.io/david/ioBroker/iobroker.ham.svg)](https://david-dm.org/ioBroker/iobroker.ham)
 [![Greenkeeper badge](https://badges.greenkeeper.io/ioBroker/ioBroker.ham.svg)](https://greenkeeper.io/)
 
-=================
+[![NPM](https://nodei.co/npm/iobroker.ham.png?downloads=true)](https://nodei.co/npm/iobroker.ham/)
+
+**Tests:** ![Test and Release](https://github.com/ioBroker/ioBroker.ham/workflows/Test%20and%20Release/badge.svg)
 
 Use Homebridge plugins in ioBroker or run a global installed Homebridge as ioBroker adapter.
 All States from Homebridge will be available in ioBroker too and can also be controlled there.

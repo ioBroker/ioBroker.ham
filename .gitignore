@@ -1,3 +1,8 @@
+.cache
 .idea
+*.code-workspace
 node_modules
+# Sourcemaps
+maps/
+
 package-lock.json

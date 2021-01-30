@@ -1,6 +1,7 @@
 {
-  "version": "3.0.2",
   "name": "iobroker.ham",
+  "version": "3.0.2",
+  "description": "ioBroker Homebridge Adapter",
   "author": {
     "name": "Apollon77",
     "email": "ingo@fischer-ka.de"
@@ -26,13 +27,38 @@
     "@iobroker/adapter-core": "^2.3.1",
     "string-argv": "^0.3.1"
   },
-  "description": "Homebridge accessories manager",
   "devDependencies": {
     "@alcalzone/release-script": "^1.8.1",
+    "@babel/cli": "^7.12.10",
+    "@babel/core": "^7.12.10",
+    "@iobroker/adapter-react": "^1.6.1",
+    "@iobroker/testing": "^2.4.2",
+    "@material-ui/core": "^4.11.3",
+    "@material-ui/icons": "^4.11.2",
+    "@sentry/browser": "^6.0.3",
+    "@types/chai": "^4.2.14",
+    "@types/chai-as-promised": "^7.1.3",
+    "@types/gulp": "^4.0.8",
+    "@types/mocha": "^8.2.0",
+    "@types/node": "^14.14.22",
+    "@types/proxyquire": "^1.3.28",
+    "@types/react": "^16.14.2",
+    "@types/react-dom": "^16.9.10",
+    "@types/sinon": "^9.0.10",
+    "@types/sinon-chai": "^3.2.5",
+    "axios": "^0.21.1",
     "chai": "^4.2.0",
     "gulp": "^4.0.2",
     "mocha": "^8.2.1",
-    "request": "^2.88.2"
+    "parcel-bundler": "^1.12.4",
+    "proxyquire": "^2.1.3",
+    "react": "^16.14.0",
+    "react-dom": "^16.14.0",
+    "react-icons": "^4.1.0",
+    "request": "^2.88.2",
+    "sinon": "^9.2.4",
+    "sinon-chai": "^3.5.0",
+    "typescript": "^4.1.3"
   },
   "optionalDependencies": {},
   "homepage": "https://github.com/ioBroker/ioBroker.ham",
@@ -50,7 +76,12 @@
     "url": "git+https://github.com/ioBroker/ioBroker.ham.git"
   },
   "scripts": {
+    "watch:parcel": "parcel admin/src/tab.jsx -d admin/build",
+    "build:parcel": "parcel build admin/src/tab.jsx -d admin/build",
+    "build": "npm run build:parcel",
     "test": "node node_modules/mocha/bin/mocha --exit",
-    "release": "release-script"
+    "release": "release-script",
+    "check": "tsc --noEmit -p tsconfig.check.json",
+    "lint": "eslint --ext .js,.jsx"
   }
 }
