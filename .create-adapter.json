@@ -23,7 +23,8 @@
     "tabReact": "yes",
     "tools": [
         "ESLint",
-        "type checking"
+        "type checking",
+        "devcontainer"
     ],
     "indentation": "Space (4)",
     "quotes": "single",
