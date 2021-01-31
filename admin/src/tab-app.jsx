@@ -3,6 +3,8 @@ import { withStyles } from "@material-ui/core/styles";
 
 import GenericApp from "@iobroker/adapter-react/GenericApp";
 
+import PluginsTable from "./plugins-table"
+
 /**
  * @type {(_theme: Theme) => import("@material-ui/styles").StyleRules}
  */
@@ -43,7 +45,7 @@ class TabApp extends GenericApp {
 
         return (
             <div className="App">
-                Add your components here.
+                <PluginsTable installed={this.state.native.libraries.split(/[,;\s]+/)} />
                 {this.renderError()}
                 {this.renderToast()}
             </div>
@@ -51,4 +53,4 @@ class TabApp extends GenericApp {
     }
 }
 
-export default withStyles(styles)(App);
+export default withStyles(styles)(TabApp);

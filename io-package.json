@@ -254,19 +254,19 @@
         "adminTab": {
             "singleton": true,
             "name": {
-                "en": "Homebridge accessories manager",
-                "de": "Homebridge Zubehör Manager",
-                "ru": "Менеджер по аксессуарам для домашнего моста",
-                "pt": "Gerente de acessórios Homebridge",
-                "nl": "Homebridge accessoires manager",
-                "fr": "Gestionnaire d'accessoires Homebridge",
-                "it": "Responsabile degli accessori di Homebridge",
-                "es": "Gerente de accesorios de Homebridge",
-                "pl": "Menedżer akcesoriów Homebridge",
-                "zh-cn": "Homebridge配件经理"
+                "en": "Homebridge",
+                "de": "Homebridge",
+                "ru": "Homebridge",
+                "pt": "Homebridge",
+                "nl": "Homebridge",
+                "fr": "Homebridge",
+                "it": "Homebridge",
+                "es": "Homebridge",
+                "pl": "Homebridge",
+                "zh-cn": "Homebridge"
             },
             "link": "",
-            "fa-icon": "info"
+            "fa-icon": "home"
         },
         "dependencies": [
             {
