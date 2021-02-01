@@ -13,10 +13,12 @@ import HelpOutline from '@material-ui/icons/HelpOutline';
 import Update from '@material-ui/icons/Update';
 import SearchBar from 'material-ui-search-bar';
 import React, { useEffect, useReducer, useState } from 'react';
+import ConfigDialog from './config-dialog';
 
 const VIRTUAL_PAGE_SIZE = 50;
 const SEARCH_URL = 'https://api.npms.io/v2/search?q=keywords:homebridge-plugin';
 const INFO_URL = 'https://api.npms.io/v2/package/mget';
+const UNKNOWN_VERSION = '?';
 const getRowId = (row) => row.package.name;
 const buildQueryString = (skip, take, search) =>
     `${SEARCH_URL}${!!search ? encodeURIComponent(' ' + search) : ''}&from=${skip}&size=${take}`;
@@ -30,9 +32,11 @@ const initialState = {
     loading: false,
     lastQuery: '',
     search: '',
+    openConfig: undefined,
 };
 
 function reducer(state, { type, payload }) {
+    //console.log('reducer', type, payload);
     switch (type) {
         case 'UPDATE_ROWS':
             return {
@@ -78,51 +82,20 @@ function reducer(state, { type, payload }) {
                 search: '',
                 rows: state.search ? [] : state.rows,
             };
+        case 'OPEN_CONFIG':
+            return {
+                ...state,
+                openConfig: payload,
+            };
+        case 'CLOSE_CONFIG':
+            return {
+                ...state,
+                openConfig: undefined,
+            };
         default:
             return state;
     }
 }
-
-const PackageNameFormatter = ({ value, row }) => {
-    return (
-        <Tooltip title={row.package.name}>
-            {row.installed ? <strong>{value}</strong> : <Typography>{value}</Typography>}
-        </Tooltip>
-    );
-};
-
-const ToolTipButton = ({ tooltip, disabled, Icon, ...other }) => {
-    return !!disabled ? (
-        <Button disabled={true} {...other}>
-            <Icon />
-        </Button>
-    ) : (
-        <Tooltip title={tooltip}>
-            <Button {...other}>
-                <Icon />
-            </Button>
-        </Tooltip>
-    );
-};
-
-const ActionsFormatter = ({ row }) => {
-    return (
-        <ButtonGroup size="small" aria-label="outlined primary button group">
-            <ToolTipButton tooltip="Readme" Icon={HelpOutline} target="_blank" href={row.package.links.homepage} />
-            <ToolTipButton
-                tooltip={row.installed ? 'Update' : 'Install'}
-                disabled={row.installed && row.installed === row.package.version}
-                Icon={row.installed ? Update : GetApp}
-            />
-            <ToolTipButton tooltip="Configure" disabled={!row.installed} Icon={Build} />
-            <ToolTipButton tooltip="Delete" disabled={!row.installed} Icon={DeleteForever} />
-        </ButtonGroup>
-    );
-};
-
-const KeywordsFormatter = ({ value }) => {
-    return value.map((k) => <Chip key={k} variant="outlined" size="small" label={k} />);
-};
 
 const filterKeywords = (keyword) => {
     return keyword.indexOf('homebridge') === -1 && keyword.indexOf('homekit') === -1;
@@ -137,10 +110,11 @@ const cleanModuleName = (name) => {
 
 const Root = (props) => <Grid.Root {...props} style={{ height: 'calc(100% - 64px)' }} />;
 
-export default (props) => {
+export default ({ adapterConfig }) => {
     const [state, dispatch] = useReducer(reducer, {
         ...initialState,
-        installed: (props.installed && props.installed.filter((p) => !!p)) || [],
+        installed: adapterConfig.libraries.split(/[,;\s]+/).filter((p) => !!p),
+        wrapperConfig: adapterConfig.wrapperConfig,
     });
     const [columns] = useState([
         { name: 'name', title: 'Name', getCellValue: (row) => cleanModuleName(row.package.name) },
@@ -209,7 +183,10 @@ export default (props) => {
                 results = results.filter((r) => !names.includes(r.package.name));
                 results.unshift(
                     ...keys
-                        .map((k) => ({ package: data[k].collected.metadata, installed: versions[k] || '?' }))
+                        .map((k) => ({
+                            package: data[k].collected.metadata,
+                            installed: versions[k] || UNKNOWN_VERSION,
+                        }))
                         .filter(filterSearch),
                 );
                 return { results, total };
@@ -217,14 +194,16 @@ export default (props) => {
     };
 
     const loadData = () => {
-        const { requestedSkip, take, search, lastQuery, loading, installed } = state;
-        const showInstalled = requestedSkip === 0 ? installed : [];
+        const { requestedSkip, take, search, lastQuery, loading } = state;
         const query = buildQueryString(requestedSkip, take, search);
         if (query !== lastQuery && !loading) {
             dispatch({ type: 'FETCH_INIT' });
             fetch(query)
                 .then((response) => response.json())
-                .then(({ results, total }) => prependInstalled(results, total, showInstalled, search))
+                .then(({ results, total }) => {
+                    console.log('before prependInstalled', state);
+                    return prependInstalled(results, total, requestedSkip === 0 ? state.installed : [], search);
+                })
                 .then(({ results, total }) => {
                     dispatch({
                         type: 'UPDATE_ROWS',
@@ -242,36 +221,87 @@ export default (props) => {
 
     useEffect(() => loadData());
 
-    const { rows, skip, totalCount, loading, search } = state;
-    return (
-        <>
-            <div style={{ height: '100%' }}>
-                <SearchBar
-                    value={search}
-                    onChange={(newValue) => dispatch({ type: 'CHANGE_SEARCH', payload: newValue })}
-                    onRequestSearch={() => dispatch({ type: 'EXECUTE_SEARCH' })}
-                    onCancelSearch={() => dispatch({ type: 'CLEAR_SEARCH' })}
-                    style={{ marginBottom: '8px' }}
+    const { rows, skip, totalCount, loading, search, openConfig, wrapperConfig } = state;
+
+    const PackageNameFormatter = ({ value, row }) => {
+        return (
+            <Tooltip title={row.package.name}>
+                {row.installed ? <strong>{value}</strong> : <Typography>{value}</Typography>}
+            </Tooltip>
+        );
+    };
+
+    const ToolTipButton = ({ tooltip, disabled, Icon, ...other }) => {
+        return !!disabled ? (
+            <Button disabled={true} {...other}>
+                <Icon />
+            </Button>
+        ) : (
+            <Tooltip title={tooltip}>
+                <Button {...other}>
+                    <Icon />
+                </Button>
+            </Tooltip>
+        );
+    };
+
+    const onConfigureClicked = (row) => {
+        const versionPostfix = row.installed === UNKNOWN_VERSION ? '' : `@${row.installed}`;
+        dispatch({ type: 'OPEN_CONFIG', payload: `${row.package.name}${versionPostfix}` });
+    };
+
+    const ActionsFormatter = ({ row }) => {
+        return (
+            <ButtonGroup size="small" aria-label="outlined primary button group">
+                <ToolTipButton tooltip="Readme" Icon={HelpOutline} target="_blank" href={row.package.links.homepage} />
+                <ToolTipButton
+                    tooltip={row.installed ? 'Update' : 'Install'}
+                    disabled={row.installed && row.installed === row.package.version}
+                    Icon={row.installed ? Update : GetApp}
                 />
-                <div style={{ flex: '1 1 auto' }}>
-                    <Paper>
-                        <Grid rows={rows} columns={columns} getRowId={getRowId} rootComponent={Root}>
-                            <DataTypeProvider formatterComponent={ActionsFormatter} for={['actions']} />
-                            <DataTypeProvider formatterComponent={PackageNameFormatter} for={['name']} />
-                            <DataTypeProvider formatterComponent={KeywordsFormatter} for={['keywords']} />
-                            <VirtualTableState
-                                loading={loading}
-                                totalRowCount={totalCount}
-                                pageSize={VIRTUAL_PAGE_SIZE}
-                                skip={skip}
-                                getRows={getRemoteRows}
-                            />
-                            <VirtualTable columnExtensions={tableColumnExtensions} />
-                            <TableHeaderRow />
-                        </Grid>
-                    </Paper>
-                </div>
+                <ToolTipButton
+                    tooltip="Configure"
+                    disabled={!row.installed}
+                    Icon={Build}
+                    onClick={() => onConfigureClicked(row)}
+                />
+                <ToolTipButton tooltip="Delete" disabled={!row.installed} Icon={DeleteForever} />
+            </ButtonGroup>
+        );
+    };
+
+    const KeywordsFormatter = ({ value }) => {
+        return value.map((k) => <Chip key={k} variant="outlined" size="small" label={k} />);
+    };
+
+    return (
+        <div style={{ height: '100%' }}>
+            <SearchBar
+                value={search}
+                onChange={(newValue) => dispatch({ type: 'CHANGE_SEARCH', payload: newValue })}
+                onRequestSearch={() => dispatch({ type: 'EXECUTE_SEARCH' })}
+                onCancelSearch={() => dispatch({ type: 'CLEAR_SEARCH' })}
+                style={{ marginBottom: '8px' }}
+            />
+            <div style={{ flex: '1 1 auto' }}>
+                <Paper>
+                    <Grid rows={rows} columns={columns} getRowId={getRowId} rootComponent={Root}>
+                        <DataTypeProvider formatterComponent={ActionsFormatter} for={['actions']} />
+                        <DataTypeProvider formatterComponent={PackageNameFormatter} for={['name']} />
+                        <DataTypeProvider formatterComponent={KeywordsFormatter} for={['keywords']} />
+                        <VirtualTableState
+                            loading={loading}
+                            totalRowCount={totalCount}
+                            pageSize={VIRTUAL_PAGE_SIZE}
+                            skip={skip}
+                            getRows={getRemoteRows}
+                        />
+                        <VirtualTable columnExtensions={tableColumnExtensions} />
+                        <TableHeaderRow />
+                    </Grid>
+                </Paper>
             </div>
-        </>
+            <ConfigDialog moduleName={openConfig} wrapperConfig={wrapperConfig} />
+        </div>
     );
 };

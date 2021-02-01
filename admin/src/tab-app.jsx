@@ -43,7 +43,7 @@ class TabApp extends GenericApp {
 
         return (
             <div className="App">
-                <PluginsTable installed={this.state.native.libraries.split(/[,;\s]+/)} />
+                <PluginsTable adapterConfig={this.state.native} />
                 {this.renderError()}
                 {this.renderToast()}
             </div>
