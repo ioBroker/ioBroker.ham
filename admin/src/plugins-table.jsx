@@ -70,7 +70,7 @@ function reducer(state, { type, payload }) {
             return {
                 ...state,
                 search: state.typingSearch,
-                rows: [],
+                rows: state.search !== state.typingSearch ? [] : state.rows,
             };
         case 'CLEAR_SEARCH':
             return {
@@ -134,6 +134,8 @@ const cleanModuleName = (name) => {
         .replace('-homebridge', '')
         .replace(/^@.+?\//, '');
 };
+
+const Root = (props) => <Grid.Root {...props} style={{ height: 'calc(100% - 64px)' }} />;
 
 export default (props) => {
     const [state, dispatch] = useReducer(reducer, {
@@ -243,29 +245,33 @@ export default (props) => {
     const { rows, skip, totalCount, loading, search } = state;
     return (
         <>
-            <SearchBar
-                value={search}
-                onChange={(newValue) => dispatch({ type: 'CHANGE_SEARCH', payload: newValue })}
-                onRequestSearch={() => dispatch({ type: 'EXECUTE_SEARCH' })}
-                onCancelSearch={() => dispatch({ type: 'CLEAR_SEARCH' })}
-                style={{ marginBottom: '8px' }}
-            />
-            <Paper>
-                <Grid rows={rows} columns={columns} getRowId={getRowId}>
-                    <DataTypeProvider formatterComponent={ActionsFormatter} for={['actions']} />
-                    <DataTypeProvider formatterComponent={PackageNameFormatter} for={['name']} />
-                    <DataTypeProvider formatterComponent={KeywordsFormatter} for={['keywords']} />
-                    <VirtualTableState
-                        loading={loading}
-                        totalRowCount={totalCount}
-                        pageSize={VIRTUAL_PAGE_SIZE}
-                        skip={skip}
-                        getRows={getRemoteRows}
-                    />
-                    <VirtualTable columnExtensions={tableColumnExtensions} />
-                    <TableHeaderRow />
-                </Grid>
-            </Paper>
+            <div style={{ height: '100%' }}>
+                <SearchBar
+                    value={search}
+                    onChange={(newValue) => dispatch({ type: 'CHANGE_SEARCH', payload: newValue })}
+                    onRequestSearch={() => dispatch({ type: 'EXECUTE_SEARCH' })}
+                    onCancelSearch={() => dispatch({ type: 'CLEAR_SEARCH' })}
+                    style={{ marginBottom: '8px' }}
+                />
+                <div style={{ flex: '1 1 auto' }}>
+                    <Paper>
+                        <Grid rows={rows} columns={columns} getRowId={getRowId} rootComponent={Root}>
+                            <DataTypeProvider formatterComponent={ActionsFormatter} for={['actions']} />
+                            <DataTypeProvider formatterComponent={PackageNameFormatter} for={['name']} />
+                            <DataTypeProvider formatterComponent={KeywordsFormatter} for={['keywords']} />
+                            <VirtualTableState
+                                loading={loading}
+                                totalRowCount={totalCount}
+                                pageSize={VIRTUAL_PAGE_SIZE}
+                                skip={skip}
+                                getRows={getRemoteRows}
+                            />
+                            <VirtualTable columnExtensions={tableColumnExtensions} />
+                            <TableHeaderRow />
+                        </Grid>
+                    </Paper>
+                </div>
+            </div>
         </>
     );
 };
