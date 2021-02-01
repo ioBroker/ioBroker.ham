@@ -274,6 +274,11 @@ export default ({ adapterConfig }) => {
         return value.map((k) => <Chip key={k} variant="outlined" size="small" label={k} />);
     };
 
+    const onDialogClose = ({ save, wrapperConfig }) => {
+        console.log('onDialogClose', save, wrapperConfig);
+        dispatch({ type: 'CLOSE_CONFIG' });
+    };
+
     return (
         <div style={{ height: '100%' }}>
             <SearchBar
@@ -301,7 +306,7 @@ export default ({ adapterConfig }) => {
                     </Grid>
                 </Paper>
             </div>
-            <ConfigDialog moduleName={openConfig} wrapperConfig={wrapperConfig} />
+            <ConfigDialog moduleName={openConfig} wrapperConfig={wrapperConfig} onClose={onDialogClose} />
         </div>
     );
 };
