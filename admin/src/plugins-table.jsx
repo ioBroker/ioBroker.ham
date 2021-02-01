@@ -175,7 +175,8 @@ export default (props) => {
                 !searchTerms.filter(
                     (t) =>
                         !item.package.name.toLowerCase().includes(t) &&
-                        !item.package.description.toLowerCase().includes(t),
+                        !item.package.description.toLowerCase().includes(t) &&
+                        !item.package.keywords.filter((k) => k.toLowerCase().includes(t)).length,
                 ).length;
         }
 
