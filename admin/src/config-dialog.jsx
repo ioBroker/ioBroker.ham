@@ -62,7 +62,7 @@ function reducer(state, { type, payload }) {
     }
 }
 
-export default ({ moduleName, wrapperConfig, onClose }) => {
+export default ({ moduleName, isNew, wrapperConfig, onClose }) => {
     const [state, dispatch] = useReducer(reducer, { ...initialState, wrapperConfig: wrapperConfig });
 
     const loadData = () => {
@@ -103,13 +103,14 @@ export default ({ moduleName, wrapperConfig, onClose }) => {
     useEffect(() => loadData());
 
     const { loading, open, title, configSchema } = state;
-    console.log('wrapperConfig', wrapperConfig, configSchema);
     let configList = [];
     let configIndex = -1;
     if (configSchema) {
         const kind = configSchema.pluginType === 'platform' ? 'platforms' : 'accessories';
         configList = wrapperConfig[kind];
-        configIndex = configList.findIndex((c) => c[configSchema.pluginType] === configSchema.pluginAlias);
+        if (!isNew) {
+            configIndex = configList.findIndex((c) => c[configSchema.pluginType] === configSchema.pluginAlias);
+        }
     }
 
     const config = configList[configIndex] || {};
@@ -126,7 +127,10 @@ export default ({ moduleName, wrapperConfig, onClose }) => {
 
     const handleSave = () => {
         dispatch({ type: 'CLOSE_DIALOG' });
-        if (configList[configIndex]) {
+        if (isNew) {
+            lastFormData[configSchema.pluginType] = configSchema.pluginAlias;
+            configList.push(lastFormData);
+        } else if (configList[configIndex]) {
             configList[configIndex] = lastFormData;
         }
         onClose({ save: true, wrapperConfig: wrapperConfig });

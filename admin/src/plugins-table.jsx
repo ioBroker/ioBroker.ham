@@ -1,5 +1,6 @@
 import { DataTypeProvider, VirtualTableState } from '@devexpress/dx-react-grid';
 import { Grid, TableHeaderRow, VirtualTable } from '@devexpress/dx-react-grid-material-ui';
+import Confirm from '@iobroker/adapter-react/Dialogs/Confirm';
 import Button from '@material-ui/core/Button';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 import Chip from '@material-ui/core/Chip';
@@ -31,8 +32,10 @@ const initialState = {
     totalCount: 0,
     loading: false,
     lastQuery: '',
+    lastAdapterConfigJson: '{}',
     search: '',
     openConfig: undefined,
+    confirmDelete: undefined,
 };
 
 function reducer(state, { type, payload }) {
@@ -60,10 +63,11 @@ function reducer(state, { type, payload }) {
                 ...state,
                 loading: true,
             };
-        case 'UPDATE_QUERY':
+        case 'UPDATE_CACHE':
             return {
                 ...state,
-                lastQuery: payload,
+                lastQuery: payload.query,
+                lastAdapterConfigJson: JSON.stringify(payload.adapterConfig),
             };
         case 'CHANGE_SEARCH':
             return {
@@ -87,10 +91,21 @@ function reducer(state, { type, payload }) {
                 ...state,
                 openConfig: payload,
             };
+        case 'INSTALL_CONFIG':
+            return {
+                ...state,
+                installConfig: payload,
+            };
         case 'CLOSE_CONFIG':
             return {
                 ...state,
                 openConfig: undefined,
+                installConfig: undefined,
+            };
+        case 'CONFIRM_DELETE':
+            return {
+                ...state,
+                confirmDelete: payload,
             };
         default:
             return state;
@@ -110,12 +125,8 @@ const cleanModuleName = (name) => {
 
 const Root = (props) => <Grid.Root {...props} style={{ height: 'calc(100% - 64px)' }} />;
 
-export default ({ adapterConfig }) => {
-    const [state, dispatch] = useReducer(reducer, {
-        ...initialState,
-        installed: adapterConfig.libraries.split(/[,;\s]+/).filter((p) => !!p),
-        wrapperConfig: adapterConfig.wrapperConfig,
-    });
+export default ({ adapterConfig, onChange, showToast }) => {
+    const [state, dispatch] = useReducer(reducer, initialState);
     const [columns] = useState([
         { name: 'name', title: 'Name', getCellValue: (row) => cleanModuleName(row.package.name) },
         { name: 'actions', title: 'Actions', getCellValue: (row) => row },
@@ -193,17 +204,17 @@ export default ({ adapterConfig }) => {
             });
     };
 
+    const installed = adapterConfig.libraries.split(/[,;\s]+/).filter((p) => !!p);
     const loadData = () => {
-        const { requestedSkip, take, search, lastQuery, loading } = state;
+        const { requestedSkip, take, search, lastQuery, lastAdapterConfigJson, loading } = state;
         const query = buildQueryString(requestedSkip, take, search);
-        if (query !== lastQuery && !loading) {
+        if ((query !== lastQuery || JSON.stringify(adapterConfig) !== lastAdapterConfigJson) && !loading) {
             dispatch({ type: 'FETCH_INIT' });
             fetch(query)
                 .then((response) => response.json())
-                .then(({ results, total }) => {
-                    console.log('before prependInstalled', state);
-                    return prependInstalled(results, total, requestedSkip === 0 ? state.installed : [], search);
-                })
+                .then(({ results, total }) =>
+                    prependInstalled(results, total, requestedSkip === 0 ? installed : [], search),
+                )
                 .then(({ results, total }) => {
                     dispatch({
                         type: 'UPDATE_ROWS',
@@ -215,13 +226,13 @@ export default ({ adapterConfig }) => {
                     });
                 })
                 .catch(() => dispatch({ type: 'REQUEST_ERROR' }));
-            dispatch({ type: 'UPDATE_QUERY', payload: query });
+            dispatch({ type: 'UPDATE_CACHE', payload: { query, adapterConfig } });
         }
     };
 
     useEffect(() => loadData());
 
-    const { rows, skip, totalCount, loading, search, openConfig, wrapperConfig } = state;
+    const { rows, skip, totalCount, loading, search, openConfig, installConfig, confirmDelete } = state;
 
     const PackageNameFormatter = ({ value, row }) => {
         return (
@@ -250,6 +261,34 @@ export default ({ adapterConfig }) => {
         dispatch({ type: 'OPEN_CONFIG', payload: `${row.package.name}${versionPostfix}` });
     };
 
+    const onUpdateOrInstallClicked = (row) => {
+        const packageRef = `${row.package.name}@${row.package.version}`;
+        if (row.installed) {
+            const index = installed.findIndex((m) => m.startsWith(`${row.package.name}@`) || m === row.package.name);
+            if (index !== -1) {
+                installed[index] = packageRef;
+                showToast(`${row.package.name} will be updated to ${row.package.version}`);
+                onChange({ libraries: installed.join(' ') });
+            }
+        } else {
+            dispatch({ type: 'INSTALL_CONFIG', payload: packageRef });
+        }
+    };
+
+    const onDeleteClicked = (row) => {
+        dispatch({ type: 'CONFIRM_DELETE', payload: row.package.name });
+    };
+
+    const onDeleteConfirmed = (ok) => {
+        dispatch({ type: 'CONFIRM_DELETE' }); // closes the dialog by clearing "confirmDelete"
+        const index = installed.findIndex((m) => m.startsWith(`${confirmDelete}@`) || m === confirmDelete);
+        if (ok && index !== -1) {
+            installed.splice(index, 1);
+            showToast(`${confirmDelete} will be removed`);
+            onChange({ libraries: installed.join(' ') });
+        }
+    };
+
     const ActionsFormatter = ({ row }) => {
         return (
             <ButtonGroup size="small" aria-label="outlined primary button group">
@@ -258,6 +297,7 @@ export default ({ adapterConfig }) => {
                     tooltip={row.installed ? 'Update' : 'Install'}
                     disabled={row.installed && row.installed === row.package.version}
                     Icon={row.installed ? Update : GetApp}
+                    onClick={() => onUpdateOrInstallClicked(row)}
                 />
                 <ToolTipButton
                     tooltip="Configure"
@@ -265,7 +305,12 @@ export default ({ adapterConfig }) => {
                     Icon={Build}
                     onClick={() => onConfigureClicked(row)}
                 />
-                <ToolTipButton tooltip="Delete" disabled={!row.installed} Icon={DeleteForever} />
+                <ToolTipButton
+                    tooltip="Remove"
+                    disabled={!row.installed}
+                    Icon={DeleteForever}
+                    onClick={() => onDeleteClicked(row)}
+                />
             </ButtonGroup>
         );
     };
@@ -275,7 +320,15 @@ export default ({ adapterConfig }) => {
     };
 
     const onDialogClose = ({ save, wrapperConfig }) => {
-        console.log('onDialogClose', save, wrapperConfig);
+        if (save) {
+            if (installConfig) {
+                installed.push(installConfig);
+                showToast(`${installConfig} will be installed`);
+                onChange({ wrapperConfig, libraries: installed.join(' ') });
+            } else {
+                onChange({ wrapperConfig });
+            }
+        }
         dispatch({ type: 'CLOSE_CONFIG' });
     };
 
@@ -306,7 +359,15 @@ export default ({ adapterConfig }) => {
                     </Grid>
                 </Paper>
             </div>
-            <ConfigDialog moduleName={openConfig} wrapperConfig={wrapperConfig} onClose={onDialogClose} />
+            <ConfigDialog
+                moduleName={openConfig || installConfig}
+                isNew={!!installConfig}
+                wrapperConfig={adapterConfig.wrapperConfig}
+                onClose={onDialogClose}
+            />
+            {confirmDelete && (
+                <Confirm text={`Do you really want to remove ${confirmDelete}?`} onClose={onDeleteConfirmed} />
+            )}
         </div>
     );
 };

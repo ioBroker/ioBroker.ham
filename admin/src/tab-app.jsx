@@ -36,6 +36,11 @@ class TabApp extends GenericApp {
         // executed when connection is ready
     }
 
+    handleChange(changes) {
+        //console.log('save this:', { ...this.state.native, ...changes });
+        this.setState({ native: { ...this.state.native, ...changes } }, () => this.onSave(false));
+    }
+
     render() {
         if (!this.state.loaded) {
             return super.render();
@@ -43,7 +48,11 @@ class TabApp extends GenericApp {
 
         return (
             <div className="App">
-                <PluginsTable adapterConfig={this.state.native} />
+                <PluginsTable
+                    adapterConfig={this.state.native}
+                    onChange={(changes) => this.handleChange(changes)}
+                    showToast={(toast) => this.showToast(toast)}
+                />
                 {this.renderError()}
                 {this.renderToast()}
             </div>
