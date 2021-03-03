@@ -28,7 +28,7 @@
   },
   "description": "Homebridge accessories manager",
   "devDependencies": {
-    "@alcalzone/release-script": "^1.8.1",
+    "@alcalzone/release-script": "^1.8.3",
     "chai": "^4.3.0",
     "gulp": "^4.0.2",
     "mocha": "^8.2.1",
