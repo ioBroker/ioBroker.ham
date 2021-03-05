@@ -98,7 +98,7 @@ jobs:
           rm -rf tmp/node_modules/iobroker.ham/node_modules/homebridge-http-webhooks
           rm -rf tmp/node_modules/iobroker.ham/node_modules/homebridge-sun-position
           rm -rf tmp/node_modules/iobroker.ham/node_modules/homebridge
-          npm install -g homebridge@1.1.1
+          npm install -g homebridge@1.3.2
           npm install -g homebridge-http-webhooks
           npm install -g homebridge-sun-position
           export NODE_GLOBAL_DIR=$(npm root -g)
@@ -115,7 +115,7 @@ jobs:
         if: startsWith(runner.OS, 'windows')
         shell: cmd
         run: |
-          npm install -g homebridge@1.1.1
+          npm install -g homebridge@1.3.2
           npm install -g homebridge-http-webhooks
           npm install -g homebridge-sun-position
           for /f "delims=" %%A in ('npm root -g') do set "NODE_GLOBAL_DIR=%%A"
