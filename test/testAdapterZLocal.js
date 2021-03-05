@@ -364,12 +364,12 @@ describe('Test ' + adapterShortName + ' Local adapter', () => {
     }).timeout(10000);
 
     after('Test ' + adapterShortName + ' Local adapter: Stop js-controller', function (done) {
-        this.timeout(10000);
+        this.timeout(12000);
 
         setup.stopController(function (normalTerminated) {
             console.log('Adapter normal terminated: ' + normalTerminated);
             httpServer.close();
-            done();
+            setTimeout(done, 2000);
         });
     });
 });
