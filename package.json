@@ -1,7 +1,6 @@
 {
+  "version": "4.0.0",
   "name": "iobroker.ham",
-  "version": "3.1.0",
-  "description": "ioBroker Homebridge Adapter",
   "author": {
     "name": "Apollon77",
     "email": "ingo@fischer-ka.de"
@@ -23,13 +22,14 @@
     "node": ">=10.17.0"
   },
   "dependencies": {
-    "@iobroker/adapter-core": "^2.3.1",
-    "homebridge-plugin-wrapper": "^2.0.3",
+    "homebridge-plugin-wrapper": "Apollon77/homebridge-plugin-wrapper",
     "react-virtualized": "^9.22.3",
+    "@iobroker/adapter-core": "^2.4.0",
     "string-argv": "^0.3.1"
   },
+  "description": "Homebridge accessories manager",
   "devDependencies": {
-    "@alcalzone/release-script": "^1.8.1",
+    "@alcalzone/release-script": "^1.8.3",
     "@babel/cli": "^7.12.10",
     "@babel/core": "^7.12.10",
     "@devexpress/dx-react-core": "^2.7.4",
@@ -53,10 +53,10 @@
     "@types/sinon": "^9.0.10",
     "@types/sinon-chai": "^3.2.5",
     "axios": "^0.21.1",
-    "chai": "^4.2.0",
+    "chai": "^4.3.3",
     "gulp": "^4.0.2",
     "material-ui-search-bar": "^1.0.0",
-    "mocha": "^8.2.1",
+    "mocha": "^8.3.0",
     "parcel-bundler": "^1.12.4",
     "proxyquire": "^2.1.3",
     "react": "^16.14.0",
