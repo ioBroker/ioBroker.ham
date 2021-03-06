@@ -52,6 +52,9 @@ For this to work you need to provide the location of the systems global node-mod
 
 ## Changelog
 
+### __WORK IN PROGRESS__
+* (Apollon77) update homebridge and wrapper to 1.3.2 (latest as of today). IMPORTANT: Requires also homebridge 1.3.x installed when using global mode and local mode will update to 1.3.x too! Check your plugins for updates!
+
 ### 3.0.2 (2020-11-29)
 * (Apollon77) update homebridge in wrapper to 1.1.6 (latest as of today)
 
