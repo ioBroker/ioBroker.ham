@@ -208,43 +208,71 @@
         "title": "Homebridge accessories manager",
         "titleLang": {
             "en": "Homebridge accessories manager",
-            "de": "Homebridge accessories manager",
-            "ru": "Homebridge accessories manager",
-            "pt": "Homebridge accessories manager",
-            "nl": "Homebridge accessories manager",
-            "fr": "Homebridge accessories manager",
-            "it": "Homebridge accessories manager",
-            "es": "Homebridge accessories manager",
-            "zh-cn": "Homebridge外设管理器"
+            "de": "Homebridge Zubehör Manager",
+            "ru": "Менеджер по аксессуарам для домашнего моста",
+            "pt": "Gerente de acessórios Homebridge",
+            "nl": "Homebridge accessoires manager",
+            "fr": "Gestionnaire d'accessoires Homebridge",
+            "it": "Responsabile degli accessori di Homebridge",
+            "es": "Gerente de accesorios de Homebridge",
+            "pl": "Menedżer akcesoriów Homebridge",
+            "zh-cn": "Homebridge配件经理"
         },
         "desc": {
             "en": "ioBroker Homebridge Adapter",
             "de": "ioBroker Homebridge Adapter",
-            "ru": "ioBroker Homebridge драйвер",
-            "pt": "Modelo de Homebridge para o ioBroker",
-            "fr": "ioBroker Homebridge modèle",
-            "nl": "ioBroker Homebridge Adapter",
-            "it": "Adattatore Homebridge ioBroker",
-            "es": "Adaptador Homebridge ioBroker",
-            "zh-cn": "Homebridge接入适配器"
+            "ru": "Адаптер домашнего моста ioBroker",
+            "pt": "Adaptador ioBroker Homebridge",
+            "nl": "ioBroker Homebridge-adapter",
+            "fr": "Adaptateur Homebridge ioBroker",
+            "it": "Adattatore ioBroker Homebridge",
+            "es": "Adaptador de puente doméstico ioBroker",
+            "pl": "Adapter ioBroker Homebridge",
+            "zh-cn": "ioBroker Homebridge适配器"
         },
         "authors": [
             "Kirov Ilya <kirovilya@gmail.com>",
             "Apollon77 <ingo@fischer-ka.de>"
         ],
-        "license": "MIT",
-        "platform": "Javascript/Node.js",
-        "mode": "daemon",
-        "icon": "ham.png",
-        "materialize": true,
-        "enabled": false,
-        "extIcon": "https://raw.githubusercontent.com/ioBroker/ioBroker.ham/master/admin/ham.png",
         "keywords": [
             "homebridge"
         ],
+        "license": "MIT",
+        "platform": "Javascript/Node.js",
+        "main": "main.js",
+        "icon": "ham.png",
+        "enabled": false,
+        "extIcon": "https://raw.githubusercontent.com/ioBroker/ioBroker.ham/master/admin/ham.png",
         "readme": "https://github.com/ioBroker/ioBroker.ham/blob/master/README.md",
         "loglevel": "info",
-        "type": "iot-systems"
+        "mode": "daemon",
+        "type": "iot-systems",
+        "connectionType": "local",
+        "dataSource": "push",
+        "materialize": true,
+        "materializeTab": true,
+        "adminTab": {
+            "singleton": true,
+            "name": {
+                "en": "Homebridge",
+                "de": "Homebridge",
+                "ru": "Homebridge",
+                "pt": "Homebridge",
+                "nl": "Homebridge",
+                "fr": "Homebridge",
+                "it": "Homebridge",
+                "es": "Homebridge",
+                "pl": "Homebridge",
+                "zh-cn": "Homebridge"
+            },
+            "link": "",
+            "fa-icon": "home"
+        },
+        "dependencies": [
+            {
+                "js-controller": ">=2.0.0"
+            }
+        ]
     },
     "native": {
         "useGlobalHomebridge": false,
@@ -263,5 +291,6 @@
         "updateLibraries": false,
         "virtualCommandLine": ""
     },
-    "objects": []
+    "objects": [],
+    "instanceObjects": []
 }

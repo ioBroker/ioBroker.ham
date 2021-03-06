@@ -1,0 +1,41 @@
+{
+    "cli": true,
+    "adapterName": "ham",
+    "title": "Homebridge accessories manager",
+    "description": "ioBroker Homebridge Adapter",
+    "keywords": [
+        "homebridge"
+    ],
+    "expert": "yes",
+    "features": [
+        "adapter"
+    ],
+    "adminFeatures": [
+        "tab"
+    ],
+    "type": "iot-systems",
+    "startMode": "daemon",
+    "connectionType": "local",
+    "dataSource": "push",
+    "connectionIndicator": "no",
+    "language": "JavaScript",
+    "adminReact": "no",
+    "tabReact": "yes",
+    "tools": [
+        "ESLint",
+        "type checking",
+        "devcontainer"
+    ],
+    "indentation": "Space (4)",
+    "quotes": "single",
+    "es6class": "no",
+    "authorName": "Apollon77",
+    "authorGithub": "ioBroker",
+    "authorEmail": "ingo@fischer-ka.de",
+    "gitRemoteProtocol": "HTTPS",
+    "gitCommit": "no",
+    "license": "MIT License",
+    "ci": "gh-actions",
+    "dependabot": "yes",
+    "creatorVersion": "1.31.0"
+}
