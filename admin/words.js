@@ -85,5 +85,17 @@ systemDictionary = {
         "es": "Modo local (instale un Homebridge local en ioBroker como puente)",
         "pl": "Tryb lokalny (zainstaluj lokalny mostek domowy w ioBroker as Bridge)",
         "zh-cn": "本地模式（在ioBroker中安装本地Homebridge作为Bridge）"
+    },
+    "reactTabInfo": {
+        "en": "Check out the new Admin-tab \"Homebridge\" (needs to be manually activated) for a more convenient way to install plugins and configure them (Beta).",
+        "de": "Auf der neuen Admin-Registerkarte \"Homebridge\" (muss manuell aktiviert werden) findet sich eine bequemere Möglichkeit, Plugins zu installieren und zu konfigurieren (Beta).",
+        "ru": "Ознакомьтесь с новой вкладкой администратора «Homebridge» (необходимо активировать вручную) для более удобного способа установки и настройки плагинов (бета).",
+        "pt": "Confira a nova aba Admin \"Homebridge\" (precisa ser ativada manualmente) para uma maneira mais conveniente de instalar plugins e configurá-los (Beta).",
+        "nl": "Bekijk de nieuwe Admin-tab \"Homebridge\" (moet handmatig worden geactiveerd) voor een gemakkelijkere manier om plug-ins te installeren en te configureren (Beta).",
+        "fr": "Consultez le nouvel onglet Admin \"Homebridge\" (doit être activé manuellement) pour un moyen plus pratique d'installer des plugins et de les configurer (bêta).",
+        "it": "Controlla la nuova scheda di amministrazione \"Homebridge\" (deve essere attivata manualmente) per un modo più conveniente di installare i plugin e configurarli (Beta).",
+        "es": "Consulte la nueva pestaña de administración \"Homebridge\" (debe activarse manualmente) para obtener una forma más conveniente de instalar complementos y configurarlos (Beta).",
+        "pl": "Sprawdź nową kartę Administratora „Homebridge” (wymaga ręcznej aktywacji), aby uzyskać wygodniejszy sposób instalowania i konfigurowania wtyczek (Beta).",
+        "zh-cn": "查看新的“管理”标签“ Homebridge”（需要手动激活），以更方便的方式安装插件并对其进行配置（测试版）。"
     }
 };
