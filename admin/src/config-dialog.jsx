@@ -144,7 +144,7 @@ export default ({ moduleName, isNew, wrapperConfig, onClose }) => {
             <Dialog aria-labelledby="form-dialog-title" fullWidth={true} maxWidth="md" open={open}>
                 <DialogTitle id="form-dialog-title">Configure {title}</DialogTitle>
                 <DialogContent>
-                    {configSchema?.headerDisplay && (
+                    {configSchema && configSchema.headerDisplay && (
                         <Typography component="div">
                             <ReactMarkdown linkTarget="_blank">{configSchema.headerDisplay}</ReactMarkdown>
                         </Typography>
@@ -166,7 +166,7 @@ export default ({ moduleName, isNew, wrapperConfig, onClose }) => {
                 </DialogContent>
                 <DialogActions>
                     <Typography component="div">
-                        <ReactMarkdown linkTarget="_blank">{configSchema?.footerDisplay}</ReactMarkdown>
+                        <ReactMarkdown linkTarget="_blank">{configSchema && configSchema.footerDisplay}</ReactMarkdown>
                     </Typography>
                     <div style={{ flex: '1 0 0' }} />
                     <Button color="primary" onClick={handleClose}>
