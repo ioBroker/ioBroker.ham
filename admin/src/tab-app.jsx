@@ -50,6 +50,8 @@ class TabApp extends GenericApp {
             <div className="App">
                 <PluginsTable
                     adapterConfig={this.state.native}
+                    socket={this.socket}
+                    instanceId={this.instanceId}
                     onChange={(changes) => this.handleChange(changes)}
                     showToast={(toast) => this.showToast(toast)}
                 />
