@@ -123,7 +123,8 @@ const cleanModuleName = (name) => {
         .replace(/^@.+?\//, '');
 };
 
-const Root = (props) => <DxGrid.Root {...props} style={{ height: 'calc(100% - 72px)' }} />;
+const remainderHeight = 'calc(100% - 72px)';
+const Root = (props) => <DxGrid.Root {...props} style={{ height: remainderHeight }} />;
 
 export default ({ adapterConfig, socket, instanceId, onChange, showToast }) => {
     const [state, dispatch] = useReducer(reducer, initialState);
@@ -351,6 +352,8 @@ export default ({ adapterConfig, socket, instanceId, onChange, showToast }) => {
         location.href = location.pathname + '?' + parts[parts.length - 1];
     };
 
+    const isGlobalMode = adapterConfig.useGlobalHomebridge;
+
     return (
         <div style={{ height: '100%', paddingRight: '4px' }}>
             <Grid container spacing={3} style={{ marginBottom: '8px' }}>
@@ -372,12 +375,12 @@ export default ({ adapterConfig, socket, instanceId, onChange, showToast }) => {
                       xs={instances.length > 1 ? 9 : 12}
                       md={instances.length > 1 ? 10 : 12}
                       xl={instances.length > 1 ? 11 : 12}>
-                    <SearchField onSearch={(search) => dispatch({ type: 'EXECUTE_SEARCH', payload: search })} />
+                    {!isGlobalMode && <SearchField onSearch={(search) => dispatch({ type: 'EXECUTE_SEARCH', payload: search })} />}
                 </Grid> 
             </Grid>
             <div style={{ flex: '1 1 auto' }}>
                 <Paper>
-                    <DxGrid rows={rows} columns={columns} getRowId={getRowId} rootComponent={Root}>
+                    {!isGlobalMode && <DxGrid rows={rows} columns={columns} getRowId={getRowId} rootComponent={Root}>
                         <DataTypeProvider formatterComponent={ActionsFormatter} for={['actions']} />
                         <DataTypeProvider formatterComponent={PackageNameFormatter} for={['name']} />
                         <DataTypeProvider formatterComponent={KeywordsFormatter} for={['keywords']} />
@@ -390,7 +393,17 @@ export default ({ adapterConfig, socket, instanceId, onChange, showToast }) => {
                         />
                         <VirtualTable columnExtensions={tableColumnExtensions} />
                         <TableHeaderRow />
-                    </DxGrid>
+                    </DxGrid>}
+                    {isGlobalMode && <Grid container spacing={3} style={{ height: remainderHeight, padding: '8px' }}>
+                        <Grid item xs={12}>
+                            <Typography variant="h6" gutterBottom>Global Mode</Typography>
+                            <Typography variant="body1" gutterBottom>
+                                This instance is configured in global mode.
+                                The installation of modules and configuration is managed outside of ioBroker
+                                and thus nothing can be configured here.
+                            </Typography>
+                        </Grid>
+                    </Grid>}
                 </Paper>
             </div>
             <ConfigDialog
