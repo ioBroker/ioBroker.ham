@@ -347,8 +347,6 @@ export default ({ adapterConfig, socket, instanceId, onChange, showToast }) => {
 
     const onSwitchInstance = ({ target }) => {
         const parts = target.value.split('.');
-        console.log(target.value);
-        console.log(location);
         location.href = location.pathname + '?' + parts[parts.length - 1];
     };
 
