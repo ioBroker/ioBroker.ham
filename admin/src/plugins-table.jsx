@@ -17,9 +17,9 @@ import DeleteForever from '@material-ui/icons/DeleteForever';
 import GetApp from '@material-ui/icons/GetApp';
 import HelpOutline from '@material-ui/icons/HelpOutline';
 import Update from '@material-ui/icons/Update';
-import SearchBar from 'material-ui-search-bar';
 import React, { useEffect, useReducer, useState } from 'react';
 import ConfigDialog from './config-dialog';
+import SearchField from './search-field';
 
 const VIRTUAL_PAGE_SIZE = 50;
 const SEARCH_URL = 'https://api.npms.io/v2/search?q=keywords:homebridge-plugin';
@@ -80,22 +80,11 @@ function reducer(state, { type, payload }) {
                 lastQuery: payload.query,
                 lastAdapterConfigJson: JSON.stringify(payload.adapterConfig),
             };
-        case 'CHANGE_SEARCH':
-            return {
-                ...state,
-                typingSearch: payload,
-            };
         case 'EXECUTE_SEARCH':
             return {
                 ...state,
-                search: state.typingSearch,
-                rows: state.search !== state.typingSearch ? [] : state.rows,
-            };
-        case 'CLEAR_SEARCH':
-            return {
-                ...state,
-                search: '',
-                rows: state.search ? [] : state.rows,
+                search: payload,
+                rows: state.search !== payload ? [] : state.rows,
             };
         case 'OPEN_CONFIG':
             return {
@@ -134,7 +123,7 @@ const cleanModuleName = (name) => {
         .replace(/^@.+?\//, '');
 };
 
-const Root = (props) => <DxGrid.Root {...props} style={{ height: 'calc(100% - 64px)' }} />;
+const Root = (props) => <DxGrid.Root {...props} style={{ height: 'calc(100% - 72px)' }} />;
 
 export default ({ adapterConfig, socket, instanceId, onChange, showToast }) => {
     const [state, dispatch] = useReducer(reducer, initialState);
@@ -383,12 +372,7 @@ export default ({ adapterConfig, socket, instanceId, onChange, showToast }) => {
                       xs={instances.length > 1 ? 9 : 12}
                       md={instances.length > 1 ? 10 : 12}
                       xl={instances.length > 1 ? 11 : 12}>
-                    <SearchBar
-                        value={search}
-                        onChange={(newValue) => dispatch({ type: 'CHANGE_SEARCH', payload: newValue })}
-                        onRequestSearch={() => dispatch({ type: 'EXECUTE_SEARCH' })}
-                        onCancelSearch={() => dispatch({ type: 'CLEAR_SEARCH' })}
-                    />
+                    <SearchField onSearch={(search) => dispatch({ type: 'EXECUTE_SEARCH', payload: search })} />
                 </Grid> 
             </Grid>
             <div style={{ flex: '1 1 auto' }}>
