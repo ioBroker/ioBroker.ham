@@ -192,7 +192,7 @@ export default ({ adapterConfig, socket, instanceId, onChange, showToast }) => {
                     keys.push(key);
                 }
                 keys.sort();
-                results = results.filter((r) => !names.includes(r.package.name));
+                results = results.filter((r) => !names.includes(r.package.name) && !r.package.name.includes('config-ui-'));
                 results.unshift(
                     ...keys
                         .map((k) => ({
