@@ -1,3 +1,4 @@
+import I18n from '@iobroker/adapter-react/i18n';
 import Backdrop from '@material-ui/core/Backdrop';
 import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
@@ -142,7 +143,7 @@ export default ({ moduleName, isNew, wrapperConfig, onClose }) => {
                 <CircularProgress color="inherit" />
             </Backdrop>
             <Dialog aria-labelledby="form-dialog-title" fullWidth={true} maxWidth="md" open={open}>
-                <DialogTitle id="form-dialog-title">Configure {title}</DialogTitle>
+                <DialogTitle id="form-dialog-title">{I18n.t('Configure %s', title)}</DialogTitle>
                 <DialogContent>
                     {configSchema && configSchema.headerDisplay && (
                         <Typography component="div">
@@ -170,10 +171,10 @@ export default ({ moduleName, isNew, wrapperConfig, onClose }) => {
                     </Typography>
                     <div style={{ flex: '1 0 0' }} />
                     <Button color="primary" onClick={handleClose}>
-                        Cancel
+                        {I18n.t('Cancel')}
                     </Button>
                     <Button color="primary" onClick={handleSave}>
-                        Save
+                        {I18n.t('Save')}
                     </Button>
                 </DialogActions>
             </Dialog>

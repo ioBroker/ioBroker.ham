@@ -1,6 +1,7 @@
 import { DataTypeProvider, VirtualTableState } from '@devexpress/dx-react-grid';
 import { Grid as DxGrid, TableHeaderRow, VirtualTable } from '@devexpress/dx-react-grid-material-ui';
 import Confirm from '@iobroker/adapter-react/Dialogs/Confirm';
+import I18n from '@iobroker/adapter-react/i18n';
 import Button from '@material-ui/core/Button';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 import Chip from '@material-ui/core/Chip';
@@ -305,21 +306,21 @@ export default ({ adapterConfig, socket, instanceId, onChange, showToast }) => {
     const ActionsFormatter = ({ row }) => {
         return (
             <ButtonGroup size="small" aria-label="outlined primary button group">
-                <ToolTipButton tooltip="Readme" Icon={HelpOutline} target="_blank" href={row.package.links.homepage} />
+                <ToolTipButton tooltip={I18n.t('Readme')} Icon={HelpOutline} target="_blank" href={row.package.links.homepage} />
                 <ToolTipButton
-                    tooltip={row.installed ? 'Update' : 'Install'}
+                    tooltip={I18n.t(row.installed ? 'Update' : 'Install')}
                     disabled={row.installed && row.installed === row.package.version}
                     Icon={row.installed ? Update : GetApp}
                     onClick={() => onUpdateOrInstallClicked(row)}
                 />
                 <ToolTipButton
-                    tooltip="Configure"
+                    tooltip={I18n.t('Configure')}
                     disabled={!row.installed}
                     Icon={Build}
                     onClick={() => onConfigureClicked(row)}
                 />
                 <ToolTipButton
-                    tooltip="Remove"
+                    tooltip={I18n.t('Remove')}
                     disabled={!row.installed}
                     Icon={DeleteForever}
                     onClick={() => onDeleteClicked(row)}
@@ -336,7 +337,7 @@ export default ({ adapterConfig, socket, instanceId, onChange, showToast }) => {
         if (save) {
             if (installConfig) {
                 installed.push(installConfig);
-                showToast(`${installConfig} will be installed`);
+                showToast(I18n.t('%s will be installed', installConfig));
                 onChange({ wrapperConfig, libraries: installed.join(' ') });
             } else {
                 onChange({ wrapperConfig });
@@ -357,7 +358,7 @@ export default ({ adapterConfig, socket, instanceId, onChange, showToast }) => {
             <Grid container spacing={3} style={{ marginBottom: '8px' }}>
                 {instances.length > 1 && <Grid item xs={3} md={2} xl={1}>
                     <FormControl variant="outlined" fullWidth size="small" style={{ marginTop: '4px' }}>
-                        <InputLabel id="instanceId-label">Instance</InputLabel>
+                        <InputLabel id="instanceId-label">{I18n.t('Instance')}</InputLabel>
                         <Select
                             labelId="instanceId-label"
                             id="instanceId"
@@ -394,12 +395,8 @@ export default ({ adapterConfig, socket, instanceId, onChange, showToast }) => {
                     </DxGrid>}
                     {isGlobalMode && <Grid container spacing={3} style={{ height: remainderHeight, padding: '8px' }}>
                         <Grid item xs={12}>
-                            <Typography variant="h6" gutterBottom>Global Mode</Typography>
-                            <Typography variant="body1" gutterBottom>
-                                This instance is configured in global mode.
-                                The installation of modules and configuration is managed outside of ioBroker
-                                and thus nothing can be configured here.
-                            </Typography>
+                            <Typography variant="h6" gutterBottom>{I18n.t('Global Mode')}</Typography>
+                            <Typography variant="body1" gutterBottom>{I18n.t('global_mode_note')}</Typography>
                         </Grid>
                     </Grid>}
                 </Paper>
@@ -411,7 +408,7 @@ export default ({ adapterConfig, socket, instanceId, onChange, showToast }) => {
                 onClose={onDialogClose}
             />
             {confirmDelete && (
-                <Confirm text={`Do you really want to remove ${confirmDelete}?`} onClose={onDeleteConfirmed} />
+                <Confirm text={I18n.t('Do you really want to remove %s', confirmDelete)} onClose={onDeleteConfirmed} />
             )}
         </div>
     );

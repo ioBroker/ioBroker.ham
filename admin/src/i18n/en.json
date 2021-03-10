@@ -1,5 +1,16 @@
 {
-    "ham adapter settings": "Adapter settings for ham",
-    "option1": "option1",
-    "option2": "option2"
+    "Search": "Search",
+    "Readme": "Readme",
+    "Update": "Update",
+    "Install": "Install",
+    "Configure": "Configure",
+    "Remove": "Remove",
+    "Instance": "Instance",
+    "Cancel": "Cancel",
+    "Save": "Save",
+    "Global Mode": "Global Mode",
+    "global_mode_note": "This instance is configured in global mode. The installation of modules and configuration is managed outside of ioBroker and thus nothing can be configured here.",
+    "%s will be installed": "%s will be installed",
+    "Do you really want to remove %s": "Do you really want to remove %s?",
+    "Configure %s": "Configure %s"
 }
