@@ -272,6 +272,11 @@ export default ({ moduleName, isNew, readme, wrapperConfig, cache, onClose }) =>
         dialogContentRef.current.scrollTo(0, 0);
     };
 
+    const transformErrors = (errors) => {
+        console.log(JSON.stringify(errors, null, 2));
+        return errors.filter(e => !e.schemaPath || !e.schemaPath.startsWith('#/definitions/'));
+    }
+
     const handleJsonChange = (value) => {
         let error = undefined;
         try {
@@ -455,6 +460,7 @@ export default ({ moduleName, isNew, readme, wrapperConfig, cache, onClose }) =>
                                 onChange={handleFormChange}
                                 onSubmit={() => handleSave(false)}
                                 onError={handleFormError}
+                                transformErrors={transformErrors}
                                 ref={formRef}
                             >
                                 <Fragment />
