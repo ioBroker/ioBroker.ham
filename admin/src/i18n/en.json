@@ -8,9 +8,16 @@
     "Instance": "Instance",
     "Cancel": "Cancel",
     "Save": "Save",
+    "Type": "Type",
+    "Name": "Name",
+    "Preview": "Preview",
+    "Select": "Select",
     "Global Mode": "Global Mode",
     "global_mode_note": "This instance is configured in global mode. The installation of modules and configuration is managed outside of ioBroker and thus nothing can be configured here.",
     "%s will be installed": "%s will be installed",
     "Do you really want to remove %s": "Do you really want to remove %s?",
-    "Configure %s": "Configure %s"
+    "%s will be removed": "%s will be removed",
+    "Configure %s": "Configure %s",
+    "Select config for %s": "Select config for %s",
+    "select_config_note_%s": "We couldn't figure out which configuration section belongs to %s. Please choose the type and name of the configuration:"
 }

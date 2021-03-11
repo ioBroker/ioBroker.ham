@@ -2,6 +2,7 @@ import { DataTypeProvider, VirtualTableState } from '@devexpress/dx-react-grid';
 import { Grid as DxGrid, TableHeaderRow, VirtualTable } from '@devexpress/dx-react-grid-material-ui';
 import Confirm from '@iobroker/adapter-react/Dialogs/Confirm';
 import I18n from '@iobroker/adapter-react/i18n';
+import { Tab } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 import Chip from '@material-ui/core/Chip';
@@ -21,6 +22,7 @@ import Update from '@material-ui/icons/Update';
 import React, { useEffect, useReducer, useState } from 'react';
 import ConfigDialog from './config-dialog';
 import SearchField from './search-field';
+import { TabCache } from './tab-cache';
 
 const VIRTUAL_PAGE_SIZE = 50;
 const SEARCH_URL = 'https://api.npms.io/v2/search?q=keywords:homebridge-plugin';
@@ -145,6 +147,8 @@ export default ({ adapterConfig, socket, instanceId, onChange, showToast }) => {
         { columnName: 'keywords', width: 300 },
     ]);
 
+    adapterConfig._tabCache = adapterConfig._tabCache || {};
+
     const getRemoteRows = (requestedSkip, take) => {
         dispatch({ type: 'START_LOADING', payload: { requestedSkip, take } });
     };
@@ -246,8 +250,6 @@ export default ({ adapterConfig, socket, instanceId, onChange, showToast }) => {
     };
     useEffect(() => loadInstances());
 
-    const { rows, skip, totalCount, loading, search, openConfig, installConfig, confirmDelete, instances } = state;
-
     const PackageNameFormatter = ({ value, row }) => {
         return (
             <Tooltip title={row.package.name}>
@@ -294,12 +296,23 @@ export default ({ adapterConfig, socket, instanceId, onChange, showToast }) => {
     };
 
     const onDeleteConfirmed = (ok) => {
+        const { confirmDelete } = state;
         dispatch({ type: 'CONFIRM_DELETE' }); // closes the dialog by clearing "confirmDelete"
         const index = installed.findIndex((m) => m.startsWith(`${confirmDelete}@`) || m === confirmDelete);
         if (ok && index !== -1) {
-            installed.splice(index, 1);
-            showToast(`${confirmDelete} will be removed`);
-            onChange({ libraries: installed.join(' ') });
+            showToast(I18n.t('%s will be removed', confirmDelete));
+            const [ removed ] = installed.splice(index, 1);
+            const change = { libraries: installed.join(' ') };
+            try {
+                const tabCache = new TabCache(adapterConfig._tabCache);
+                const { configList, configIndex } = tabCache.locateConfig(removed, adapterConfig.wrapperConfig);
+                configList.splice(configIndex, 1);
+                change.wrapperConfig = adapterConfig.wrapperConfig;
+            } catch (e) {
+                console.error(`Couldn't delete plugin from wrapperConfig: ${e}`);
+            }
+
+            onChange(change);
         }
     };
 
@@ -333,14 +346,15 @@ export default ({ adapterConfig, socket, instanceId, onChange, showToast }) => {
         return value.map((k) => <Chip key={k} variant="outlined" size="small" label={k} />);
     };
 
-    const onDialogClose = ({ save, wrapperConfig }) => {
+    const onDialogClose = ({ save, wrapperConfig, cache }) => {
+        const { installConfig } = state;
         if (save) {
             if (installConfig) {
                 installed.push(installConfig);
                 showToast(I18n.t('%s will be installed', installConfig));
-                onChange({ wrapperConfig, libraries: installed.join(' ') });
+                onChange({ wrapperConfig, libraries: installed.join(' '), _tabCache: cache });
             } else {
-                onChange({ wrapperConfig });
+                onChange({ wrapperConfig, _tabCache: cache });
             }
         }
         dispatch({ type: 'CLOSE_CONFIG' });
@@ -353,6 +367,7 @@ export default ({ adapterConfig, socket, instanceId, onChange, showToast }) => {
 
     const isGlobalMode = adapterConfig.useGlobalHomebridge;
 
+    const { rows, skip, totalCount, loading, openConfig, installConfig, confirmDelete, instances } = state;
     return (
         <div style={{ height: '100%', paddingRight: '4px' }}>
             <Grid container spacing={3} style={{ marginBottom: '8px' }}>
@@ -405,6 +420,7 @@ export default ({ adapterConfig, socket, instanceId, onChange, showToast }) => {
                 moduleName={openConfig || installConfig}
                 isNew={!!installConfig}
                 wrapperConfig={adapterConfig.wrapperConfig}
+                cache={adapterConfig._tabCache}
                 onClose={onDialogClose}
             />
             {confirmDelete && (
