@@ -273,7 +273,7 @@ export default ({ moduleName, isNew, readme, wrapperConfig, cache, onClose }) =>
     };
 
     const transformErrors = (errors) => {
-        console.log(JSON.stringify(errors, null, 2));
+        // remove all errors that come from the schema definitions
         return errors.filter(e => !e.schemaPath || !e.schemaPath.startsWith('#/definitions/'));
     }
 
