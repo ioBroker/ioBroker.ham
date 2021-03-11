@@ -2,8 +2,6 @@ import { DataTypeProvider, VirtualTableState } from '@devexpress/dx-react-grid';
 import { Grid as DxGrid, TableHeaderRow, VirtualTable } from '@devexpress/dx-react-grid-material-ui';
 import Confirm from '@iobroker/adapter-react/Dialogs/Confirm';
 import I18n from '@iobroker/adapter-react/i18n';
-import { Tab } from '@material-ui/core';
-import Button from '@material-ui/core/Button';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 import Chip from '@material-ui/core/Chip';
 import FormControl from '@material-ui/core/FormControl';
@@ -23,6 +21,7 @@ import React, { useEffect, useReducer, useState } from 'react';
 import ConfigDialog from './config-dialog';
 import SearchField from './search-field';
 import { TabCache } from './tab-cache';
+import TooltipButton from './tooltip-button';
 
 const VIRTUAL_PAGE_SIZE = 50;
 const SEARCH_URL = 'https://api.npms.io/v2/search?q=keywords:homebridge-plugin';
@@ -92,12 +91,14 @@ function reducer(state, { type, payload }) {
         case 'OPEN_CONFIG':
             return {
                 ...state,
-                openConfig: payload,
+                openConfig: payload.moduleName,
+                configReadme: payload.readme,
             };
         case 'INSTALL_CONFIG':
             return {
                 ...state,
-                installConfig: payload,
+                installConfig: payload.moduleName,
+                configReadme: payload.readme,
             };
         case 'CLOSE_CONFIG':
             return {
@@ -258,23 +259,15 @@ export default ({ adapterConfig, socket, instanceId, onChange, showToast }) => {
         );
     };
 
-    const ToolTipButton = ({ tooltip, disabled, Icon, ...other }) => {
-        return !!disabled ? (
-            <Button disabled={true} {...other}>
-                <Icon />
-            </Button>
-        ) : (
-            <Tooltip title={tooltip}>
-                <Button {...other}>
-                    <Icon />
-                </Button>
-            </Tooltip>
-        );
-    };
-
     const onConfigureClicked = (row) => {
         const versionPostfix = row.installed === UNKNOWN_VERSION ? '' : `@${row.installed}`;
-        dispatch({ type: 'OPEN_CONFIG', payload: `${row.package.name}${versionPostfix}` });
+        dispatch({
+            type: 'OPEN_CONFIG',
+            payload: {
+                moduleName: `${row.package.name}${versionPostfix}`,
+                readme: row.package.links.homepage,
+            }
+        });
     };
 
     const onUpdateOrInstallClicked = (row) => {
@@ -287,7 +280,13 @@ export default ({ adapterConfig, socket, instanceId, onChange, showToast }) => {
                 onChange({ libraries: installed.join(' ') });
             }
         } else {
-            dispatch({ type: 'INSTALL_CONFIG', payload: packageRef });
+            dispatch({
+                type: 'INSTALL_CONFIG',
+                payload: {
+                    moduleName: packageRef,
+                    readme: row.package.links.homepage,
+                }
+             });
         }
     };
 
@@ -318,21 +317,21 @@ export default ({ adapterConfig, socket, instanceId, onChange, showToast }) => {
 
     const ActionsFormatter = ({ row }) => {
         return (
-            <ButtonGroup size="small" aria-label="outlined primary button group">
-                <ToolTipButton tooltip={I18n.t('Readme')} Icon={HelpOutline} target="_blank" href={row.package.links.homepage} />
-                <ToolTipButton
+            <ButtonGroup size="small">
+                <TooltipButton tooltip={I18n.t('Readme')} Icon={HelpOutline} target="_blank" href={row.package.links.homepage} />
+                <TooltipButton
                     tooltip={I18n.t(row.installed ? 'Update' : 'Install')}
                     disabled={row.installed && row.installed === row.package.version}
                     Icon={row.installed ? Update : GetApp}
                     onClick={() => onUpdateOrInstallClicked(row)}
                 />
-                <ToolTipButton
+                <TooltipButton
                     tooltip={I18n.t('Configure')}
                     disabled={!row.installed}
                     Icon={Build}
                     onClick={() => onConfigureClicked(row)}
                 />
-                <ToolTipButton
+                <TooltipButton
                     tooltip={I18n.t('Remove')}
                     disabled={!row.installed}
                     Icon={DeleteForever}
@@ -367,7 +366,7 @@ export default ({ adapterConfig, socket, instanceId, onChange, showToast }) => {
 
     const isGlobalMode = adapterConfig.useGlobalHomebridge;
 
-    const { rows, skip, totalCount, loading, openConfig, installConfig, confirmDelete, instances } = state;
+    const { rows, skip, totalCount, loading, openConfig, installConfig, configReadme, confirmDelete, instances } = state;
     return (
         <div style={{ height: '100%', paddingRight: '4px' }}>
             <Grid container spacing={3} style={{ marginBottom: '8px' }}>
@@ -419,6 +418,7 @@ export default ({ adapterConfig, socket, instanceId, onChange, showToast }) => {
             <ConfigDialog
                 moduleName={openConfig || installConfig}
                 isNew={!!installConfig}
+                readme={configReadme}
                 wrapperConfig={adapterConfig.wrapperConfig}
                 cache={adapterConfig._tabCache}
                 onClose={onDialogClose}

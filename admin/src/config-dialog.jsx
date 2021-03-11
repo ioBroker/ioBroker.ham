@@ -12,11 +12,16 @@ import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 import Typography from '@material-ui/core/Typography';
+import Code from '@material-ui/icons/Code';
+import HelpOutline from '@material-ui/icons/HelpOutline';
+import ListAlt from '@material-ui/icons/ListAlt';
+import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
 import Form from '@rjsf/material-ui';
-import React, { Fragment, useEffect, useReducer } from 'react';
+import React, { Fragment, useEffect, useReducer, useRef } from 'react';
 import AceEditor from 'react-ace';
 import ReactMarkdown from 'react-markdown';
 import { TabCache } from './tab-cache';
+import TooltipButton from './tooltip-button';
 
 import 'ace-builds/src-noconflict/mode-json';
 import 'ace-builds/src-noconflict/theme-github';
@@ -26,13 +31,12 @@ ace.config.set(
     "/lib/js/ace-1.2.0/" // if this doesn't work, we could also use jsdelivr "https://cdn.jsdelivr.net/npm/ace-builds@1.4.12/src-noconflict/"
 );
 
-const log = (type) => console.log.bind(console, type);
-
 const initialState = {
     loading: false,
     open: false,
     title: '',
     configSchema: undefined,
+    showForm: false,
     lastQuery: undefined,
     configChoice: undefined,
     selectedType: '',
@@ -99,6 +103,11 @@ function reducer(state, { type, payload }) {
                 text: payload.text,
                 inputError: payload.error,
             };
+        case 'SWITCH_DISPLAY_MODE':
+            return {
+                ...state,
+                showForm: payload,
+            };
         default:
             return state;
     }
@@ -107,7 +116,7 @@ function reducer(state, { type, payload }) {
 // list of all modules that schema fetch failed, so we don't fetch again from the remote server (only keep this in local memory)
 const skipFetchModules = [];
 
-export default ({ moduleName, isNew, wrapperConfig, cache, onClose }) => {
+export default ({ moduleName, isNew, readme, wrapperConfig, cache, onClose }) => {
     const [state, dispatch] = useReducer(reducer, { ...initialState, wrapperConfig: wrapperConfig });
     const tabCache = new TabCache(cache);
 
@@ -131,6 +140,7 @@ export default ({ moduleName, isNew, wrapperConfig, cache, onClose }) => {
                             type: 'OPEN_DIALOG',
                             payload: {
                                 configSchema: configSchema,
+                                showForm: true,
                                 title: configSchema.pluginAlias || moduleName,
                                 config: config,
                                 text: undefined,
@@ -142,27 +152,29 @@ export default ({ moduleName, isNew, wrapperConfig, cache, onClose }) => {
                         if (!skipFetchModules.includes(moduleName)) {
                             skipFetchModules.push(moduleName);
                         }
-                        if (tabCache.exists(moduleName)) {
-                            const config = tabCache.findConfig(moduleName, wrapperConfig);
+                        if (isNew) {
                             dispatch({
                                 type: 'OPEN_DIALOG',
                                 payload: {
                                     configSchema: undefined,
-                                    title: moduleName,
-                                    config: undefined,
-                                },
-                            });
-                            handleJsonChange(JSON.stringify(config, null, 4));
-                        } else if (isNew) {
-                            dispatch({
-                                type: 'OPEN_DIALOG',
-                                payload: {
-                                    configSchema: undefined,
+                                    showForm: false,
                                     title: moduleName,
                                     config: undefined,
                                 },
                             });
                             handleJsonChange(JSON.stringify({}, null, 4));
+                        } else if (tabCache.exists(moduleName)) {
+                            const config = tabCache.findConfig(moduleName, wrapperConfig);
+                            dispatch({
+                                type: 'OPEN_DIALOG',
+                                payload: {
+                                    configSchema: undefined,
+                                    showForm: false,
+                                    title: moduleName,
+                                    config: undefined,
+                                },
+                            });
+                            handleJsonChange(JSON.stringify(config, null, 4));
                         } else {
                             // we don't know which config matches this plugin, let's ask the user
                             const choice = {
@@ -184,6 +196,9 @@ export default ({ moduleName, isNew, wrapperConfig, cache, onClose }) => {
     };
 
     useEffect(() => loadData());
+
+    const dialogContentRef = useRef();
+    const formRef = useRef();
 
     const handleTypeChange = ({ target }) => {
         const { configChoice } = state;
@@ -225,11 +240,35 @@ export default ({ moduleName, isNew, wrapperConfig, cache, onClose }) => {
         handleJsonChange(JSON.stringify(config, null, 4));
     };
 
+    const handleDisplayMode = (_event, value) => {
+        const { config, text } = state;
+        switch (value) {
+            case 'text':
+                dispatch({
+                    type: 'SWITCH_DISPLAY_MODE',
+                    payload: false,
+                });
+                handleJsonChange(JSON.stringify(config, null, 4));
+                break;
+            case 'form':
+                dispatch({
+                    type: 'SWITCH_DISPLAY_MODE',
+                    payload: true,
+                });
+                // config will already contain the new value
+                break;
+        }
+    };
+
     const handleFormChange = ({ formData }) => {
         dispatch({
             type: 'CONFIG_CHANGE',
             payload: formData,
         });
+    };
+
+    const handleFormError = () => {
+        dialogContentRef.current.scrollTo(0, 0);
     };
 
     const handleJsonChange = (value) => {
@@ -260,14 +299,20 @@ export default ({ moduleName, isNew, wrapperConfig, cache, onClose }) => {
         onClose({ save: false, wrapperConfig, cache });
     };
 
-    const handleSave = () => {
-        const { config, text, configSchema } = state;
+    const handleSave = (requireValidation) => {
+        const { config, text, configSchema, showForm } = state;
+        if (showForm && requireValidation) {
+            // this will trigger onSubmit() if validation passes
+            console.log(formRef);
+            formRef.current.submit();
+            return;
+        }
+
         dispatch({ type: 'CLOSE_DIALOG' });
         if (isNew) {
-            // TODO: fix
             let newConfig;
             let kind;
-            if (configSchema) {
+            if (showForm) {
                 newConfig = { ...config, [configSchema.pluginType]: configSchema.pluginAlias };
                 kind = tabCache.getKind(configSchema.pluginType);
             } else {
@@ -286,7 +331,7 @@ export default ({ moduleName, isNew, wrapperConfig, cache, onClose }) => {
         onClose({ save: true, wrapperConfig, cache });
     };
 
-    const { loading, open, title, configSchema, configChoice, selectedType, availableNames, selectedName, text, config, inputError } = state;
+    const { loading, open, title, configSchema, showForm, configChoice, selectedType, availableNames, selectedName, text, config, inputError } = state;
     return (
         <>
             <Backdrop open={loading} style={{ zIndex: 2000 }}>
@@ -358,25 +403,40 @@ export default ({ moduleName, isNew, wrapperConfig, cache, onClose }) => {
                 </DialogActions>
             </Dialog>
             <Dialog aria-labelledby="form-dialog-title" fullWidth={true} maxWidth="md" open={open}>
-                <DialogTitle id="form-dialog-title">{I18n.t('Configure %s', title)}</DialogTitle>
-                <DialogContent>
+                <DialogTitle id="form-dialog-title">
+                    {I18n.t('Configure %s', title)}
+                    <ToggleButtonGroup
+                        size="small"
+                        style={{ float: 'right' }}
+                        value={(showForm ? 'form' : 'text')}
+                        exclusive
+                        onChange={handleDisplayMode}>
+                        <TooltipButton toggle={true} tooltip={I18n.t('JSON Source')} Icon={Code} value="text" />
+                        <TooltipButton toggle={true} tooltip={I18n.t('Form')} Icon={ListAlt} value="form" disabled={!configSchema || inputError} />
+                        <TooltipButton toggle={true} tooltip={I18n.t('Readme')} Icon={HelpOutline} value="readme" target="_blank" href={readme} />
+                    </ToggleButtonGroup>
+                </DialogTitle>
+                <DialogContent ref={dialogContentRef}>
                     {configSchema && configSchema.headerDisplay && (
                         <Typography component="div">
                             <ReactMarkdown linkTarget="_blank">{configSchema.headerDisplay}</ReactMarkdown>
                         </Typography>
                     )}
-                    {configSchema && (
-                        <Form
-                            schema={configSchema.schema}
-                            formData={(config || {})}
-                            onChange={handleFormChange}
-                            onSubmit={log('submitted')}
-                            onError={log('errors')}
-                        >
-                            <Fragment />
-                        </Form>
+                    {showForm && (
+                        <div style={{height:'550px'}}>
+                            <Form
+                                schema={configSchema.schema}
+                                formData={(config || {})}
+                                onChange={handleFormChange}
+                                onSubmit={() => handleSave(false)}
+                                onError={handleFormError}
+                                ref={formRef}
+                            >
+                                <Fragment />
+                            </Form>
+                        </div>
                     )}
-                    {!configSchema && (
+                    {!showForm && (
                         <AceEditor
                             mode="json"
                             theme="github"
@@ -403,7 +463,7 @@ export default ({ moduleName, isNew, wrapperConfig, cache, onClose }) => {
                     <Button color="primary" onClick={handleClose}>
                         {I18n.t('Cancel')}
                     </Button>
-                    <Button color="primary" onClick={handleSave} disabled={!!inputError}>
+                    <Button color="primary" onClick={() => handleSave(true)} disabled={!!inputError}>
                         {I18n.t('Save')}
                     </Button>
                 </DialogActions>
