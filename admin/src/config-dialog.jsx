@@ -233,6 +233,7 @@ export default ({ moduleName, isNew, readme, wrapperConfig, cache, onClose }) =>
             type: 'OPEN_DIALOG',
             payload: {
                 configSchema: undefined,
+                showForm: false,
                 title: moduleName,
                 config: undefined,
             },
@@ -332,6 +333,30 @@ export default ({ moduleName, isNew, readme, wrapperConfig, cache, onClose }) =>
     };
 
     const { loading, open, title, configSchema, showForm, configChoice, selectedType, availableNames, selectedName, text, config, inputError } = state;
+    
+    useEffect(() => {
+        setTimeout(() => {
+            // very hacky way to figure out whether we couldn't read the schema at all
+            if (configSchema && formRef.current && formRef.current.formElement) {
+                const root = formRef.current.formElement;
+                if (root && root.firstChild && root.firstChild.firstChild && root.firstChild.firstChild.className === 'unsupported-field') {
+                    const { config } = state;
+                    console.error('Unsupported schema, switching to text mode');
+                    dispatch({
+                        type: 'OPEN_DIALOG',
+                        payload: {
+                            configSchema: undefined,
+                            showForm: false,
+                            title: moduleName,
+                            config: undefined,
+                        },
+                    });
+                    handleJsonChange(JSON.stringify(config || {}, null, 4));
+                }
+            }
+        }, 0);
+    }, [configSchema]);
+
     return (
         <>
             <Backdrop open={loading} style={{ zIndex: 2000 }}>
