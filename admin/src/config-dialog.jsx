@@ -242,7 +242,7 @@ export default ({ moduleName, isNew, readme, wrapperConfig, cache, onClose }) =>
     };
 
     const handleDisplayMode = (_event, value) => {
-        const { config, text } = state;
+        const { config } = state;
         switch (value) {
             case 'text':
                 dispatch({
