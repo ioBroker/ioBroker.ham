@@ -1,10 +1,15 @@
 import { DataTypeProvider, VirtualTableState } from '@devexpress/dx-react-grid';
-import { Grid, TableHeaderRow, VirtualTable } from '@devexpress/dx-react-grid-material-ui';
+import { Grid as DxGrid, TableHeaderRow, VirtualTable } from '@devexpress/dx-react-grid-material-ui';
 import Confirm from '@iobroker/adapter-react/Dialogs/Confirm';
-import Button from '@material-ui/core/Button';
+import I18n from '@iobroker/adapter-react/i18n';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 import Chip from '@material-ui/core/Chip';
+import FormControl from '@material-ui/core/FormControl';
+import Grid from '@material-ui/core/Grid';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
 import Paper from '@material-ui/core/Paper';
+import Select from '@material-ui/core/Select';
 import Tooltip from '@material-ui/core/Tooltip';
 import Typography from '@material-ui/core/Typography';
 import Build from '@material-ui/icons/Build';
@@ -12,9 +17,11 @@ import DeleteForever from '@material-ui/icons/DeleteForever';
 import GetApp from '@material-ui/icons/GetApp';
 import HelpOutline from '@material-ui/icons/HelpOutline';
 import Update from '@material-ui/icons/Update';
-import SearchBar from 'material-ui-search-bar';
 import React, { useEffect, useReducer, useState } from 'react';
 import ConfigDialog from './config-dialog';
+import SearchField from './search-field';
+import { TabCache } from './tab-cache';
+import TooltipButton from './tooltip-button';
 
 const VIRTUAL_PAGE_SIZE = 50;
 const SEARCH_URL = 'https://api.npms.io/v2/search?q=keywords:homebridge-plugin';
@@ -25,6 +32,7 @@ const buildQueryString = (skip, take, search) =>
     `${SEARCH_URL}${!!search ? encodeURIComponent(' ' + search) : ''}&from=${skip}&size=${take}`;
 
 const initialState = {
+    instances: [],
     rows: [],
     skip: 0,
     requestedSkip: 0,
@@ -63,38 +71,34 @@ function reducer(state, { type, payload }) {
                 ...state,
                 loading: true,
             };
+        case 'UPDATE_INSTANCES': 
+            return {
+                ...state,
+                instances: payload,
+            };
         case 'UPDATE_CACHE':
             return {
                 ...state,
                 lastQuery: payload.query,
                 lastAdapterConfigJson: JSON.stringify(payload.adapterConfig),
             };
-        case 'CHANGE_SEARCH':
-            return {
-                ...state,
-                typingSearch: payload,
-            };
         case 'EXECUTE_SEARCH':
             return {
                 ...state,
-                search: state.typingSearch,
-                rows: state.search !== state.typingSearch ? [] : state.rows,
-            };
-        case 'CLEAR_SEARCH':
-            return {
-                ...state,
-                search: '',
-                rows: state.search ? [] : state.rows,
+                search: payload,
+                rows: state.search !== payload ? [] : state.rows,
             };
         case 'OPEN_CONFIG':
             return {
                 ...state,
-                openConfig: payload,
+                openConfig: payload.moduleName,
+                configReadme: payload.readme,
             };
         case 'INSTALL_CONFIG':
             return {
                 ...state,
-                installConfig: payload,
+                installConfig: payload.moduleName,
+                configReadme: payload.readme,
             };
         case 'CLOSE_CONFIG':
             return {
@@ -123,9 +127,10 @@ const cleanModuleName = (name) => {
         .replace(/^@.+?\//, '');
 };
 
-const Root = (props) => <Grid.Root {...props} style={{ height: 'calc(100% - 64px)' }} />;
+const remainderHeight = 'calc(100% - 72px)';
+const Root = (props) => <DxGrid.Root {...props} style={{ height: remainderHeight }} />;
 
-export default ({ adapterConfig, onChange, showToast }) => {
+export default ({ adapterConfig, socket, instanceId, onChange, showToast }) => {
     const [state, dispatch] = useReducer(reducer, initialState);
     const [columns] = useState([
         { name: 'name', title: 'Name', getCellValue: (row) => cleanModuleName(row.package.name) },
@@ -142,6 +147,8 @@ export default ({ adapterConfig, onChange, showToast }) => {
         { columnName: 'available', width: 80 },
         { columnName: 'keywords', width: 300 },
     ]);
+
+    adapterConfig._tabCache = adapterConfig._tabCache || {};
 
     const getRemoteRows = (requestedSkip, take) => {
         dispatch({ type: 'START_LOADING', payload: { requestedSkip, take } });
@@ -191,7 +198,7 @@ export default ({ adapterConfig, onChange, showToast }) => {
                     keys.push(key);
                 }
                 keys.sort();
-                results = results.filter((r) => !names.includes(r.package.name));
+                results = results.filter((r) => !names.includes(r.package.name) && !r.package.name.includes('config-ui-'));
                 results.unshift(
                     ...keys
                         .map((k) => ({
@@ -229,10 +236,20 @@ export default ({ adapterConfig, onChange, showToast }) => {
             dispatch({ type: 'UPDATE_CACHE', payload: { query, adapterConfig } });
         }
     };
-
     useEffect(() => loadData());
 
-    const { rows, skip, totalCount, loading, search, openConfig, installConfig, confirmDelete } = state;
+    const loadInstances = () => {
+        const { instances } = state;
+        if (instances.length > 0) {
+            // only do this once
+            return;
+        }
+        socket.getForeignObjects('system.adapter.ham.*', 'instance').then(objs => {
+            const newInstances = Object.keys(objs);
+            dispatch({ type: 'UPDATE_INSTANCES', payload: newInstances });
+        });
+    };
+    useEffect(() => loadInstances());
 
     const PackageNameFormatter = ({ value, row }) => {
         return (
@@ -242,23 +259,15 @@ export default ({ adapterConfig, onChange, showToast }) => {
         );
     };
 
-    const ToolTipButton = ({ tooltip, disabled, Icon, ...other }) => {
-        return !!disabled ? (
-            <Button disabled={true} {...other}>
-                <Icon />
-            </Button>
-        ) : (
-            <Tooltip title={tooltip}>
-                <Button {...other}>
-                    <Icon />
-                </Button>
-            </Tooltip>
-        );
-    };
-
     const onConfigureClicked = (row) => {
         const versionPostfix = row.installed === UNKNOWN_VERSION ? '' : `@${row.installed}`;
-        dispatch({ type: 'OPEN_CONFIG', payload: `${row.package.name}${versionPostfix}` });
+        dispatch({
+            type: 'OPEN_CONFIG',
+            payload: {
+                moduleName: `${row.package.name}${versionPostfix}`,
+                readme: row.package.links.homepage,
+            }
+        });
     };
 
     const onUpdateOrInstallClicked = (row) => {
@@ -271,7 +280,13 @@ export default ({ adapterConfig, onChange, showToast }) => {
                 onChange({ libraries: installed.join(' ') });
             }
         } else {
-            dispatch({ type: 'INSTALL_CONFIG', payload: packageRef });
+            dispatch({
+                type: 'INSTALL_CONFIG',
+                payload: {
+                    moduleName: packageRef,
+                    readme: row.package.links.homepage,
+                }
+             });
         }
     };
 
@@ -280,33 +295,44 @@ export default ({ adapterConfig, onChange, showToast }) => {
     };
 
     const onDeleteConfirmed = (ok) => {
+        const { confirmDelete } = state;
         dispatch({ type: 'CONFIRM_DELETE' }); // closes the dialog by clearing "confirmDelete"
         const index = installed.findIndex((m) => m.startsWith(`${confirmDelete}@`) || m === confirmDelete);
         if (ok && index !== -1) {
-            installed.splice(index, 1);
-            showToast(`${confirmDelete} will be removed`);
-            onChange({ libraries: installed.join(' ') });
+            showToast(I18n.t('%s will be removed', confirmDelete));
+            const [ removed ] = installed.splice(index, 1);
+            const change = { libraries: installed.join(' ') };
+            try {
+                const tabCache = new TabCache(adapterConfig._tabCache);
+                const { configList, configIndex } = tabCache.locateConfig(removed, adapterConfig.wrapperConfig);
+                configList.splice(configIndex, 1);
+                change.wrapperConfig = adapterConfig.wrapperConfig;
+            } catch (e) {
+                console.error(`Couldn't delete plugin from wrapperConfig: ${e}`);
+            }
+
+            onChange(change);
         }
     };
 
     const ActionsFormatter = ({ row }) => {
         return (
-            <ButtonGroup size="small" aria-label="outlined primary button group">
-                <ToolTipButton tooltip="Readme" Icon={HelpOutline} target="_blank" href={row.package.links.homepage} />
-                <ToolTipButton
-                    tooltip={row.installed ? 'Update' : 'Install'}
+            <ButtonGroup size="small">
+                <TooltipButton tooltip={I18n.t('Readme')} Icon={HelpOutline} target="_blank" href={row.package.links.homepage} />
+                <TooltipButton
+                    tooltip={I18n.t(row.installed ? 'Update' : 'Install')}
                     disabled={row.installed && row.installed === row.package.version}
                     Icon={row.installed ? Update : GetApp}
                     onClick={() => onUpdateOrInstallClicked(row)}
                 />
-                <ToolTipButton
-                    tooltip="Configure"
+                <TooltipButton
+                    tooltip={I18n.t('Configure')}
                     disabled={!row.installed}
                     Icon={Build}
                     onClick={() => onConfigureClicked(row)}
                 />
-                <ToolTipButton
-                    tooltip="Remove"
+                <TooltipButton
+                    tooltip={I18n.t('Remove')}
                     disabled={!row.installed}
                     Icon={DeleteForever}
                     onClick={() => onDeleteClicked(row)}
@@ -319,31 +345,55 @@ export default ({ adapterConfig, onChange, showToast }) => {
         return value.map((k) => <Chip key={k} variant="outlined" size="small" label={k} />);
     };
 
-    const onDialogClose = ({ save, wrapperConfig }) => {
+    const onDialogClose = ({ save, wrapperConfig, cache }) => {
+        const { installConfig } = state;
         if (save) {
             if (installConfig) {
                 installed.push(installConfig);
-                showToast(`${installConfig} will be installed`);
-                onChange({ wrapperConfig, libraries: installed.join(' ') });
+                showToast(I18n.t('%s will be installed', installConfig));
+                onChange({ wrapperConfig, libraries: installed.join(' '), _tabCache: cache });
             } else {
-                onChange({ wrapperConfig });
+                onChange({ wrapperConfig, _tabCache: cache });
             }
         }
         dispatch({ type: 'CLOSE_CONFIG' });
     };
 
+    const onSwitchInstance = ({ target }) => {
+        const parts = target.value.split('.');
+        location.href = location.pathname + '?' + parts[parts.length - 1];
+    };
+
+    const isGlobalMode = adapterConfig.useGlobalHomebridge;
+
+    const { rows, skip, totalCount, loading, openConfig, installConfig, configReadme, confirmDelete, instances } = state;
     return (
-        <div style={{ height: '100%' }}>
-            <SearchBar
-                value={search}
-                onChange={(newValue) => dispatch({ type: 'CHANGE_SEARCH', payload: newValue })}
-                onRequestSearch={() => dispatch({ type: 'EXECUTE_SEARCH' })}
-                onCancelSearch={() => dispatch({ type: 'CLEAR_SEARCH' })}
-                style={{ marginBottom: '8px' }}
-            />
+        <div style={{ height: '100%', paddingRight: '4px' }}>
+            <Grid container spacing={3} style={{ marginBottom: '8px' }}>
+                {instances.length > 1 && <Grid item xs={3} md={2} xl={1}>
+                    <FormControl variant="outlined" fullWidth size="small" style={{ marginTop: '4px' }}>
+                        <InputLabel id="instanceId-label">{I18n.t('Instance')}</InputLabel>
+                        <Select
+                            labelId="instanceId-label"
+                            id="instanceId"
+                            label="Instance"
+                            value={instanceId}
+                            onChange={(value) => onSwitchInstance(value)}
+                        >
+                            {instances.map(id => <MenuItem value={id} key={id}>{id.replace('system.adapter.', '')}</MenuItem>)}
+                        </Select>
+                    </FormControl>
+                </Grid>}
+                <Grid item
+                      xs={instances.length > 1 ? 9 : 12}
+                      md={instances.length > 1 ? 10 : 12}
+                      xl={instances.length > 1 ? 11 : 12}>
+                    {!isGlobalMode && <SearchField onSearch={(search) => dispatch({ type: 'EXECUTE_SEARCH', payload: search })} />}
+                </Grid> 
+            </Grid>
             <div style={{ flex: '1 1 auto' }}>
                 <Paper>
-                    <Grid rows={rows} columns={columns} getRowId={getRowId} rootComponent={Root}>
+                    {!isGlobalMode && <DxGrid rows={rows} columns={columns} getRowId={getRowId} rootComponent={Root}>
                         <DataTypeProvider formatterComponent={ActionsFormatter} for={['actions']} />
                         <DataTypeProvider formatterComponent={PackageNameFormatter} for={['name']} />
                         <DataTypeProvider formatterComponent={KeywordsFormatter} for={['keywords']} />
@@ -356,17 +406,25 @@ export default ({ adapterConfig, onChange, showToast }) => {
                         />
                         <VirtualTable columnExtensions={tableColumnExtensions} />
                         <TableHeaderRow />
-                    </Grid>
+                    </DxGrid>}
+                    {isGlobalMode && <Grid container spacing={3} style={{ height: remainderHeight, padding: '8px' }}>
+                        <Grid item xs={12}>
+                            <Typography variant="h6" gutterBottom>{I18n.t('Global Mode')}</Typography>
+                            <Typography variant="body1" gutterBottom>{I18n.t('global_mode_note')}</Typography>
+                        </Grid>
+                    </Grid>}
                 </Paper>
             </div>
             <ConfigDialog
                 moduleName={openConfig || installConfig}
                 isNew={!!installConfig}
+                readme={configReadme}
                 wrapperConfig={adapterConfig.wrapperConfig}
+                cache={adapterConfig._tabCache}
                 onClose={onDialogClose}
             />
             {confirmDelete && (
-                <Confirm text={`Do you really want to remove ${confirmDelete}?`} onClose={onDeleteConfirmed} />
+                <Confirm text={I18n.t('Do you really want to remove %s', confirmDelete)} onClose={onDeleteConfirmed} />
             )}
         </div>
     );

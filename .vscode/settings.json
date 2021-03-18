@@ -9,7 +9,7 @@
     },
     "[javascriptreact]": {
         "editor.codeActionsOnSave": {
-            "source.organizeImports": true
+            "source.organizeImports": false
         }
     }
 }
