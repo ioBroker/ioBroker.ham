@@ -177,7 +177,7 @@ export default ({ adapterConfig, socket, instanceId, onChange, showToast }) => {
         const versions = {};
         const names = [];
         installed
-            .map((m) => m.split('@'))
+            .map((m) => m.split(/(?<!^)@/)) // split on @, but not when it is at the very beginning
             .forEach((parts) => {
                 names.push(parts[0]);
                 versions[parts[0]] = parts[1];
