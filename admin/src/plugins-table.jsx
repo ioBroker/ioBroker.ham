@@ -133,12 +133,12 @@ const Root = (props) => <DxGrid.Root {...props} style={{ height: remainderHeight
 export default ({ adapterConfig, socket, instanceId, onChange, showToast }) => {
     const [state, dispatch] = useReducer(reducer, initialState);
     const [columns] = useState([
-        { name: 'name', title: 'Name', getCellValue: (row) => cleanModuleName(row.package.name) },
-        { name: 'actions', title: 'Actions', getCellValue: (row) => row },
-        { name: 'description', title: 'Description', getCellValue: (row) => row.package.description },
-        { name: 'installed', title: 'Installed', getCellValue: (row) => row.installed },
-        { name: 'available', title: 'Available', getCellValue: (row) => row.package.version },
-        { name: 'keywords', title: 'Keywords', getCellValue: (row) => row.package.keywords.filter(filterKeywords) },
+        { name: 'name', title: I18n.t('Name'), getCellValue: (row) => cleanModuleName(row.package.name) },
+        { name: 'actions', title: I18n.t('Actions'), getCellValue: (row) => row },
+        { name: 'description', title: I18n.t('Description'), getCellValue: (row) => row.package.description },
+        { name: 'installed', title: I18n.t('Installed'), getCellValue: (row) => row.installed },
+        { name: 'available', title: I18n.t('Available'), getCellValue: (row) => row.package.version },
+        { name: 'keywords', title: I18n.t('Keywords'), getCellValue: (row) => row.package.keywords.filter(filterKeywords) },
     ]);
     const [tableColumnExtensions] = useState([
         { columnName: 'name', width: 200 },
