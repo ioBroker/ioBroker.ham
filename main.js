@@ -22,7 +22,7 @@ function createHam(options) {
 
     let homebridgeHandler;
     const npmLibrariesToInstall = [];
-    const installLocalHomebridgeVersion = '1.3.2';
+    const installLocalHomebridgeVersion = '1.3.4';
 
     // is called when adapter shuts down - callback has to be called under any circumstances!
     adapter.on('unload', callback => {
@@ -323,7 +323,7 @@ function createHam(options) {
             callback && callback(new Error('Library ' + npmLib + ' not installed after 3 attempts'), npmLib);
             return;
         }
-        const libraryDir = npmLib.split('@')[0];
+        const libraryDir = npmLib.split(/(?<!^)@/)[0];
         if (!nodeFS.existsSync(__dirname + '/node_modules/' + libraryDir + '/package.json') || (adapter.config.updateLibraries && counter === 3)) {
 
             installNpm(npmLib, () => {
