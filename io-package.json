@@ -84,7 +84,8 @@
                 "fr": "correctifs et optimisations",
                 "it": "correzioni e ottimizzazioni",
                 "es": "correcciones y optimizaciones",
-                "pl": "poprawki i optymalizacje"
+                "pl": "poprawki i optymalizacje",
+                "zh-cn": "修复和优化"
             },
             "0.4.4": {
                 "en": "corrected automatic role determination and bugs fixed",
@@ -95,7 +96,8 @@
                 "fr": "correction automatique du rôle et correction des bugs",
                 "it": "Correzione della correzione automatica del ruolo e dei bug corretti",
                 "es": "se corrigió la determinación automática del rol y se corrigieron errores",
-                "pl": "naprawiono automatyczne ustalanie roli i naprawione błędy"
+                "pl": "naprawiono automatyczne ustalanie roli i naprawione błędy",
+                "zh-cn": "更正了自动确定角色并修复了错误"
             },
             "0.4.3": {
                 "en": "Updates for Homebridge-Wrapper",
@@ -106,7 +108,8 @@
                 "fr": "Mises à jour pour Homebridge-Wrapper",
                 "it": "Aggiornamenti per Homebridge-Wrapper",
                 "es": "Actualizaciones para Homebridge-Wrapper",
-                "pl": "Aktualizacje dla Wrappera Homebridge"
+                "pl": "Aktualizacje dla Wrappera Homebridge",
+                "zh-cn": "Homebridge包装器的更新"
             },
             "0.4.2": {
                 "en": "fix for global mode",
@@ -117,7 +120,8 @@
                 "fr": "corriger pour le mode global",
                 "it": "correzione per la modalità globale",
                 "es": "arreglar para el modo global",
-                "pl": "naprawić w trybie globalnym"
+                "pl": "naprawić w trybie globalnym",
+                "zh-cn": "修复全局模式"
             },
             "0.4.1": {
                 "en": "option to poll values from the plugins added and other optimisations",
@@ -128,7 +132,8 @@
                 "fr": "option pour interroger les valeurs des plugins ajoutés et d'autres optimisations",
                 "it": "opzione per interrogare i valori dai plugin aggiunti e altre ottimizzazioni",
                 "es": "opción para sondear valores de los complementos agregados y otras optimizaciones",
-                "pl": "opcja odpytywania wartości z dodanych wtyczek i innych optymalizacji"
+                "pl": "opcja odpytywania wartości z dodanych wtyczek i innych optymalizacji",
+                "zh-cn": "从添加的插件和其他优化中轮询值的选项"
             },
             "0.3.0": {
                 "en": "Support of ham plugins was added",
@@ -139,7 +144,8 @@
                 "fr": "Le support des plugins jambon a été ajouté",
                 "it": "È stato aggiunto il supporto per i plug-in ham",
                 "es": "Soporte de plugins de jamón fue agregado",
-                "pl": "Dodano obsługę wtyczek szynkowych"
+                "pl": "Dodano obsługę wtyczek szynkowych",
+                "zh-cn": "火腿插件的支持增加了"
             },
             "0.2.6": {
                 "en": "Updates for Homebridge-Wrapper",
@@ -150,7 +156,8 @@
                 "fr": "Mises à jour pour Homebridge-Wrapper",
                 "it": "Aggiornamenti per Homebridge-Wrapper",
                 "es": "Actualizaciones para Homebridge-Wrapper",
-                "pl": "Aktualizacje dla Wrappera Homebridge"
+                "pl": "Aktualizacje dla Wrappera Homebridge",
+                "zh-cn": "Homebridge包装器的更新"
             },
             "0.2.5": {
                 "en": "Optimize debug logging",
@@ -161,7 +168,8 @@
                 "fr": "Optimiser la journalisation du débogage",
                 "it": "Ottimizza la registrazione di debug",
                 "es": "Optimizar el registro de depuración",
-                "pl": "Zoptymalizuj rejestrowanie debugowania"
+                "pl": "Zoptymalizuj rejestrowanie debugowania",
+                "zh-cn": "优化调试日志"
             },
             "0.2.4": {
                 "en": "Updates for Homebridge-Wrapper",
@@ -172,7 +180,8 @@
                 "fr": "Mises à jour pour Homebridge-Wrapper",
                 "it": "Aggiornamenti per Homebridge-Wrapper",
                 "es": "Actualizaciones para Homebridge-Wrapper",
-                "pl": "Aktualizacje dla Wrappera Homebridge"
+                "pl": "Aktualizacje dla Wrappera Homebridge",
+                "zh-cn": "Homebridge包装器的更新"
             },
             "0.2.2": {
                 "en": "Fixes for JSON editor",
@@ -183,7 +192,8 @@
                 "fr": "Corrections pour l'éditeur JSON",
                 "it": "Correzioni per l'editor JSON",
                 "es": "Correcciones para el editor JSON",
-                "pl": "Poprawki dla edytora JSON"
+                "pl": "Poprawki dla edytora JSON",
+                "zh-cn": "修复JSON编辑器"
             },
             "0.2.1": {
                 "en": "Public test version",
@@ -194,7 +204,8 @@
                 "fr": "Version de test publique",
                 "it": "Versione di prova pubblica",
                 "es": "Versión de prueba pública",
-                "pl": "Publiczna wersja testowa"
+                "pl": "Publiczna wersja testowa",
+                "zh-cn": "公开测试版"
             },
             "0.1.0": {
                 "en": "initial adapter",
@@ -202,7 +213,11 @@
                 "ru": "Первоначальный адаптер",
                 "pt": "Versão inicial",
                 "fr": "Version initiale",
-                "nl": "Eerste release"
+                "nl": "Eerste release",
+                "it": "adattatore iniziale",
+                "es": "adaptador inicial",
+                "pl": "początkowy adapter",
+                "zh-cn": "初始适配器"
             }
         },
         "title": "Homebridge accessories manager",
