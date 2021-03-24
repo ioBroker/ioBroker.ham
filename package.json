@@ -22,7 +22,7 @@
     "node": ">=10.17.0"
   },
   "dependencies": {
-    "homebridge-plugin-wrapper": "Apollon77/homebridge-plugin-wrapper",
+    "homebridge-plugin-wrapper": "^2.1.0",
     "@iobroker/adapter-core": "^2.4.0",
     "string-argv": "^0.3.1"
   },
