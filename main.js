@@ -163,7 +163,7 @@ function createHam(options) {
 
     function loadExistingAccessories(callback) {
         adapter.getDevices((err, res) => {
-            if (err) {
+            if (err || !res) {
                 adapter.log.error('Can not get all existing devices: ' + err);
                 return;
             }
