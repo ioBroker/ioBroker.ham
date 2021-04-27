@@ -1,11 +1,11 @@
 {
-    "Add module": "Homebridge-Plugin hinzufügen",
+    "Add module": "NPM-Modul hinzufügen",
     "Additional npm modules:": "Zusätzliche NPM-Module:",
     "Configuration file": "Konfigurationsdatei",
     "Global Homebridge Config Directory Path": "Globaler Pfad zum Homebridge-Konfigurationsverzeichnis",
     "Global Homebridge Path": "Globaler Pfad zur Homebridge-Installation",
     "Main settings": "Allgemeine Einstellungen",
-    "Module names": "Homebridge-Pluginnamen",
+    "Module names": "NPM-Modulnamen",
     "Use insecure Homebridge mode": "Unsicheren Homebridge-Modus verwenden",
     "Value Polling Interval": "Wertabfrageintervall (sec)",
     "homebridgeMode": "Homebridge-Adapter-Modus",
