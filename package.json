@@ -30,7 +30,7 @@
   "devDependencies": {
     "@alcalzone/release-script": "^1.8.3",
     "@babel/cli": "^7.13.14",
-    "@babel/core": "^7.13.14",
+    "@babel/core": "^7.14.0",
     "@devexpress/dx-react-core": "^2.7.5",
     "@devexpress/dx-react-grid": "^2.7.5",
     "@devexpress/dx-react-grid-material-ui": "^2.7.5",
