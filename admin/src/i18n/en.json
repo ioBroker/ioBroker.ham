@@ -4,7 +4,7 @@
     "Configuration file": "Configuration file",
     "Global Homebridge Config Directory Path": "Global Homebridge config directory path",
     "Global Homebridge Path": "Global Homebridge path",
-    "Main settings": "Main settings",
+    "Main settings": "General settings",
     "Module names": "NPM module names",
     "Use insecure Homebridge mode": "Use insecure Homebridge mode",
     "Value Polling Interval": "Value polling interval (sec)",
