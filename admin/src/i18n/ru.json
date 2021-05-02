@@ -1,5 +1,5 @@
 {
-    "Add module": "Добавить модуль",
+    "Add module": "Добавить NPM модуль",
     "Additional npm modules:": "Дополнительные модули npm:",
     "Configuration file": "Файл конфигурации",
     "Global Homebridge Config Directory Path": "Путь к каталогу Global Homebridge Config",
