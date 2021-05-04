@@ -266,7 +266,6 @@
         ],
         "license": "MIT",
         "platform": "Javascript/Node.js",
-        "main": "main.js",
         "icon": "ham.png",
         "enabled": false,
         "extIcon": "https://raw.githubusercontent.com/ioBroker/ioBroker.ham/master/admin/ham.png",
@@ -299,7 +298,8 @@
             {
                 "js-controller": ">=2.0.0"
             }
-        ]
+        ],
+        "tier": 2
     },
     "native": {
         "useGlobalHomebridge": false,

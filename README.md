@@ -71,6 +71,9 @@ For this to work you need to provide the location of the systems global node-mod
 
 ## Changelog
 
+### __WORK IN PROGRESS__
+* (Apollon77) prevent warnings in js-controller 3.3
+
 ### 4.0.1 (2021-03-24)
 * (Apollon77) update homebridge and wrapper to 1.3.4 (latest as of today). IMPORTANT: Requires also homebridge 1.3.x installed when using global mode and local mode will update to 1.3.x too! Check your plugins for updates!
 * (UncleSamSwiss) Add an experimental version of new plugin selection and configuration tab - TRY IT OUT!
