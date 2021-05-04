@@ -1,15 +1,13 @@
 ![Logo](admin/ham.png)
 # ioBroker Homebridge accessories manager
-[![NPM version](https://img.shields.io/npm/v/iobroker.ham.svg)](https://www.npmjs.com/package/iobroker.ham)
-[![Downloads](https://img.shields.io/npm/dm/iobroker.ham.svg)](https://www.npmjs.com/package/iobroker.ham)
-![Number of Installations (latest)](https://iobroker.live/badges/ham-installed.svg)
-![Number of Installations (stable)](https://iobroker.live/badges/ham-stable.svg)
-[![Dependency Status](https://img.shields.io/david/ioBroker/iobroker.ham.svg)](https://david-dm.org/ioBroker/iobroker.ham)
+
+![Number of Installations](http://iobroker.live/badges/ham-installed.svg)
+![Number of Installations](http://iobroker.live/badges/ham-stable.svg)
+[![NPM version](http://img.shields.io/npm/v/iobroker.ham.svg)](https://www.npmjs.com/package/iobroker.ham)
+
+![Test and Release](https://github.com/ioBroker/iobroker.ham/workflows/Test%20and%20Release/badge.svg)
 [![Translation status](https://weblate.iobroker.net/widgets/adapters/-/ham/svg-badge.svg)](https://weblate.iobroker.net/engage/adapters/?utm_source=widget)
-
-[![NPM](https://nodei.co/npm/iobroker.ham.png?downloads=true)](https://nodei.co/npm/iobroker.ham/)
-
-**Tests:** ![Test and Release](https://github.com/ioBroker/ioBroker.ham/workflows/Test%20and%20Release/badge.svg)
+[![Downloads](https://img.shields.io/npm/dm/iobroker.ham.svg)](https://www.npmjs.com/package/iobroker.ham)
 
 Use Homebridge plugins in ioBroker or run a global installed Homebridge as ioBroker adapter.
 All States from Homebridge will be available in ioBroker too and can also be controlled there.
