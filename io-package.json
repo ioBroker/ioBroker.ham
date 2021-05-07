@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "ham",
-        "version": "4.0.1",
+        "version": "4.0.2",
         "news": {
+            "4.0.2": {
+                "en": "prevent warnings in js-controller 3.3",
+                "de": "Warnungen in js-controller verhindern 3.3",
+                "ru": "предотвратить предупреждения в js-controller 3.3",
+                "pt": "evitar avisos no js-controller 3.3",
+                "nl": "waarschuwingen voorkomen in js-controller 3.3",
+                "fr": "empêcher les avertissements dans js-controller 3.3",
+                "it": "prevenire avvisi in js-controller 3.3",
+                "es": "prevenir advertencias en js-controller 3.3",
+                "pl": "Zapobiegaj ostrzeżeniom w js-controller 3.3",
+                "zh-cn": "防止在js-controller 3.3中出现警告"
+            },
             "4.0.1": {
                 "en": "update homebridge and wrapper to 1.3.4 (latest as of today). IMPORTANT: Requires also homebridge 1.3.x installed when using global mode and local mode will update to 1.3.x too! Check your plugins for updates!\nAdd an experimental version of new plugin selection and configuration tab - TRY IT OUT!\nIMPORTANT: Configurations in local/global mode with child bridges will NOT work because ioBroker can not access the data on the child bridge processes!",
                 "de": "Aktualisieren Sie Homebridge und Wrapper auf 1.3.4 (Stand heute). WICHTIG: Erfordert auch die Installation von homebridge 1.3.x, wenn der globale Modus verwendet wird, und der lokale Modus wird ebenfalls auf 1.3.x aktualisiert! Überprüfen Sie Ihre Plugins auf Updates!\nFügen Sie eine experimentelle Version der neuen Registerkarte zur Auswahl und Konfiguration von Plugins hinzu - TRY IT OUT!\nWICHTIG: Konfigurationen im lokalen / globalen Modus mit untergeordneten Bridges funktionieren NICHT, da ioBroker nicht auf die Daten der untergeordneten Bridge-Prozesse zugreifen kann!",
