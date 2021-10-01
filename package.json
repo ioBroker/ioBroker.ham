@@ -65,7 +65,7 @@
     "react-ace": "^9.4.4",
     "react-dom": "^16.14.0",
     "react-icons": "^4.2.0",
-    "react-markdown": "^6.0.2",
+    "react-markdown": "^7.0.1",
     "request": "^2.88.2",
     "sinon": "^11.1.2",
     "sinon-chai": "^3.7.0",
