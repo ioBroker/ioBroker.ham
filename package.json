@@ -28,7 +28,7 @@
   },
   "description": "Homebridge accessories manager",
   "devDependencies": {
-    "@alcalzone/release-script": "^2.2.1",
+    "@alcalzone/release-script": "^3.4.1",
     "@babel/cli": "^7.16.0",
     "@babel/core": "^7.16.0",
     "@devexpress/dx-react-core": "^2.7.6",
