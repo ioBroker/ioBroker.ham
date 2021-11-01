@@ -54,7 +54,7 @@
     "@types/sinon": "^10.0.6",
     "@types/sinon-chai": "^3.2.5",
     "ace-builds": "^1.4.13",
-    "axios": "^0.22.0",
+    "axios": "^0.24.0",
     "chai": "^4.3.4",
     "gulp": "^4.0.2",
     "material-ui-search-bar": "^1.0.0",
