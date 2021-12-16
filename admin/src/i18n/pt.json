@@ -4,7 +4,7 @@
     "Configuration file": "Arquivo de configuração",
     "Global Homebridge Config Directory Path": "Caminho global do diretório de configuração do Homebridge",
     "Global Homebridge Path": "Caminho Global Homebridge",
-    "Main settings": "Configurações Gerais",
+    "Main settings": "Configurações gerais",
     "Module names": "Nomes de módulos NPM",
     "Use insecure Homebridge mode": "Use o modo homebridge inseguro",
     "Value Polling Interval": "Intervalo de solicitação de valor (s)",
