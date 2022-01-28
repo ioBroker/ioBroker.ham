@@ -89,7 +89,7 @@ describe('Test ' + adapterShortName + ' Wrapper adapter No-AccessoryInfo', () =>
         this.timeout(600000); // because of first install from npm
 
         setup.setupController(() => {
-            const config = setup.getAdapterConfig();
+            const config = await setup.getAdapterConfig();
             // enable adapter
             config.common.enabled  = true;
             config.common.loglevel = ((process.env.TRAVIS && process.env.TRAVIS === 'true') || (process.env.APPVEYOR && process.env.APPVEYOR === 'True')) ? 'info' : 'debug';
@@ -232,7 +232,7 @@ describe('Test ' + adapterShortName + ' Wrapper adapter No-AccessoryInfo', () =>
                 ]
             };
 
-            setup.setAdapterConfig(config.common, config.native);
+            await setup.setAdapterConfig(config.common, config.native);
 
             setupHTTPServer(9080, () => {
                 setup.startController(
