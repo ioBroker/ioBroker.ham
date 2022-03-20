@@ -73,7 +73,7 @@ For this to work you need to provide the location of the systems global node-mod
 -->
 
 ## Changelog
-### **WORK IN PROGRESS**
+### 4.0.3 (2022-03-20)
 * (bluefox) Update packages
 
 ### 4.0.2 (2021-05-08)
@@ -88,7 +88,7 @@ For this to work you need to provide the location of the systems global node-mod
 * (Apollon77) update homebridge in wrapper to 1.1.6 (latest as of today)
 
 ### 3.0.1 (2020-08-08)
-* (Apollon77) set a very high limit (again) on allowed accessories and services because irrelevant 
+* (Apollon77) set a very high limit (again) on allowed accessories and services because irrelevant
 
 ### 3.0.0 (2020-08-04)
 * (Apollon77) BREAKING: ONLY WORKS WITH HOMEBRIDGE 1.1.x+ AND Node JS >=10.17.0!! Make sure plugins support it AND homebridge is updated to 1.1.x when you use the Global Mode!
