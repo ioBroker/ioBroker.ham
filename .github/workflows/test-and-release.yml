@@ -35,7 +35,7 @@ jobs:
           node-version: ${{ matrix.node-version }}
 
       - name: Install Dependencies
-        run: npm install
+        run: npm install -f
 
       - name: Build Admin Tab
         run: npm run build
@@ -69,7 +69,7 @@ jobs:
           node-version: ${{ matrix.node-version }}
 
       - name: Install Dependencies
-        run: npm install
+        run: npm install -f
 
       - name: Run package tests
         run: node node_modules/mocha/bin/mocha test/testPackageFiles.js --exit
@@ -170,7 +170,7 @@ jobs:
           echo "::set-output name=BODY::$BODY"
 
       - name: Install Dependencies
-        run: npm install
+        run: npm install -f
 
       - name: Install Dependencies
         run: npm run build
