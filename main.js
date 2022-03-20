@@ -49,7 +49,7 @@ function createHam(options) {
     // is called if a subscribed state changes
     adapter.on('stateChange', (id, state) => {
         // Warning, state can be null if it was deleted
-        adapter.log.info('stateChange ' + id + ' ' + JSON.stringify(state));
+        adapter.log.info(`stateChange ${id} ${JSON.stringify(state)}`);
 
         id = id.substr(adapter.namespace.length+1);
         adapter.log.debug('lookup id: ' + id);
@@ -61,7 +61,7 @@ function createHam(options) {
     });
 
     function updateDev(dev_id, dev_name, dev_type, dev_uuid) {
-        adapter.log.info('updateDev ' + dev_id + ': name = ' + dev_name + ' /type= ' + dev_type);
+        adapter.log.info(`updateDev ${dev_id}: name = ${dev_name} /type= ${dev_type}`);
         // create dev
         adapter.getObject(dev_id, (err, obj) => {
             if (!err && obj) {
@@ -92,7 +92,7 @@ function createHam(options) {
     function updateChannel(dev_id, ch_id, name, ch_uuid) {
         const id = dev_id + '.' + ch_id;
         // create channel for dev
-        adapter.log.info('updateChannel ' + id + ': name = ' + name);
+        adapter.log.info(`updateChannel ${id}: name = ${name}`);
         adapter.getObject(id, (err, obj) => {
             if (!err && obj) {
                 adapter.extendObject(id, {
@@ -126,7 +126,7 @@ function createHam(options) {
         if (common.type === undefined) common.type = 'string';
         if (common.unit === undefined) common.unit = '';
 
-        adapter.log.info('updateState ' + id + ': value = ' + value + ' /common= ' + JSON.stringify(common));
+        adapter.log.info(`updateState ${id}: value = ${value} /common= ${JSON.stringify(common)}`);
 
         adapter.getObject(id, (err, obj) => {
             if (!err && obj) {
@@ -153,7 +153,7 @@ function createHam(options) {
     }
 
     function setState(dev_id, ch_id, st_id, value) {
-        const id = dev_id + '.' + ch_id + '.' + st_id;
+        const id = `${dev_id}.${ch_id}.${st_id}`;
         adapter.setState(id, value, true);
     }
 
@@ -169,7 +169,7 @@ function createHam(options) {
             }
             for (let i = 0; i < res.length; i++) {
                 if (res[i].native && res[i].native.UUID) {
-                    adapter.log.debug('Remember existing Accessory ' + res[i].native.displayName + ' with UUID ' + res[i].native.UUID);
+                    adapter.log.debug(`Remember existing Accessory ${res[i].native.displayName} with UUID ${res[i].native.UUID}`);
                     homebridgeHandler.registerExistingAccessory(res[i].native.UUID, res[i].native.displayName);
                 }
             }
@@ -218,10 +218,10 @@ function createHam(options) {
                         logger: usedLogger,
                         homebridgeBasePath: adapter.config.globalHomebridgeBasePath,
                         homebridgeConfigPath: adapter.config.globalHomebridgeConfigPath,
-                        updateDev: updateDev,
-                        updateChannel: updateChannel,
-                        updateState: updateState,
-                        setState: setState,
+                        updateDev,
+                        updateChannel,
+                        updateState,
+                        setState,
                         ignoreInfoAccessoryServices: adapter.config.ignoreInfoAccessoryServices,
                         characteristicPollingInterval: adapter.config.characteristicPollingInterval * 1000,
                         insecureAccess: adapter.config.insecureAccess || false
@@ -236,7 +236,7 @@ function createHam(options) {
                         nodeFS.writeFileSync(nodePath.join(configDir, 'config.json'), JSON.stringify(adapter.config.wrapperConfig));
                     }
                     catch (err) {
-                        adapter.log.error('Error writing config file at ' + nodePath.join(configDir, 'config.json') + ', but needed for local Mode to work! Exiting: ' + err);
+                        adapter.log.error(`Error writing config file at ${nodePath.join(configDir, 'config.json')}, but needed for local Mode to work! Exiting: ${err}`);
                         return;
                     }
                     homebridgeHandler = require('./lib/global-handler');
@@ -244,10 +244,10 @@ function createHam(options) {
                         logger: usedLogger,
                         homebridgeBasePath: nodePath.join(__dirname, 'node_modules', 'homebridge'),
                         homebridgeConfigPath: configDir,
-                        updateDev: updateDev,
-                        updateChannel: updateChannel,
-                        updateState: updateState,
-                        setState: setState,
+                        updateDev,
+                        updateChannel,
+                        updateState,
+                        setState,
                         ignoreInfoAccessoryServices: adapter.config.ignoreInfoAccessoryServices,
                         characteristicPollingInterval: adapter.config.characteristicPollingInterval * 1000,
                         insecureAccess: adapter.config.insecureAccess || false
@@ -258,10 +258,10 @@ function createHam(options) {
                     homebridgeHandler.init({
                         logger: usedLogger,
                         homebridgeConfigPath: configDir,
-                        updateDev: updateDev,
-                        updateChannel: updateChannel,
-                        updateState: updateState,
-                        setState: setState,
+                        updateDev,
+                        updateChannel,
+                        updateState,
+                        setState,
                         wrapperConfig: adapter.config.wrapperConfig,
                         ignoreInfoAccessoryServices: adapter.config.ignoreInfoAccessoryServices,
                         characteristicPollingInterval: adapter.config.characteristicPollingInterval * 1000,
@@ -275,7 +275,8 @@ function createHam(options) {
 
                     homebridgeHandler.start();
 
-                    options.exitAfter && setTimeout(() => adapter && adapter.stop(), 10000);
+                    options.exitAfter && setTimeout(() =>
+                        adapter && adapter.stop(), 10000);
                 });
             });
         });
@@ -292,7 +293,7 @@ function createHam(options) {
             nodeFS.mkdirSync(nodePath.join(localPath, 'node_modules'));
         }
 
-        const cmd = 'npm install ' + npmLib + ' --production  --loglevel error';
+        const cmd = `npm install ${npmLib} --production  --loglevel error`;
         adapter.log.info(cmd + ' (System call)');
         // Install node modules as system call
 
@@ -308,29 +309,27 @@ function createHam(options) {
 
         child.on('exit', (code /* , signal */) => {
             if (code && code !== 1) {
-                adapter.log.error('Cannot install ' + npmLib + ': ' + code);
-                if (typeof callback === 'function') callback(new Error('Installation failed with code ' + code), npmLib);
+                adapter.log.error(`Cannot install ${npmLib}: ${code}`);
+                typeof callback === 'function' && callback(new Error('Installation failed with code ' + code), npmLib);
                 return;
             }
             // command succeeded
-            if (typeof callback === 'function') callback(null, npmLib);
+            typeof callback === 'function' && callback(null, npmLib);
         });
     }
 
     function installNpmLibraryWithRetries(npmLib, callback, counter) {
         if (counter === undefined) counter = 3;
         if (counter === 0) {
-            callback && callback(new Error('Library ' + npmLib + ' not installed after 3 attempts'), npmLib);
+            callback && callback(new Error(`Library ${npmLib} not installed after 3 attempts`), npmLib);
             return;
         }
         const libraryDir = npmLib.split(/(?<!^)@/)[0];
-        if (!nodeFS.existsSync(__dirname + '/node_modules/' + libraryDir + '/package.json') || (adapter.config.updateLibraries && counter === 3)) {
+        if (!nodeFS.existsSync(`${__dirname}/node_modules/${libraryDir}/package.json`) || (adapter.config.updateLibraries && counter === 3)) {
 
-            installNpm(npmLib, () => {
-                installNpmLibraryWithRetries(npmLib, callback, --counter)
-            });
-        }
-        else {
+            installNpm(npmLib, () =>
+                installNpmLibraryWithRetries(npmLib, callback, --counter));
+        } else {
             callback && callback(null, npmLib);
         }
     }
@@ -383,7 +382,7 @@ function createHam(options) {
 
     function deleteFolderRecursive(path) {
         if (nodeFS.existsSync(path)) {
-            nodeFS.readdirSync(path).forEach(function(file){
+            nodeFS.readdirSync(path).forEach(file => {
                 const curPath = nodePath.join(path, file);
                 if (nodeFS.lstatSync(curPath).isDirectory()) { // recurse
                     deleteFolderRecursive(curPath);
@@ -403,7 +402,14 @@ function createHam(options) {
         if (nodeFS.existsSync(nodePath.join(dataDir, adapter.namespace.replace('.', '_'), 'config.json'))) {
             try {
                 const formerConfig = require(nodePath.join(dataDir, adapter.namespace.replace('.', '_'), 'config.json'));
-                if (formerConfig && formerConfig.bridge && formerConfig.bridge.username && adapter.config.wrapperConfig && adapter.config.wrapperConfig.bridge && adapter.config.wrapperConfig.bridge.username && adapter.config.wrapperConfig.bridge.username !== formerConfig.bridge.username) {
+                if (formerConfig &&
+                    formerConfig.bridge &&
+                    formerConfig.bridge.username &&
+                    adapter.config.wrapperConfig &&
+                    adapter.config.wrapperConfig.bridge &&
+                    adapter.config.wrapperConfig.bridge.username &&
+                    adapter.config.wrapperConfig.bridge.username !== formerConfig.bridge.username
+                ) {
                     adapter.log.info('remove homebridge cache directory because Bridge username changed!');
                     deleteFolderRecursive(nodePath.join(dataDir, adapter.namespace.replace('.', '_')));
                 }
@@ -419,15 +425,13 @@ function createHam(options) {
             let localHomebridgeVersion;
             try {
                 localHomebridgeVersion = JSON.parse(nodeFS.readFileSync(__dirname + '/node_modules/homebridge/package.json'));
-            }
-            catch (err) {
+            } catch (err) {
                 localHomebridgeVersion = '0';
             }
             if (localHomebridgeVersion !== installLocalHomebridgeVersion) {
                 installHomebridge = true;
             }
-        }
-        else {
+        } else {
             installHomebridge = true;
         }
 
