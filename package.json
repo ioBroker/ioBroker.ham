@@ -42,7 +42,7 @@
     "@material-ui/icons": "^4.11.2",
     "@material-ui/lab": "^4.0.0-alpha.60",
     "@rjsf/core": "^4.1.0",
-    "@rjsf/material-ui": "^4.1.0",
+    "@rjsf/material-ui": "^4.1.1",
     "@sentry/browser": "^6.18.2",
     "@sentry/integrations": "^6.18.2",
     "@types/chai": "^4.3.0",
