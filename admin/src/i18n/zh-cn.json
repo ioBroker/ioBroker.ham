@@ -1,5 +1,5 @@
 {
-    "Add module": "添加模块",
+    "Add module": "添加NPM模块",
     "Additional npm modules:": "额外的npm模块：",
     "Configuration file": "配置文件",
     "Global Homebridge Config Directory Path": "全局Homebridge配置目录路径",
@@ -22,12 +22,12 @@
     "Update": "更新",
     "Install": "安装",
     "Configure": "配置",
-    "Remove": "消除",
+    "Remove": "移除",
     "Instance": "实例",
     "Cancel": "取消",
     "Save": "救",
     "Type": "类型",
-    "Name": "姓名",
+    "Name": "名称",
     "Preview": "预览",
     "Select": "选择",
     "JSON Source": "JSON来源",
@@ -39,5 +39,6 @@
     "%s will be removed": "％s 将被删除",
     "Configure %s": "配置 ％s",
     "Select config for %s": "选择 ％s 的配置",
-    "select_config_note_%s": "我们无法确定哪个配置部分属于 ％s。"
+    "select_config_note_%s": "我们无法确定哪个配置部分属于 ％s。",
+    "Description": "描述"
 }
