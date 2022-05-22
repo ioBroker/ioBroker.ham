@@ -45,7 +45,7 @@
     "@rjsf/material-ui": "^4.1.1",
     "@sentry/browser": "^6.19.3",
     "@sentry/integrations": "^6.19.7",
-    "@types/chai": "^4.3.0",
+    "@types/chai": "^4.3.1",
     "@types/chai-as-promised": "^7.1.5",
     "@types/gulp": "^4.0.9",
     "@types/mocha": "^9.1.0",
