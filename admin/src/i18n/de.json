@@ -1,6 +1,6 @@
 {
     "Add module": "NPM-Modul hinzufügen",
-    "Additional npm modules:": "Zusätzliche NPM-Module:",
+    "Additional npm modules:": "Zusätzliche NPM-Module",
     "Configuration file": "Konfigurationsdatei",
     "Global Homebridge Config Directory Path": "Globaler Pfad zum Homebridge-Konfigurationsverzeichnis",
     "Global Homebridge Path": "Globaler Pfad zur Homebridge-Installation",
