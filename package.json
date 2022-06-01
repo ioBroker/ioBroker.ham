@@ -28,7 +28,7 @@
   },
   "description": "Homebridge accessories manager",
   "devDependencies": {
-    "@alcalzone/release-script": "^3.5.6",
+    "@alcalzone/release-script": "^3.5.9",
     "@alcalzone/release-script-plugin-iobroker": "^3.5.9",
     "@alcalzone/release-script-plugin-license": "^3.5.9",
     "@babel/cli": "^7.17.10",
