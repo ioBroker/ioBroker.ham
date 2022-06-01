@@ -66,7 +66,7 @@
     "react": "^17.0.2",
     "react-ace": "^10.1.0",
     "react-dom": "^17.0.2",
-    "react-icons": "^4.3.1",
+    "react-icons": "^4.4.0",
     "react-markdown": "^8.0.3",
     "request": "^2.88.2",
     "sinon": "^13.0.2",
