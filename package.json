@@ -32,7 +32,7 @@
     "@alcalzone/release-script-plugin-iobroker": "^3.5.9",
     "@alcalzone/release-script-plugin-license": "^3.5.9",
     "@babel/cli": "^7.17.10",
-    "@babel/core": "^7.18.0",
+    "@babel/core": "^7.18.2",
     "@devexpress/dx-react-core": "^2.7.6",
     "@devexpress/dx-react-grid": "^2.7.6",
     "@devexpress/dx-react-grid-material-ui": "^2.7.6",
