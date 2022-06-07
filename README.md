@@ -73,6 +73,9 @@ For this to work you need to provide the location of the systems global node-mod
 -->
 
 ## Changelog
+### **WORK IN PROGRESS**
+* (bluefox) Corrected configuration in dark theme
+
 ### 4.0.3 (2022-03-20)
 * (bluefox) Update packages
 
