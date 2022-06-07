@@ -88,7 +88,7 @@ describe('Test ' + adapterShortName + ' Wrapper adapter With-AccessoryInfo', () 
     before('Test ' + adapterShortName + ' Wrapper adapter With-AccessoryInfo: Start js-controller', function (_done) {
         this.timeout(600000); // because of first install from npm
 
-        setup.setupController(() => {
+        setup.setupController(async () => {
             const config = await setup.getAdapterConfig();
             // enable adapter
             config.common.enabled  = true;
