@@ -40,13 +40,13 @@ The installation of the homebridge modules is also done via ioBroker.
 If you already use Homebridge (Apple OpenSource SmartHome) as a global installation on the host where also ioBroker runs on,
 then you can use this existing Homebridge installation and start this Homebridge
 installation as ioBroker process. In this case the Homebridge server is started by ioBroker.
-Additionally all states from Homebridge are available as states in ioBroker and allow to be controlled from ioBroker.
+Additionally, all states from Homebridge are available as states in ioBroker and allow to be controlled from ioBroker.
 
-For this to work you need to provide the location of the systems global node-modules folder. For this call **npm root -g**. Additionally you need to provide the path of the homebridge configuration directory (usually .homebridge in the "users" folder).
+For this to work you need to provide the location of the systems global node-modules folder. For this call **npm root -g**. Additionally, you need to provide the path of the homebridge configuration directory (usually .homebridge in the "users" folder).
 
 **IMPORTANT: ioBroker runs as user "iobroker", but homebridge normally as root or homebridge user (depending on how you installed it). You need to make sure that the homebride "persistance" folder can be accessed by the ioBroker user, else you will see errors that the file can not be saved (which can crash the adapter!)**
 
-**IMPORTANT: When using child bridges (new homebridge feature since 1.3.x) the adapter CAN NOT access the data provided by these child bridges! Only the main bridge is accessable!**
+**IMPORTANT: When using child bridges (new homebridge feature since 1.3.x) the adapter CAN NOT access the data provided by these child bridges! Only the main bridge is accessible!**
 
 ## Following plugins were tested in Default mode
 
@@ -94,7 +94,7 @@ For this to work you need to provide the location of the systems global node-mod
 * (Apollon77) BREAKING: ONLY WORKS WITH HOMEBRIDGE 1.1.x+ AND Node JS >=10.17.0!! Make sure plugins support it AND homebridge is updated to 1.1.x when you use the Global Mode!
 
 ### 1.1.2 (2019-07-08)
-* (Apollon77) Allow more then 149 accessories in wrapper mode
+* (Apollon77) Allow more than 149 accessories in wrapper mode
 
 ### 1.1.1 (2019-07-05)
 * (Apollon77) Add option to update NPM modules in Admin. Reinstall will happen after saving settings
@@ -132,7 +132,7 @@ For this to work you need to provide the location of the systems global node-mod
 * (Apollon77) Updates for Homebridge-Wrapper
 
 ### 0.2.5 (2018.06.18)
-* (Apollon77) Catch all console logs from Homegridge and make available as debug log
+* (Apollon77) Catch all console logs from Homebridge and make available as debug log
 
 ### 0.2.4 (2018.06.18)
 * (Apollon77) Updates for Homebridge-Wrapper

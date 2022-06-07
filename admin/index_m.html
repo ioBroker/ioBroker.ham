@@ -48,6 +48,9 @@
                 if ($('#wrapperConfig').is(':visible')) {
                     editor = ace.edit('wrapperConfig');
                     editor.getSession().setMode('ace/mode/json');
+                    var _theme = (currentTheme && currentTheme()) || 'light';
+                    _theme === 'react-dark' || _theme === 'react-blue' ? editor.setTheme('ace/theme/clouds_midnight') : editor.setTheme('ace/theme/chrome');
+
                     editor.$blockScrolling = true;
                     editor.setValue(wrapperConfig);
                     editor.getSession().on('change', function() {
@@ -173,16 +176,20 @@
         obj.wrapperConfig = _obj;
 
         switch (obj.homebridgeMode) {
-            case 'global':  obj.useGlobalHomebridge = true;
-                            obj.useLocalHomebridge = false;
-                            break;
-            case 'local':   obj.useGlobalHomebridge = false;
-                            obj.useLocalHomebridge = true;
-                            break;
-            case 'wrapper': obj.useGlobalHomebridge = false;
-                            obj.useLocalHomebridge = false;
-                            break;
+            case 'global':
+                obj.useGlobalHomebridge = true;
+                obj.useLocalHomebridge = false;
+                break;
+            case 'local':
+                obj.useGlobalHomebridge = false;
+                obj.useLocalHomebridge = true;
+                break;
+            case 'wrapper':
+                obj.useGlobalHomebridge = false;
+                obj.useLocalHomebridge = false;
+                break;
         }
+
         delete obj.homebridgeMode;
         callback(obj);
     }
