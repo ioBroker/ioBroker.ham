@@ -1,8 +1,20 @@
 {
   "common": {
     "name": "ham",
-    "version": "4.0.3",
+    "version": "4.0.4",
     "news": {
+      "4.0.4": {
+        "en": "Corrected configuration in dark theme",
+        "de": "Korrigierte Konfiguration im dunklen Thema",
+        "ru": "Исправлена настройка в тёмной теме",
+        "pt": "Configuração corrigida no tema escuro",
+        "nl": "Gecorrigeerde configuratie in donker thema",
+        "fr": "Configuration corrigée dans le thème sombre",
+        "it": "Configurazione corretta in tema scuro",
+        "es": "Configuración corregida en tema oscuro",
+        "pl": "Poprawiona konfiguracja w ciemnym motywie",
+        "zh-cn": "更正了深色主题中的配置"
+      },
       "4.0.3": {
         "en": "Update packages",
         "de": "Pakete aktualisieren",
@@ -74,18 +86,6 @@
         "es": "ROMPIENDO: SOLO FUNCIONA CON HOMEBRIDGE 1.1.x + Y Nodo JS> = 10.17.0 !! ¡Asegúrese de que los complementos lo admitan y que homebridge se actualice a 1.1.x cuando use el modo global!",
         "pl": "ŁAMANIE: DZIAŁA TYLKO Z HOMEBRIDGE 1.1.x + I Węzłem JS> = 10.17.0 !! Upewnij się, że wtyczki go obsługują ORAZ mostek główny jest aktualizowany do wersji 1.1.x podczas korzystania z trybu globalnego!",
         "zh-cn": "BREAKING：仅适用于HOMEBRIDGE 1.1.x +和Node JS> = 10.17.0！确保插件支持它，并且在使用全局模式时将homebridge更新为1.1.x！"
-      },
-      "1.1.2": {
-        "en": "more then 149 accessories allowed in wrapper mode",
-        "de": "Mehr als 149 Zubehörteile sind im Wrapper-Modus zulässig",
-        "ru": "в режиме обертки разрешено более 149 аксессуаров",
-        "pt": "mais de 149 acessórios permitidos no modo wrapper",
-        "nl": "meer dan 149 accessoires toegestaan in wrapper-modus",
-        "fr": "plus de 149 accessoires autorisés en mode wrapper",
-        "it": "più di 149 accessori consentiti in modalità wrapper",
-        "es": "más de 149 accesorios permitidos en modo envoltorio",
-        "pl": "więcej niż 149 akcesoriów dozwolonych w trybie owijania",
-        "zh-cn": "包装模式允许超过149个配件"
       }
     },
     "title": "Homebridge accessories manager",

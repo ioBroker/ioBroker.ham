@@ -73,7 +73,7 @@ For this to work you need to provide the location of the systems global node-mod
 -->
 
 ## Changelog
-### **WORK IN PROGRESS**
+### 4.0.4 (2022-06-07)
 * (bluefox) Corrected configuration in dark theme
 
 ### 4.0.3 (2022-03-20)
