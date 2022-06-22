@@ -96,7 +96,7 @@ describe('Test ' + adapterShortName + ' Global adapter', () => {
             const config = await setup.getAdapterConfig();
             // enable adapter
             config.common.enabled  = true;
-            config.common.loglevel = ((process.env.TRAVIS && process.env.TRAVIS === 'true') || (process.env.APPVEYOR && process.env.APPVEYOR === 'True')) ? 'info' : 'debug';
+            config.common.loglevel = 'debug';
 
             config.native.useGlobalHomebridge = true;
             config.native.globalHomebridgeBasePath = path.join(process.env.NODE_GLOBAL_DIR, 'homebridge');

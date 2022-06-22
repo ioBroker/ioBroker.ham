@@ -95,7 +95,7 @@ describe('Test ' + adapterShortName + ' Local adapter', () => {
             const config = await setup.getAdapterConfig();
             // enable adapter
             config.common.enabled  = true;
-            config.common.loglevel = ((process.env.TRAVIS && process.env.TRAVIS === 'true') || (process.env.APPVEYOR && process.env.APPVEYOR === 'True')) ? 'info' : 'debug';
+            config.common.loglevel = 'debug';
 
             config.native.useLocalHomebridge = true;
             config.native.libraries = "homebridge-http-webhooks homebridge-sun-position";

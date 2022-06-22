@@ -92,11 +92,11 @@ describe('Test ' + adapterShortName + ' Wrapper adapter No-AccessoryInfo', () =>
             const config = await setup.getAdapterConfig();
             // enable adapter
             config.common.enabled  = true;
-            config.common.loglevel = ((process.env.TRAVIS && process.env.TRAVIS === 'true') || (process.env.APPVEYOR && process.env.APPVEYOR === 'True')) ? 'info' : 'debug';
+            config.common.loglevel = 'debug';
 
             config.native.useGlobalHomebridge = false;
             //config.native.globalHomebridgeConfigPath = __dirname + "/homebridge/";
-            config.native.libraries = "homebridge-http-webhooks homebridge-sun-position https://git@github.com/Apollon77/homebridge-plugin-template";
+            config.native.libraries = "homebridge-http-webhooks homebridge-sun-position";
             config.native.ignoreInfoAccessoryServices = true;
             config.native.characteristicPollingInterval = 30;
             config.native.wrapperConfig = {
@@ -228,11 +228,7 @@ describe('Test ' + adapterShortName + ' Wrapper adapter No-AccessoryInfo', () =>
             				"off_method": "GET"
             				}
             			]
-            		},
-                    {
-                        platform: "ExampleHomebridgePlugin",
-                        name: "ExampleHomebridgePlugin"
-                    }
+            		}
                 ]
             };
 
