@@ -130,8 +130,8 @@
 			]
 		},
 		{
-			platform: "ExampleHomebridgePlugin",
-			name: "ExampleHomebridgePlugin"
+			"platform": "ExampleHomebridgePlugin",
+			"name": "ExampleHomebridgePlugin"
 		}
     ]
 }
