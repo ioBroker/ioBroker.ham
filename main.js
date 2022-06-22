@@ -325,7 +325,7 @@ function createHam(options) {
             return;
         }
         const libraryDir = npmLib.split(/(?<!^)@/)[0];
-        if (!nodeFS.existsSync(`${__dirname}/node_modules/${libraryDir}/package.json`) || (adapter.config.updateLibraries && counter === 3)) {
+        if ((npmLib.includes('://') && counter === 3) || (!npmLib.includes('://') && !nodeFS.existsSync(`${__dirname}/node_modules/${libraryDir}/package.json`)) || (adapter.config.updateLibraries && counter === 3)) {
 
             installNpm(npmLib, () =>
                 installNpmLibraryWithRetries(npmLib, callback, --counter));
