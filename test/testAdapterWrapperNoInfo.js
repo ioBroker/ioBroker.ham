@@ -272,8 +272,8 @@ describe('Test ' + adapterShortName + ' Wrapper adapter No-AccessoryInfo', () =>
     }).timeout(60000);
 
     it('Test ' + adapterShortName + ' Wrapper adapter No-AccessoryInfo: Wait for npm installs', done => {
-        setTimeout(() => done(), 59000);
-    }).timeout(60000);
+        setTimeout(() => done(), 119000);
+    }).timeout(120000);
 
     it('Test ' + adapterShortName + ' Wrapper: Verify Init', done => {
         expect(fs.existsSync(__dirname + '/homebridge/config.json')).to.be.true;
