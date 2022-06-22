@@ -161,7 +161,7 @@ describe('Test ' + adapterShortName + ' Global adapter', () => {
     });
 
     it('Test ' + adapterShortName + ' Wrapper: Test Change from inside', done => {
-        request('http://localhost:61828/?accessoryId=switch1&state=true', (error, response, body) => {
+        request('http://127.0.0.1:61828/?accessoryId=switch1&state=true', (error, response, body) => {
             expect(error).to.be.null;
             expect(response && response.statusCode).to.be.equal(200);
 
@@ -208,7 +208,7 @@ describe('Test ' + adapterShortName + ' Global adapter', () => {
 
     it('Test ' + adapterShortName + ' Wrapper: Test Change from inside 2', done => {
         lastHTTPRequest = null;
-        request('http://localhost:61828/?accessoryId=switch1&state=false', (error, response, body) => {
+        request('http://127.0.0.1:61828/?accessoryId=switch1&state=false', (error, response, body) => {
             expect(error).to.be.null;
             expect(response && response.statusCode).to.be.equal(200);
 

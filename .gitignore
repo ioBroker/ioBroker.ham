@@ -5,5 +5,4 @@ node_modules
 # Sourcemaps
 maps/
 
-package-lock.json
 /tmp/

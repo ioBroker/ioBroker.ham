@@ -162,33 +162,33 @@ describe('Test ' + adapterShortName + ' Wrapper adapter No-AccessoryInfo', () =>
             				{
             				"id": "switch1",
             				"name": "Switch name 1",
-            				"on_url": "http://localhost:9080/switch1?on",
+            				"on_url": "http://127.0.0.1:9080/switch1?on",
             				"on_method": "GET",
-            				"off_url": "http://localhost:9080/switch1?off",
+            				"off_url": "http://127.0.0.1:9080/switch1?off",
             				"off_method": "GET"
             				},
             				{
             				"id": "switch2",
             				"name": "Switch name 2",
-            				"on_url": "http://localhost:9080/switch2?on",
+            				"on_url": "http://127.0.0.1:9080/switch2?on",
             				"on_method": "GET",
-            				"off_url": "http://localhost:9080/switch2?off",
+            				"off_url": "http://127.0.0.1:9080/switch2?off",
             				"off_method": "GET"
             				},
             				{
             				"id": "switch3",
             				"name": "Switch name 3",
-            				"on_url": "http://localhost:9080/switch3?on",
+            				"on_url": "http://127.0.0.1:9080/switch3?on",
             				"on_method": "GET",
-            				"off_url": "http://localhost:9080/switch3?off",
+            				"off_url": "http://127.0.0.1:9080/switch3?off",
             				"off_method": "GET"
             				},
             				{
             				"id": "switch4",
             				"name": "Switch name*3",
-            				"on_url": "http://localhost:9080/switch3-2?on",
+            				"on_url": "http://127.0.0.1:9080/switch3-2?on",
             				"on_method": "GET",
-            				"off_url": "http://localhost:9080/switch3-2?off",
+            				"off_url": "http://127.0.0.1:9080/switch3-2?off",
             				"off_method": "GET"
             				}
             			],
@@ -196,7 +196,7 @@ describe('Test ' + adapterShortName + ' Wrapper adapter No-AccessoryInfo', () =>
             				{
             				"id": "pushbutton1",
             				"name": "Push button name 1",
-            				"push_url": "http://localhost:9080/pushbutton1?push",
+            				"push_url": "http://127.0.0.1:9080/pushbutton1?push",
             				"push_method": "GET"
             				}
             			],
@@ -204,9 +204,9 @@ describe('Test ' + adapterShortName + ' Wrapper adapter No-AccessoryInfo', () =>
             				{
             				"id": "light1",
             				"name": "Light name 1",
-            				"on_url": "http://localhost:9080/light1?on",
+            				"on_url": "http://127.0.0.1:9080/light1?on",
             				"on_method": "GET",
-            				"off_url": "http://localhost:9080/light1?off",
+            				"off_url": "http://127.0.0.1:9080/light1?off",
             				"off_method": "GET"
             				}
             			],
@@ -214,21 +214,25 @@ describe('Test ' + adapterShortName + ' Wrapper adapter No-AccessoryInfo', () =>
             				{
             				"id": "thermostat1",
             				"name": "Thermostat name 1",
-            				"set_target_temperature_url": "http://localhost:9080/thermostat1?targettemperature=%f",
-            				"set_target_heating_cooling_state_url": "http://localhost:9080/thermostat1??targetstate=%b"
+            				"set_target_temperature_url": "http://127.0.0.1:9080/thermostat1?targettemperature=%f",
+            				"set_target_heating_cooling_state_url": "http://127.0.0.1:9080/thermostat1??targetstate=%b"
             				}
             			],
             			"outlets": [
             				{
             				"id": "outlet1",
             				"name": "Outlet name 1",
-            				"on_url": "http://localhost:9080/outlet1?on",
+            				"on_url": "http://127.0.0.1:9080/outlet1?on",
             				"on_method": "GET",
-            				"off_url": "http://localhost:9080/outlet1?off",
+            				"off_url": "http://127.0.0.1:9080/outlet1?off",
             				"off_method": "GET"
             				}
             			]
-            		}
+            		},
+                    {
+                        platform: "ExampleHomebridgePlugin",
+                        name: "ExampleHomebridgePlugin"
+                    }
                 ]
             };
 
@@ -291,7 +295,7 @@ describe('Test ' + adapterShortName + ' Wrapper adapter No-AccessoryInfo', () =>
     }).timeout(10000);
 
     it('Test ' + adapterShortName + ' Wrapper: Test Change from inside', done => {
-        request('http://localhost:61828/?accessoryId=switch1&state=true', (error, response, body) => {
+        request('http://127.0.0.1:61828/?accessoryId=switch1&state=true', (error, response, body) => {
             expect(error).to.be.null;
             expect(response && response.statusCode).to.be.equal(200);
 
@@ -338,7 +342,7 @@ describe('Test ' + adapterShortName + ' Wrapper adapter No-AccessoryInfo', () =>
 
     it('Test ' + adapterShortName + ' Wrapper: Test Change from inside 2', done => {
         lastHTTPRequest = null;
-        request('http://localhost:61828/?accessoryId=switch1&state=false', (error, response, body) => {
+        request('http://127.0.0.1:61828/?accessoryId=switch1&state=false', (error, response, body) => {
             expect(error).to.be.null;
             expect(response && response.statusCode).to.be.equal(200);
 
