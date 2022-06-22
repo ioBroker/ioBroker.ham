@@ -96,7 +96,7 @@ describe('Test ' + adapterShortName + ' Wrapper adapter No-AccessoryInfo', () =>
 
             config.native.useGlobalHomebridge = false;
             //config.native.globalHomebridgeConfigPath = __dirname + "/homebridge/";
-            config.native.libraries = "homebridge-http-webhooks homebridge-sun-position";
+            config.native.libraries = "homebridge-http-webhooks homebridge-sun-position https://git@github.com/Apollon77/homebridge-plugin-template";
             config.native.ignoreInfoAccessoryServices = true;
             config.native.characteristicPollingInterval = 30;
             config.native.wrapperConfig = {

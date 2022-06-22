@@ -96,7 +96,7 @@ describe('Test ' + adapterShortName + ' Wrapper adapter With-AccessoryInfo', () 
 
             config.native.useGlobalHomebridge = false;
             //config.native.globalHomebridgeConfigPath = __dirname + "/homebridge/";
-            config.native.libraries = "homebridge-http-webhooks homebridge-sun-position";
+            config.native.libraries = "homebridge-http-webhooks homebridge-sun-position https://git@github.com/Apollon77/homebridge-plugin-template";
             config.native.ignoreInfoAccessoryServices = false;
             config.native.wrapperConfig = {
                 "accessories": [
@@ -271,8 +271,8 @@ describe('Test ' + adapterShortName + ' Wrapper adapter With-AccessoryInfo', () 
     }).timeout(60000);
 
     it('Test ' + adapterShortName + ' Wrapper adapter With-AccessoryInfo: Wait for npm installs', done => {
-        setTimeout(() => done(), 59000);
-    }).timeout(60000);
+        setTimeout(() => done(), 119000);
+    }).timeout(120000);
 
     it('Test ' + adapterShortName + ' Wrapper: Verify Init', done => {
         expect(fs.existsSync(__dirname + '/homebridge/config.json')).to.be.true;
