@@ -41,7 +41,7 @@ function createHam(options) {
 
     process.on('uncaughtException', err => {
         if (adapter && adapter.log) {
-            adapter.log.warn('Exception: ' + err);
+            adapter.log.warn(`Exception: ${err}`);
         }
         homebridgeHandler && homebridgeHandler.end();
     });
@@ -51,12 +51,16 @@ function createHam(options) {
         // Warning, state can be null if it was deleted
         adapter.log.info(`stateChange ${id} ${JSON.stringify(state)}`);
 
-        id = id.substr(adapter.namespace.length+1);
-        adapter.log.debug('lookup id: ' + id);
-        // you can use the ack flag to detect if it is status (true) or command (false)
         if (state && !state.ack) {
-            adapter.log.debug('ack is not set!');
-            homebridgeHandler.setValueForCharId(id, state.val);
+            id = id.substr(adapter.namespace.length+1);
+            adapter.log.debug(`Set value ${JSON.stringify(state.val)} for lookup id ${id}`);
+            homebridgeHandler.setValueForCharId(id, state.val, (err, val) => {
+                if (err) {
+                    adapter.log.info(`Error setting value for ${id}: ${err}`);
+                } else {
+                    adapter.log.debug(`Set value ${JSON.stringify(val)} for ${id} successful`);
+                }
+            });
         }
     });
 
@@ -90,7 +94,7 @@ function createHam(options) {
     }
 
     function updateChannel(dev_id, ch_id, name, ch_uuid) {
-        const id = dev_id + '.' + ch_id;
+        const id = `${dev_id}.${ch_id}`;
         // create channel for dev
         adapter.log.info(`updateChannel ${id}: name = ${name}`);
         adapter.getObject(id, (err, obj) => {
@@ -118,7 +122,7 @@ function createHam(options) {
     }
 
     function updateState(dev_id, ch_id, st_id, name, value, common, st_uuid, callback) {
-        const id = dev_id + '.' + ch_id + '.'+ st_id;
+        const id = `${dev_id}.${ch_id}.${st_id}`;
         if (!common) common = {};
         if (common.name === undefined) common.name = name;
         if (common.role === undefined) common.role = 'state';
@@ -164,7 +168,7 @@ function createHam(options) {
     function loadExistingAccessories(callback) {
         adapter.getDevices((err, res) => {
             if (err || !res) {
-                adapter.log.error('Can not get all existing devices: ' + err);
+                adapter.log.error(`Can not get all existing devices: ${err}`);
                 return;
             }
             for (let i = 0; i < res.length; i++) {
@@ -184,16 +188,17 @@ function createHam(options) {
             if (adapter && adapter.log && adapter.log.debug) {
                 adapter.log.debug(logs);
             }
-            process.stdout.write(logs + '\n');
+            process.stdout.write(`${logs}
+`);
         };
     }
 
     function main() {
         const usedLogger = {
-            info: adapter.log.debug,
-            warn: adapter.log.warn,
-            debug: adapter.log.silly,
-            silly: adapter.log.silly
+            info: adapter.log.debug.bind(adapter),
+            warn: adapter.log.warn.bind(adapter),
+            debug: adapter.log.silly.bind(adapter),
+            silly: adapter.log.silly.bind(adapter)
         };
         if (adapter.config.virtualCommandLine) {
             stringArgv.parseArgsStringToArgv(adapter.config.virtualCommandLine).forEach(e => process.argv.push(e));
@@ -203,15 +208,15 @@ function createHam(options) {
             installAllLibraries(() => {
                 const configDir = nodePath.join(dataDir, adapter.namespace.replace('.', '_'));
                 if (adapter.config.useGlobalHomebridge) {
-                    adapter.log.debug('Use Global Homebridge Path: ' + adapter.config.globalHomebridgeBasePath);
+                    adapter.log.debug(`Use Global Homebridge Path: ${adapter.config.globalHomebridgeBasePath}`);
                     let nodePathEnv = process.env.NODE_PATH;
                     if (!nodePathEnv) {
                         nodePathEnv = adapter.config.globalHomebridgeBasePath;
                     }
                     else {
-                        nodePathEnv = adapter.config.globalHomebridgeBasePath + (process.platform === 'win32' ? ';' : ':') + nodePathEnv;
+                        nodePathEnv = `${adapter.config.globalHomebridgeBasePath}${process.platform === 'win32' ? ';' : ':'}${nodePathEnv}`;
                     }
-                    nodePathEnv = nodePath.join(adapter.config.globalHomebridgeBasePath, '..') + (process.platform === 'win32' ? ';' : ':') + nodePathEnv;
+                    nodePathEnv = `${nodePath.join(adapter.config.globalHomebridgeBasePath, '..')}${process.platform === 'win32' ? ';' : ':'}${nodePathEnv}`;
                     process.env.NODE_PATH = nodePathEnv;
                     homebridgeHandler = require('./lib/global-handler');
                     homebridgeHandler.init({
@@ -294,7 +299,7 @@ function createHam(options) {
         }
 
         const cmd = `npm install ${npmLib} --production  --loglevel error`;
-        adapter.log.info(cmd + ' (System call)');
+        adapter.log.info(`${cmd} (System call)`);
         // Install node modules as system call
 
         // System call used for update of js-controller itself,
@@ -310,7 +315,7 @@ function createHam(options) {
         child.on('exit', (code /* , signal */) => {
             if (code && code !== 1) {
                 adapter.log.error(`Cannot install ${npmLib}: ${code}`);
-                typeof callback === 'function' && callback(new Error('Installation failed with code ' + code), npmLib);
+                typeof callback === 'function' && callback(new Error(`Installation failed with code ${code}`), npmLib);
                 return;
             }
             // command succeeded
@@ -341,7 +346,7 @@ function createHam(options) {
         }
 
         const lib = npmLibrariesToInstall[0];
-        adapter.log.info('Install/Update ' + lib);
+        adapter.log.info(`Install/Update ${lib}`);
 
         installNpmLibraryWithRetries(lib, (err, npmLib) => {
             if (err) {
@@ -360,11 +365,11 @@ function createHam(options) {
         }
 
         if (npmLibrariesToInstall.length) {
-            adapter.log.info('Install/Update the following Libraries: ' + npmLibrariesToInstall.join(', '));
+            adapter.log.info(`Install/Update the following Libraries: ${npmLibrariesToInstall.join(', ')}`);
             installLibraries(() => {
                 if (adapter.config.updateLibraries) {
                     adapter.log.info('All NPM Modules got reinstalled/updated ... restarting ...');
-                    adapter.extendForeignObject('system.adapter.' + adapter.namespace, {
+                    adapter.extendForeignObject(`system.adapter.${adapter.namespace}`, {
                         native: {
                             updateLibraries: false
                         }
@@ -415,16 +420,16 @@ function createHam(options) {
                 }
             }
             catch (err) {
-                adapter.log.error('Error while checking former homebridge config: ' + err);
+                adapter.log.error(`Error while checking former homebridge config: ${err}`);
             }
         }
 
         let installHomebridge = false;
 
-        if (nodeFS.existsSync(__dirname + '/node_modules/homebridge/package.json')) {
+        if (nodeFS.existsSync(`${__dirname}/node_modules/homebridge/package.json`)) {
             let localHomebridgeVersion;
             try {
-                localHomebridgeVersion = JSON.parse(nodeFS.readFileSync(__dirname + '/node_modules/homebridge/package.json'));
+                localHomebridgeVersion = JSON.parse(nodeFS.readFileSync(`${__dirname}/node_modules/homebridge/package.json`));
             } catch (err) {
                 localHomebridgeVersion = '0';
             }
@@ -436,10 +441,10 @@ function createHam(options) {
         }
 
         if (installHomebridge || adapter.config.updateLibraries) {
-            adapter.log.info('Need to install/update homebridge@' + installLocalHomebridgeVersion);
-            installNpmLibraryWithRetries('homebridge@' + installLocalHomebridgeVersion, (err) => {
+            adapter.log.info(`Need to install/update homebridge@${installLocalHomebridgeVersion}`);
+            installNpmLibraryWithRetries(`homebridge@${installLocalHomebridgeVersion}`, (err) => {
                 if (err) {
-                    adapter.log.error('Can not start in local Mode because Homebridge is not installed: ' + err);
+                    adapter.log.error(`Can not start in local Mode because Homebridge is not installed: ${err}`);
                     return;
                 }
                 else {
