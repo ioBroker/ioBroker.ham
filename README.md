@@ -39,7 +39,12 @@ The installation of the homebridge modules is also done via ioBroker.
 ### Global-Homebridge-Mode
 If you already use Homebridge (Apple OpenSource SmartHome) as a global installation on the host where also ioBroker runs on,
 then you can use this existing Homebridge installation and start this Homebridge
-installation as ioBroker process. In this case the Homebridge server is started by ioBroker.
+installation as ioBroker process. **In this case the Homebridge server is started by ioBroker.**
+
+**IMPORTANT: You need to make sure the global service is NOT started by the system or such. ioBroker itself will do the start! See below for best practice setup details.**
+
+**IMPORTANT: Because ioBroker starts the Homebridge also the logging is done by ioBroker. YOu can set the loglevel from the instance to silly to also see all Homebridge logs, else it will be filtered for the important stuff.**
+
 Additionally, all states from Homebridge are available as states in ioBroker and allow to be controlled from ioBroker.
 
 For this to work you need to provide the location of the systems global node-modules folder. For this call **npm root -g**. Additionally, you need to provide the path of the homebridge configuration directory (usually .homebridge in the "users" folder).
@@ -47,6 +52,25 @@ For this to work you need to provide the location of the systems global node-mod
 **IMPORTANT: ioBroker runs as user "iobroker", but homebridge normally as root or homebridge user (depending on how you installed it). You need to make sure that the homebride "persistance" folder can be accessed by the ioBroker user, else you will see errors that the file can not be saved (which can crash the adapter!)**
 
 **IMPORTANT: When using child bridges (new homebridge feature since 1.3.x) the adapter CAN NOT access the data provided by these child bridges! Only the main bridge is accessible!**
+
+#### Install as Global Bridge details
+Thanks to @Anzic23 here some details on how to set up homebridge ideally for global mode:
+
+1. `sudo npm install -g --unsafe-perm homebridge homebridge-config-ui-x`
+2. install hb-service (sudo hb-service install --user homebridge) This step is needed to create the necessary files and directories
+3. uninstall hb-service (sudo hb-service uninstall)
+4. after installing homebridge
+```
+sudo chmod 777 -R /var/lib/homebridge/
+sudo chmod 777 -R /usr/lib/node_modules/homebridge
+```
+in iobroker
+Global Homebridge Path:
+/usr/lib/node_modules/homebridge
+
+Global Homebridge Config Directory Path:
+/var/lib/homebridge
+
 
 ## Following plugins were tested in Default mode
 
