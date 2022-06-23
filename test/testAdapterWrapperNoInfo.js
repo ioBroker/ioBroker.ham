@@ -358,7 +358,11 @@ describe('Test ' + adapterShortName + ' Wrapper adapter No-AccessoryInfo', () =>
 
         setup.stopController(function (normalTerminated) {
             console.log('Adapter normal terminated: ' + normalTerminated);
-            httpServer.close();
+            try {
+                httpServer.close();
+            } catch (err) {
+                console.log('httpServer error on close: ' + err);
+            }
             setTimeout(done, 2000);
         });
     });
