@@ -6,3 +6,7 @@ node_modules
 maps/
 
 /tmp/
+
+
+# ioBroker dev-server
+.dev-server/
