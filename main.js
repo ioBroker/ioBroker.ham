@@ -208,6 +208,7 @@ function createHam(options) {
             installAllLibraries(() => {
                 const configDir = nodePath.join(dataDir, adapter.namespace.replace('.', '_'));
                 if (adapter.config.useGlobalHomebridge) {
+                    adapter.log.info('Adapter uses Global mode')
                     adapter.log.debug(`Use Global Homebridge Path: ${adapter.config.globalHomebridgeBasePath}`);
                     let nodePathEnv = process.env.NODE_PATH;
                     if (!nodePathEnv) {
@@ -229,10 +230,12 @@ function createHam(options) {
                         setState,
                         ignoreInfoAccessoryServices: adapter.config.ignoreInfoAccessoryServices,
                         characteristicPollingInterval: adapter.config.characteristicPollingInterval * 1000,
-                        insecureAccess: adapter.config.insecureAccess || false
+                        insecureAccess: adapter.config.insecureAccess || false,
+                        forbiddenCharacters: adapter.FORBIDDEN_CHARS
                     });
                 }
                 else if (adapter.config.useLocalHomebridge) {
+                    adapter.log.info('Adapter uses Local mode')
                     try {
                         if (!nodeFS.existsSync(configDir)) {
                             nodeFS.mkdirSync(configDir);
@@ -255,10 +258,12 @@ function createHam(options) {
                         setState,
                         ignoreInfoAccessoryServices: adapter.config.ignoreInfoAccessoryServices,
                         characteristicPollingInterval: adapter.config.characteristicPollingInterval * 1000,
-                        insecureAccess: adapter.config.insecureAccess || false
+                        insecureAccess: adapter.config.insecureAccess || false,
+                        forbiddenCharacters: adapter.FORBIDDEN_CHARS
                     });
                 }
                 else {
+                    adapter.log.info('Adapter uses Wrapper mode')
                     homebridgeHandler = require('./lib/wrapper-handler');
                     homebridgeHandler.init({
                         logger: usedLogger,
@@ -270,7 +275,8 @@ function createHam(options) {
                         wrapperConfig: adapter.config.wrapperConfig,
                         ignoreInfoAccessoryServices: adapter.config.ignoreInfoAccessoryServices,
                         characteristicPollingInterval: adapter.config.characteristicPollingInterval * 1000,
-                        insecureAccess: adapter.config.insecureAccess || false
+                        insecureAccess: adapter.config.insecureAccess || false,
+                        forbiddenCharacters: adapter.FORBIDDEN_CHARS
                     });
                 }
 
