@@ -97,8 +97,7 @@ Global Homebridge Config Directory Path:
 -->
 
 ## Changelog
-
-### __WORK IN PROGRESS__
+### 5.0.0 (2022-06-27)
 * IMPORTANT update homebridge and wrapper to 1.4.1 (latest as of today). IMPORTANT: Requires also homebridge 1.4.x installed when using global mode and local mode will update to 1.4.x too! Check your plugins for updates!
 * (Apollon77) Sync forbidden characters with ioBroker standard - Object IDs might change with this version!
 * (Apollon77) Basically allow to specify http URLS as plugins in the main configuration list (not the tab!)
