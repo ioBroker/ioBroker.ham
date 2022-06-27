@@ -155,7 +155,47 @@
         "js-controller": ">=2.0.0"
       }
     ],
-    "tier": 2
+    "tier": 2,
+    "messages": [
+      {
+        "condition": {
+          "operand": "and",
+          "rules": [
+            "oldVersion<5.0.0",
+            "newVersion>=5.0.0"
+          ]
+        },
+        "title": {
+          "en": "Upgrade to Homebridge 1.4.1",
+          "de": "Upgrade auf Homebridge 1.4.1",
+          "ru": "Обновление до Homebridge 1.4.1",
+          "pt": "Atualizar para Homebridge 1.4.1",
+          "nl": "Upgrade naar Homebridge 1.41",
+          "fr": "Souscrivez à Homebridge 1.4.1",
+          "it": "Aggiornamento a Homebridge 1.4.1",
+          "es": "Actualizar a Homebridge 1.4.1",
+          "pl": "Przestrzeń do Homebridge 1.4.1",
+          "zh-cn": "屋顶1.4.1"
+        },
+        "text": {
+          "en": "This adapter update requires homebridge in version 1.4.x. If you use the global mode please upgrade your installed Homebridge and all plugins to this version before updating the adapter! For local and wrapper modes please check your plugins after the update if an update is need and trigger it using the flag in the configuration.",
+          "de": "Dieses Adapter-Update erfordert Homebridge in Version 1.4.x Wenn der globale Modus verwendet wird, bitte zuerst das installierte Homebridge und alle Plugins auf diese Version aktualisieren, bevor der Adapter aktualisiert wird! Für lokale und Wrapper-Modi bitte die Plugins nach dem Update überprüfen, ob ein Update benötigt wird und dieses mit dem Flag in der Konfiguration ausführen.",
+          "ru": "Это обновление адаптера требует домашний мост в версии 1.4.x Если вы используете глобальный режим, пожалуйста, обновите установленный Homebridge и все плагины к этой версии перед обновлением адаптера! Для местных и оберточных режимов, пожалуйста, проверьте ваши плагины после обновления, если обновление необходимо и триггер его с помощью флага в конфигурации.",
+          "pt": "Esta atualização do adaptador requer homebridge na versão 1.4.x Se você usar o modo global, atualize sua Homebridge instalada e todos os plugins para esta versão antes de atualizar o adaptador! Para modos locais e wrapper, verifique seus plugins após a atualização se uma atualização é necessária e acioná-lo usando a bandeira na configuração.",
+          "nl": "Deze adapter update vereist homebridge in versie 1.4. Als je de globale modus gebruikt, upgrade je geïnstalleerde Homebridge en alle stekkers naar deze versie voordat je de adapter aan het opvullen bent! Voor lokale en wikkelmodes, controleer alsjeblieft je stekkers na de update als een update nodig is en activeer het met de vlag in het vertrouwen.",
+          "fr": "Cette mise à jour de l'adaptateur nécessite homebridge dans la version 1.4.x Si vous utilisez le mode global s'il vous plaît mettre à niveau votre Homebridge installé et tous les plugins à cette version avant de mettre à jour l'adaptateur! Pour les modes locaux et d'emballage, veuillez vérifier vos plugins après la mise à jour si une mise à jour est nécessaire et le déclencher en utilisant le drapeau dans la configuration.",
+          "it": "Questo aggiornamento adattatore richiede homebridge nella versione 1.4.x Se si utilizza la modalità globale si prega di aggiornare il Homebridge installato e tutti i plugin per questa versione prima di aggiornare l'adattatore! Per le modalità locali e wrapper si prega di controllare i plugin dopo l'aggiornamento se è necessario un aggiornamento e avviarlo utilizzando la bandiera nella configurazione.",
+          "es": "Esta actualización del adaptador requiere pasarela en la versión 1.4.x Si utiliza el modo global por favor actualice su Homebridge instalado y todos los plugins a esta versión antes de actualizar el adaptador! Para los modos locales y envoltorios, por favor, compruebe sus plugins después de la actualización si una actualización es necesaria y active el uso de la bandera en la configuración.",
+          "pl": "Zastosowanie to wymaga ulepszeń w wersji 1.4x. Jeśli korzystasz z trybu globalnego, ulepszaj swojego zainstalowanego Homebridge'a i wszystkie wtyczki do tej wersji, zanim ulepsza się adapter! W trybach lokalnych i owijanych zadowoli swoje wtyczki po aktualizacji, jeśli uaktualnia jest potrzeba i wyzwala na użycie flagi w konfiguracji.",
+          "zh-cn": "这一适应人员更新需要图表1.4.x。 如果你使用全球模式,请在更新适应者! 对于地方和妻子模式,请在更新后核对你的午餐,如果需要更新,并利用组合的旗帜。."
+        },
+        "level": "warn",
+        "buttons": [
+          "agree",
+          "cancel"
+        ]
+      }
+    ]
   },
   "native": {
     "useGlobalHomebridge": false,
