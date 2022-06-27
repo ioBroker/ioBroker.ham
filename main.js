@@ -64,64 +64,73 @@ function createHam(options) {
         }
     });
 
-    function updateDev(dev_id, dev_name, dev_type, dev_uuid) {
+    async function updateDev(dev_id, dev_name, dev_type, dev_uuid) {
         adapter.log.info(`updateDev ${dev_id}: name = ${dev_name} /type= ${dev_type}`);
         // create dev
-        adapter.getObject(dev_id, (err, obj) => {
-            if (!err && obj) {
-                adapter.extendObject(dev_id, {
-                    type: 'device',
-                    common: {name: dev_name},
-                    native: {
-                        UUID: dev_uuid,
-                        displayName: dev_name,
-                        category: dev_type
-                    }
-                });
-            }
-            else {
-                adapter.setObject(dev_id, {
-                    type: 'device',
-                    common: {name: dev_name},
-                    native: {
-                        UUID: dev_uuid,
-                        displayName: dev_name,
-                        category: dev_type
-                    }
-                }, {});
-            }
-        });
+        let obj;
+        try {
+            obj = await adapter.getObjectAsync(dev_id);
+        } catch (err) {
+            // ignore
+        }
+        if (obj) {
+            await adapter.extendObjectAsync(dev_id, {
+                type: 'device',
+                common: {name: dev_name},
+                native: {
+                    UUID: dev_uuid,
+                    displayName: dev_name,
+                    category: dev_type
+                }
+            });
+        }
+        else {
+            await adapter.setObjectAsync(dev_id, {
+                type: 'device',
+                common: {name: dev_name},
+                native: {
+                    UUID: dev_uuid,
+                    displayName: dev_name,
+                    category: dev_type
+                }
+            });
+        }
     }
 
-    function updateChannel(dev_id, ch_id, name, ch_uuid) {
+    async function updateChannel(dev_id, ch_id, name, ch_uuid) {
         const id = `${dev_id}.${ch_id}`;
         // create channel for dev
         adapter.log.info(`updateChannel ${id}: name = ${name}`);
-        adapter.getObject(id, (err, obj) => {
-            if (!err && obj) {
-                adapter.extendObject(id, {
-                    type: 'channel',
-                    common: {name: name},
-                    native: {
-                        UUID: ch_uuid,
-                        displayName: name
-                    }
-                });
-            }
-            else {
-                adapter.setObject(id, {
-                    type: 'channel',
-                    common: {name: name},
-                    native: {
-                        UUID: ch_uuid,
-                        displayName: name
-                    }
-                }, {});
-            }
-        });
+
+        let obj;
+        try {
+            obj = await adapter.getObjectAsync(id);
+        } catch (err) {
+            // ignore
+        }
+        if (obj) {
+            await adapter.extendObjectAsync(id, {
+                type: 'channel',
+                common: {name: name},
+                native: {
+                    UUID: ch_uuid,
+                    displayName: name
+                }
+            });
+        }
+        else {
+            await adapter.setObjectAsync(id, {
+                type: 'channel',
+                common: {name: name},
+                native: {
+                    UUID: ch_uuid,
+                    displayName: name
+                }
+            });
+        }
     }
 
-    function updateState(dev_id, ch_id, st_id, name, value, common, st_uuid, callback) {
+    async function updateState(dev_id, ch_id, st_id, name, value, common, st_uuid) {
         const id = `${dev_id}.${ch_id}.${st_id}`;
         if (!common) common = {};
         if (common.name === undefined) common.name = name;
@@ -132,33 +141,38 @@ function createHam(options) {
 
         adapter.log.info(`updateState ${id}: value = ${value} /common= ${JSON.stringify(common)}`);
 
-        adapter.getObject(id, (err, obj) => {
-            if (!err && obj) {
-                adapter.extendObject(id, {
-                    type: 'state',
-                    common: common,
-                    native: {
-                        UUID: st_uuid,
-                        displayName: name
-                    }
-                }, callback);
-            }
-            else {
-                adapter.setObject(id, {
-                    type: 'state',
-                    common: common,
-                    native: {
-                        UUID: st_uuid,
-                        displayName: name
-                    }
-                }, callback);
-            }
-        });
+        let obj;
+        try {
+            obj = await adapter.getObjectAsync(id);
+        } catch (err) {
+            // ignore
+        }
+
+        if (obj) {
+            await adapter.extendObjectAsync(id, {
+                type: 'state',
+                common: common,
+                native: {
+                    UUID: st_uuid,
+                    displayName: name
+                }
+            });
+        }
+        else {
+            await adapter.setObjectAsync(id, {
+                type: 'state',
+                common: common,
+                native: {
+                    UUID: st_uuid,
+                    displayName: name
+                }
+            });
+        }
     }
 
-    function setState(dev_id, ch_id, st_id, value) {
+    async function setState(dev_id, ch_id, st_id, value) {
         const id = `${dev_id}.${ch_id}.${st_id}`;
-        adapter.setState(id, value, true);
+        await adapter.setStateAsync(id, value, true);
     }
 
     // is called when databases are connected and adapter received configuration.
@@ -287,6 +301,7 @@ function createHam(options) {
                     homebridgeHandler.start();
 
                     options.exitAfter && setTimeout(() =>
+                        // @ts-ignore
                         adapter && adapter.stop(), 10000);
                 });
             });
@@ -315,8 +330,8 @@ function createHam(options) {
             windowsHide: true
         });
 
-        child.stdout.on('data', buf => adapter.log.info(buf.toString('utf8')));
-        child.stderr.on('data', buf => adapter.log.info(buf.toString('utf8')));
+        child.stdout && child.stdout.on('data', buf => adapter.log.info(buf.toString('utf8')));
+        child.stderr && child.stderr.on('data', buf => adapter.log.info(buf.toString('utf8')));
 
         child.on('exit', (code /* , signal */) => {
             if (code && code !== 1) {
@@ -435,7 +450,7 @@ function createHam(options) {
         if (nodeFS.existsSync(`${__dirname}/node_modules/homebridge/package.json`)) {
             let localHomebridgeVersion;
             try {
-                localHomebridgeVersion = JSON.parse(nodeFS.readFileSync(`${__dirname}/node_modules/homebridge/package.json`));
+                localHomebridgeVersion = JSON.parse(nodeFS.readFileSync(`${__dirname}/node_modules/homebridge/package.json`, 'utf-8'));
             } catch (err) {
                 localHomebridgeVersion = '0';
             }
