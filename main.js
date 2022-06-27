@@ -120,7 +120,7 @@ function createHam(options) {
             adapter.log.debug(`updateState ${id}: set postponed value = ${postponedStateValues[id]}`);
             await adapter.setStateAsync(id, {val: postponedStateValues[id], ack: true});
             delete postponedStateValues[id];
-        } else {
+        } else if (value !== undefined) {
             adapter.log.debug(`updateState ${id}: set value = ${value}`);
             await adapter.setStateAsync(id, {val: value, ack: true});
         }
