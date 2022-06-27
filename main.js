@@ -70,34 +70,15 @@ function createHam(options) {
     async function updateDev(dev_id, dev_name, dev_type, dev_uuid) {
         adapter.log.info(`updateDev ${dev_id}: name = ${dev_name} /type= ${dev_type}`);
         // create dev
-        let obj;
-        try {
-            obj = await adapter.getObjectAsync(dev_id);
-        } catch (err) {
-            // ignore
-        }
-        if (obj) {
-            await adapter.extendObjectAsync(dev_id, {
-                type: 'device',
-                common: {name: dev_name},
-                native: {
-                    UUID: dev_uuid,
-                    displayName: dev_name,
-                    category: dev_type
-                }
-            });
-        }
-        else {
-            await adapter.setObjectAsync(dev_id, {
-                type: 'device',
-                common: {name: dev_name},
-                native: {
-                    UUID: dev_uuid,
-                    displayName: dev_name,
-                    category: dev_type
-                }
-            });
-        }
+        await adapter.extendObjectAsync(dev_id, {
+            type: 'device',
+            common: {name: dev_name},
+            native: {
+                UUID: dev_uuid,
+                displayName: dev_name,
+                category: dev_type
+            }
+        });
     }
 
     async function updateChannel(dev_id, ch_id, name, ch_uuid) {
@@ -105,32 +86,14 @@ function createHam(options) {
         // create channel for dev
         adapter.log.info(`updateChannel ${id}: name = ${name}`);
 
-        let obj;
-        try {
-            obj = await adapter.getObjectAsync(id);
-        } catch (err) {
-            // ignore
-        }
-        if (obj) {
-            await adapter.extendObjectAsync(id, {
-                type: 'channel',
-                common: {name: name},
-                native: {
-                    UUID: ch_uuid,
-                    displayName: name
-                }
-            });
-        }
-        else {
-            await adapter.setObjectAsync(id, {
-                type: 'channel',
-                common: {name: name},
-                native: {
-                    UUID: ch_uuid,
-                    displayName: name
-                }
-            });
-        }
+        await adapter.extendObjectAsync(id, {
+            type: 'channel',
+            common: {name: name},
+            native: {
+                UUID: ch_uuid,
+                displayName: name
+            }
+        });
     }
 
     async function updateState(dev_id, ch_id, st_id, name, value, common, st_uuid) {
@@ -144,33 +107,14 @@ function createHam(options) {
 
         adapter.log.info(`updateState ${id}: value = ${value} /common= ${JSON.stringify(common)}`);
 
-        let obj;
-        try {
-            obj = await adapter.getObjectAsync(id);
-        } catch (err) {
-            // ignore
-        }
-
-        if (obj) {
-            await adapter.extendObjectAsync(id, {
-                type: 'state',
-                common: common,
-                native: {
-                    UUID: st_uuid,
-                    displayName: name
-                }
-            });
-        }
-        else {
-            await adapter.setObjectAsync(id, {
-                type: 'state',
-                common: common,
-                native: {
-                    UUID: st_uuid,
-                    displayName: name
-                }
-            });
-        }
+        await adapter.extendObjectAsync(id, {
+            type: 'state',
+            common: common,
+            native: {
+                UUID: st_uuid,
+                displayName: name
+            }
+        });
         initializedStateObjects[id] = true;
         if (postponedStateValues[id]) {
             adapter.log.debug(`updateState ${id}: set postponed value = ${postponedStateValues[id]}`);
