@@ -11,6 +11,9 @@ const utils = require('@iobroker/adapter-core'); // Get common adapter utils
 const nodePath = require('path');
 const stringArgv = require('string-argv');
 
+const initializedStateObjects = {};
+const postponedStateValues = {};
+
 // it is not an object.
 function createHam(options) {
     const dataDir = nodePath.normalize(nodePath.join(utils.controllerDir, require(nodePath.join(utils.controllerDir, 'lib', 'tools.js')).getDefaultDataDir()));
@@ -168,10 +171,20 @@ function createHam(options) {
                 }
             });
         }
+        initializedStateObjects[id] = true;
+        if (postponedStateValues[id]) {
+            adapter.log.debug(`updateState ${id}: set postponed value = ${postponedStateValues[id]}`);
+            await adapter.setStateAsync(id, {val: postponedStateValues[id], ack: true});
+            delete postponedStateValues[id];
+        }
     }
 
     async function setState(dev_id, ch_id, st_id, value) {
         const id = `${dev_id}.${ch_id}.${st_id}`;
+        if (!initializedStateObjects[id]) {
+            postponedStateValues[id] = value;
+            return;
+        }
         await adapter.setStateAsync(id, value, true);
     }
 
