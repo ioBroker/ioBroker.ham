@@ -1,0 +1,55 @@
+{
+    "version": "4.0.4",
+    "name": "iobroker.ham.gui",
+    "private": true,
+    "author": {
+        "name": "Apollon77",
+        "email": "ingo@fischer-ka.de"
+    },
+    "description": "Homebridge accessories manager",
+    "devDependencies": {
+        "@babel/cli": "^7.17.10",
+        "@babel/core": "^7.18.5",
+        "@devexpress/dx-react-core": "^3.0.3",
+        "@devexpress/dx-react-grid": "^3.0.3",
+        "@devexpress/dx-react-grid-material-ui": "^3.0.3",
+        "@iobroker/adapter-react-v5": "^3.1.16",
+        "@mui/material": "^5.8.5",
+        "@mui/icons-material": "^5.8.4",
+        "@emotion/react": "^11.9.3",
+        "@emotion/styled": "^11.9.3",
+        "@rjsf/core": "^4.2.0",
+        "@rjsf/material-ui": "^4.2.0",
+        "@sentry/browser": "^7.0.0",
+        "@sentry/integrations": "^7.0.0",
+        "@types/react": "^17.0.47",
+        "@types/react-dom": "^17.0.17",
+        "ace-builds": "^1.6.1",
+        "react": "^18.2.0",
+        "react-ace": "^10.1.0",
+        "react-dom": "^18.2.0",
+        "react-icons": "^4.4.0",
+        "react-markdown": "^8.0.3",
+        "typescript": "^4.7.4",
+        "craco-esbuild": "^0.5.1",
+        "@craco/craco": "^6.4.3",
+        "@esbuild-plugins/node-globals-polyfill": "^0.1.1",
+        "react-scripts": "^5.0.1"
+    },
+    "scripts": {
+        "start": "craco start",
+        "lint": "eslint --fix --ext .js,.jsx src",
+        "build": "craco build",
+        "test": "react-scripts test",
+        "eject": "react-scripts eject"
+    },
+    "eslintConfig": {
+        "extends": "react-app"
+    },
+    "browserslist": [
+        ">0.2%",
+        "not dead",
+        "not ie <= 11",
+        "not op_mini all"
+    ]
+}
