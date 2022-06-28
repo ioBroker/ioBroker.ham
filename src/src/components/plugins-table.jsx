@@ -133,7 +133,7 @@ const cleanModuleName = (name) => {
         .replace(/^@.+?\//, '');
 };
 
-const remainderHeight = 'calc(100% - 72px)';
+const remainderHeight = 'calc(100% - 50px)';
 const Root = (props) => <DxGrid.Root {...props} style={{ height: remainderHeight }} />;
 
 export default ({ adapterConfig, socket, instanceId, onChange, showToast, themeType }) => {
