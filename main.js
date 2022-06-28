@@ -11,6 +11,9 @@ const utils = require('@iobroker/adapter-core'); // Get common adapter utils
 const nodePath = require('path');
 const stringArgv = require('string-argv');
 
+const initializedStateObjects = {};
+const postponedStateValues = {};
+
 // it is not an object.
 function createHam(options) {
     const dataDir = nodePath.normalize(nodePath.join(utils.controllerDir, require(nodePath.join(utils.controllerDir, 'lib', 'tools.js')).getDefaultDataDir()));
@@ -64,64 +67,36 @@ function createHam(options) {
         }
     });
 
-    function updateDev(dev_id, dev_name, dev_type, dev_uuid) {
+    async function updateDev(dev_id, dev_name, dev_type, dev_uuid) {
         adapter.log.info(`updateDev ${dev_id}: name = ${dev_name} /type= ${dev_type}`);
         // create dev
-        adapter.getObject(dev_id, (err, obj) => {
-            if (!err && obj) {
-                adapter.extendObject(dev_id, {
-                    type: 'device',
-                    common: {name: dev_name},
-                    native: {
-                        UUID: dev_uuid,
-                        displayName: dev_name,
-                        category: dev_type
-                    }
-                });
-            }
-            else {
-                adapter.setObject(dev_id, {
-                    type: 'device',
-                    common: {name: dev_name},
-                    native: {
-                        UUID: dev_uuid,
-                        displayName: dev_name,
-                        category: dev_type
-                    }
-                }, {});
+        await adapter.extendObjectAsync(dev_id, {
+            type: 'device',
+            common: {name: dev_name},
+            native: {
+                UUID: dev_uuid,
+                displayName: dev_name,
+                category: dev_type
             }
         });
     }
 
-    function updateChannel(dev_id, ch_id, name, ch_uuid) {
+    async function updateChannel(dev_id, ch_id, name, ch_uuid) {
         const id = `${dev_id}.${ch_id}`;
         // create channel for dev
         adapter.log.info(`updateChannel ${id}: name = ${name}`);
-        adapter.getObject(id, (err, obj) => {
-            if (!err && obj) {
-                adapter.extendObject(id, {
-                    type: 'channel',
-                    common: {name: name},
-                    native: {
-                        UUID: ch_uuid,
-                        displayName: name
-                    }
-                });
-            }
-            else {
-                adapter.setObject(id, {
-                    type: 'channel',
-                    common: {name: name},
-                    native: {
-                        UUID: ch_uuid,
-                        displayName: name
-                    }
-                }, {});
+
+        await adapter.extendObjectAsync(id, {
+            type: 'channel',
+            common: {name: name},
+            native: {
+                UUID: ch_uuid,
+                displayName: name
             }
         });
     }
 
-    function updateState(dev_id, ch_id, st_id, name, value, common, st_uuid, callback) {
+    async function updateState(dev_id, ch_id, st_id, name, value, common, st_uuid) {
         const id = `${dev_id}.${ch_id}.${st_id}`;
         if (!common) common = {};
         if (common.name === undefined) common.name = name;
@@ -132,33 +107,34 @@ function createHam(options) {
 
         adapter.log.info(`updateState ${id}: value = ${value} /common= ${JSON.stringify(common)}`);
 
-        adapter.getObject(id, (err, obj) => {
-            if (!err && obj) {
-                adapter.extendObject(id, {
-                    type: 'state',
-                    common: common,
-                    native: {
-                        UUID: st_uuid,
-                        displayName: name
-                    }
-                }, callback);
-            }
-            else {
-                adapter.setObject(id, {
-                    type: 'state',
-                    common: common,
-                    native: {
-                        UUID: st_uuid,
-                        displayName: name
-                    }
-                }, callback);
+        await adapter.extendObjectAsync(id, {
+            type: 'state',
+            common: common,
+            native: {
+                UUID: st_uuid,
+                displayName: name
             }
         });
+        
+        initializedStateObjects[id] = true;
+        
+        if (postponedStateValues[id]) {
+            adapter.log.debug(`updateState ${id}: set postponed value = ${postponedStateValues[id]}`);
+            await adapter.setStateAsync(id, {val: postponedStateValues[id], ack: true});
+            delete postponedStateValues[id];
+        } else if (value !== undefined) {
+            adapter.log.debug(`updateState ${id}: set value = ${value}`);
+            await adapter.setStateAsync(id, {val: value, ack: true});
+        }
     }
 
-    function setState(dev_id, ch_id, st_id, value) {
+    async function setState(dev_id, ch_id, st_id, value) {
         const id = `${dev_id}.${ch_id}.${st_id}`;
-        adapter.setState(id, value, true);
+        if (!initializedStateObjects[id]) {
+            postponedStateValues[id] = value;
+            return;
+        }
+        await adapter.setStateAsync(id, value, true);
     }
 
     // is called when databases are connected and adapter received configuration.
@@ -287,6 +263,7 @@ function createHam(options) {
                     homebridgeHandler.start();
 
                     options.exitAfter && setTimeout(() =>
+                        // @ts-ignore
                         adapter && adapter.stop(), 10000);
                 });
             });
@@ -315,8 +292,8 @@ function createHam(options) {
             windowsHide: true
         });
 
-        child.stdout.on('data', buf => adapter.log.info(buf.toString('utf8')));
-        child.stderr.on('data', buf => adapter.log.info(buf.toString('utf8')));
+        child.stdout && child.stdout.on('data', buf => adapter.log.info(buf.toString('utf8')));
+        child.stderr && child.stderr.on('data', buf => adapter.log.info(buf.toString('utf8')));
 
         child.on('exit', (code /* , signal */) => {
             if (code && code !== 1) {
@@ -435,7 +412,7 @@ function createHam(options) {
         if (nodeFS.existsSync(`${__dirname}/node_modules/homebridge/package.json`)) {
             let localHomebridgeVersion;
             try {
-                localHomebridgeVersion = JSON.parse(nodeFS.readFileSync(`${__dirname}/node_modules/homebridge/package.json`));
+                localHomebridgeVersion = JSON.parse(nodeFS.readFileSync(`${__dirname}/node_modules/homebridge/package.json`, 'utf-8'));
             } catch (err) {
                 localHomebridgeVersion = '0';
             }

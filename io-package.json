@@ -1,8 +1,32 @@
 {
   "common": {
     "name": "ham",
-    "version": "4.0.4",
+    "version": "5.0.1",
     "news": {
+      "5.0.1": {
+        "en": "Make sure values are set after objects were created",
+        "de": "Stellen Sie sicher, dass die Werte festgelegt werden, nachdem Objekte erstellt wurden",
+        "ru": "Убедитесь, что значения установлены после создания объектов",
+        "pt": "Certifique-se de que os valores são definidos após os objetos foram criados",
+        "nl": "Zorg ervoor dat er waarden worden geplaatst nadat objecten werden gecreëerd",
+        "fr": "Assurez-vous que les valeurs sont définies après la création des objets",
+        "it": "Assicurarsi che i valori siano impostati dopo che gli oggetti sono stati creati",
+        "es": "Asegúrese de que los valores se establecen después de crear objetos",
+        "pl": "Dokładne wartości zostały ustalone po tym, jak obiekty zostały stworzone",
+        "zh-cn": "创建物体后确定可靠的价值"
+      },
+      "5.0.0": {
+        "en": "IMPORTANT update homebridge and wrapper to 1.4.1 (latest as of today). IMPORTANT: Requires also homebridge 1.4.x installed when using global mode and local mode will update to 1.4.x too! Check your plugins for updates!\nSync forbidden characters with ioBroker standard - Object IDs might change with this version!\nBasically allow to specify http URLS as plugins in the main configuration list (not the tab!)\nAlso try to register on external accessories like cameras (experimental)\nFix loading issues with the tab",
+        "de": "WICHTIG Update Homebridge und Wrapper auf 1.4.1 (letztes bis heute). WICHTIG: Erfordert auch Homebridge 1.4.x installiert, wenn der globale Modus und der lokale Modus auf 1.4.x zu aktualisieren! Überprüfen Sie Ihre Plugins für Updates!\nSync verbotene Zeichen mit ioBroker Standard - Objekt-IDs können mit dieser Version ändern!\nGrundsätzlich erlauben Sie die Angabe von http URLS als Plugins in der Hauptkonfigurationsliste (nicht die Registerkarte!)\nVersuchen Sie auch, sich auf externen Zubehör wie Kameras (experimental) zu registrieren\nLadeprobleme mit der Registerkarte beheben",
+        "ru": "ВАЖНОЕ обновление гомбриджа и обертки до 1.4.1 (последнее на сегодня). ВАЖНО: Требуется также гомбридж 1.4.x установлен при использовании глобального режима и местный режим будет обновляться до 1.4.x тоже! Проверьте свои плагины для обновлений!\nSync запрещенные символы с ioBroker standard - ID объекта может измениться с этой версией!\nВ основном позвольте указать http URLS как плагины в основном списке конфигурации (не вкладка!)\nТакже попробуйте зарегистрироваться на внешних аксессуарах, таких как камеры (экспериментальные)\nИсправление вопросов загрузки с вкладкой",
+        "pt": "IMPORTANTE atualização homebridge e wrapper para 1.4.1 (mais tarde a partir de hoje). IMPORTANTE: Requer também homebridge 1.4.x instalado ao usar o modo global e o modo local irá atualizar para 1.4.x também! Verifique seus plugins para atualizações!\nSincronizar caracteres proibidos com padrão ioBroker - IDs de objeto pode mudar com esta versão!\nBasicamente permitir especificar http URLS como plugins na lista de configuração principal (não a aba!)\nTambém tente se registrar em acessórios externos como câmeras (experimental)\nCorrigir problemas de carregamento com a guia",
+        "nl": "IMPORTANT update homebridge en wikkel naar 1.4.1. Requires ook huisbrug 1.4.x geïnstalleerd als ze globale modus gebruiken en plaatselijke modus zullen updaten aan 1.4.x. Controleer je stekkers voor updates!\nSync verbiedde personages met ioBroker standaard - Object ID's kunnen veranderen met deze versie!\nIn principe toestaan om htp URLS te specificeren als plugins in de hoofdvermommmingslijst (niet de rekening\nProbeer ook te registreren op externe accessoires zoals camera's\nVerkoop problemen met de rekening",
+        "fr": "IMPORTANT mettre à jour la passerelle et l'emballage à 1.4.1 (le plus tard à compter d'aujourd'hui). IMPORTANT: Nécessite également homebridge 1.4.x installé lors de l'utilisation du mode mondial et le mode local mettra à jour 1.4.x aussi! Vérifiez vos plugins pour les mises à jour!\nSynchronisez les caractères interdits avec la norme ioBroker - Les identifiants d'objet peuvent changer avec cette version!\nEn gros, permet de spécifier http URLS comme plugins dans la liste de configuration principale (pas l'onglet!)\nEssayez également de vous inscrire sur des accessoires externes comme des appareils photo (expérimentaux)\nCorrection des problèmes de chargement avec l'onglet",
+        "it": "IMPORTANTE aggiorna homebridge e wrapper a 1.4.1 (più tardi di oggi). IMPORTANTE: Richiede anche homebridge 1.4.x installato quando si utilizza la modalità globale e la modalità locale si aggiornerà a 1.4.x troppo! Controlla i tuoi plugin per gli aggiornamenti!\nSincronizza i caratteri proibiti con standard ioBroker - Gli ID degli Oggetti potrebbero cambiare con questa versione!\nFondamentalmente permettono di specificare http URLS come plugin nell'elenco di configurazione principale (non la scheda!)\nCerca anche di registrare su accessori esterni come telecamere (esperimentali)\nRisolvere i problemi di carico con la scheda",
+        "es": "IMPORTANTE actualización casera y envoltorio a 1.4.1 (más tarde de hoy). IMPORTANTE: Requiere también homebridge 1.4.x instalado al utilizar el modo global y el modo local se actualizará a 1.4.x también! Revise sus plugins para actualizaciones!\nSincronización de caracteres prohibidos con el estándar ioBroker - ID de objetos puede cambiar con esta versión!\nBásicamente permite especificar URLS http como plugins en la lista de configuración principal (no la pestaña!)\nTambién trate de registrarse en accesorios externos como cámaras (experimental)\nArreglar los problemas de carga con la pestaña",
+        "pl": "IMPORTANT uaktualniło domowe mosty i owijało do 1.4.1 (współcześnie). IMPORTANT: Requires także homebridge 1.4.x zainstalowany w trybie globalnym, a tryb lokalny zaktualizuje 1.4.x! Wykorzystywanie dla aktualizacji!\nSync zabronił postaci z ioBroker standardem – obiekt ID może zmienić się z wersją!\nURLS pozwala na określenie http URLS jako wtyczki na głównym liście konfiguracji (nie tab!)\nPróbuje także zarejestrować się na zewnętrznych akcesoriach, jak kamery (eksperymentalne)\nZaładowanie tabeli z tabeli",
+        "zh-cn": "IMPORTANT更新了1.4.1(今天更新)。 IMPORTANT:Requires also Homebridge 1.4.x, 当使用全球模式和当地模式更新1.4.x! 检查你的供给!\nSyncidden特性 with io Broker标准-目标IDs可能与本版本相改变!\n基本上允许在主要组合清单(没有表格!)中具体说明URLS作为Plugins。\n还试图登记像摄影师(experimental)这样的外部接入场。\nA. 将问题与表格挂钩"
+      },
       "4.0.4": {
         "en": "Corrected configuration in dark theme",
         "de": "Korrigierte Konfiguration im dunklen Thema",
@@ -62,30 +86,6 @@
         "es": "actualice el Homebridge en el contenedor a 1.1.6 (el último a partir de hoy)",
         "pl": "zaktualizuj homebridge w opakowaniu do wersji 1.1.6 (najnowsze na dziś)",
         "zh-cn": "将包装器中的homebridge更新为1.1.6（今天为最新）"
-      },
-      "3.0.1": {
-        "en": "set a very high limit (again) on allowed accessories and services because irrelevant",
-        "de": "Setzen Sie (erneut) eine sehr hohe Grenze für zulässiges Zubehör und Serviceleistungen, da diese irrelevant sind",
-        "ru": "установить очень высокий предел (снова) на разрешенные аксессуары и услуги, потому что они неактуальны",
-        "pt": "definir um limite muito alto (novamente) em acessórios e serviços permitidos porque irrelevante",
-        "nl": "stel (opnieuw) een zeer hoge limiet in voor toegestane accessoires en services omdat ze niet relevant zijn",
-        "fr": "fixer une limite très élevée (à nouveau) sur les accessoires et services autorisés, car non pertinents",
-        "it": "impostare un limite molto alto (di nuovo) sugli accessori e servizi ammessi perché irrilevanti",
-        "es": "establecer un límite muy alto (nuevamente) en los accesorios y servicios permitidos porque son irrelevantes",
-        "pl": "ustawić (ponownie) bardzo wysoki limit dozwolonych akcesoriów i usług, ponieważ są one nieistotne",
-        "zh-cn": "再次对允许的附件和服务设置非常高的限制，因为这无关紧要"
-      },
-      "3.0.0": {
-        "en": "BREAKING: ONLY WORKS WITH HOMEBRIDGE 1.1.x+ AND Node JS >=10.17.0!! Make sure plugins support it AND homebridge is updated to 1.1.x when you use the Global Mode!",
-        "de": "BREAKING: FUNKTIONIERT NUR MIT HOMEBRIDGE 1.1.x + UND Node JS> = 10.17.0 !! Stellen Sie sicher, dass Plugins dies unterstützen UND Homebridge auf 1.1.x aktualisiert wird, wenn Sie den globalen Modus verwenden!",
-        "ru": "BREAKING: ТОЛЬКО РАБОТАЕТ С HOMEBRIDGE 1.1.x + И НОДОМ JS> = 10.17.0 !! Убедитесь, что плагины поддерживают это, и homebridge обновляется до 1.1.x при использовании глобального режима!",
-        "pt": "QUEBRA: FUNCIONA SOMENTE COM O HOMEBRIDGE 1.1.x + E o nó JS> = 10.17.0 !! Certifique-se de que os plugins o suportem E o homebridge seja atualizado para 1.1.x quando você usar o Modo Global!",
-        "nl": "BREAKING: WERKT ALLEEN MET HOMEBRIDGE 1.1.x + EN Node JS> = 10.17.0 !! Zorg ervoor dat plug-ins het ondersteunen EN dat homebridge wordt bijgewerkt naar 1.1.x wanneer je de Global Mode gebruikt!",
-        "fr": "RUPTURE: FONCTIONNE UNIQUEMENT AVEC HOMEBRIDGE 1.1.x + ET Node JS> = 10.17.0 !! Assurez-vous que les plugins le prennent en charge ET que homebridge est mis à jour vers 1.1.x lorsque vous utilisez le mode global!",
-        "it": "ROTTURA: FUNZIONA SOLO CON HOMEBRIDGE 1.1.x + E Nodo JS> = 10.17.0 !! Assicurati che i plugin lo supportino E homebridge sia aggiornato alla 1.1.x quando usi la Modalità Globale!",
-        "es": "ROMPIENDO: SOLO FUNCIONA CON HOMEBRIDGE 1.1.x + Y Nodo JS> = 10.17.0 !! ¡Asegúrese de que los complementos lo admitan y que homebridge se actualice a 1.1.x cuando use el modo global!",
-        "pl": "ŁAMANIE: DZIAŁA TYLKO Z HOMEBRIDGE 1.1.x + I Węzłem JS> = 10.17.0 !! Upewnij się, że wtyczki go obsługują ORAZ mostek główny jest aktualizowany do wersji 1.1.x podczas korzystania z trybu globalnego!",
-        "zh-cn": "BREAKING：仅适用于HOMEBRIDGE 1.1.x +和Node JS> = 10.17.0！确保插件支持它，并且在使用全局模式时将homebridge更新为1.1.x！"
       }
     },
     "title": "Homebridge accessories manager",
@@ -155,7 +155,47 @@
         "js-controller": ">=2.0.0"
       }
     ],
-    "tier": 2
+    "tier": 2,
+    "messages": [
+      {
+        "condition": {
+          "operand": "and",
+          "rules": [
+            "oldVersion<5.0.0",
+            "newVersion>=5.0.0"
+          ]
+        },
+        "title": {
+          "en": "Upgrade to Homebridge 1.4.1",
+          "de": "Upgrade auf Homebridge 1.4.1",
+          "ru": "Обновление до Homebridge 1.4.1",
+          "pt": "Atualizar para Homebridge 1.4.1",
+          "nl": "Upgrade naar Homebridge 1.41",
+          "fr": "Souscrivez à Homebridge 1.4.1",
+          "it": "Aggiornamento a Homebridge 1.4.1",
+          "es": "Actualizar a Homebridge 1.4.1",
+          "pl": "Przestrzeń do Homebridge 1.4.1",
+          "zh-cn": "屋顶1.4.1"
+        },
+        "text": {
+          "en": "This adapter update requires homebridge in version 1.4.x. If you use the global mode please upgrade your installed Homebridge and all plugins to this version before updating the adapter! For local and wrapper modes please check your plugins after the update if an update is need and trigger it using the flag in the configuration.",
+          "de": "Dieses Adapter-Update erfordert Homebridge in Version 1.4.x Wenn der globale Modus verwendet wird, bitte zuerst das installierte Homebridge und alle Plugins auf diese Version aktualisieren, bevor der Adapter aktualisiert wird! Für lokale und Wrapper-Modi bitte die Plugins nach dem Update überprüfen, ob ein Update benötigt wird und dieses mit dem Flag in der Konfiguration ausführen.",
+          "ru": "Это обновление адаптера требует домашний мост в версии 1.4.x Если вы используете глобальный режим, пожалуйста, обновите установленный Homebridge и все плагины к этой версии перед обновлением адаптера! Для местных и оберточных режимов, пожалуйста, проверьте ваши плагины после обновления, если обновление необходимо и триггер его с помощью флага в конфигурации.",
+          "pt": "Esta atualização do adaptador requer homebridge na versão 1.4.x Se você usar o modo global, atualize sua Homebridge instalada e todos os plugins para esta versão antes de atualizar o adaptador! Para modos locais e wrapper, verifique seus plugins após a atualização se uma atualização é necessária e acioná-lo usando a bandeira na configuração.",
+          "nl": "Deze adapter update vereist homebridge in versie 1.4. Als je de globale modus gebruikt, upgrade je geïnstalleerde Homebridge en alle stekkers naar deze versie voordat je de adapter aan het opvullen bent! Voor lokale en wikkelmodes, controleer alsjeblieft je stekkers na de update als een update nodig is en activeer het met de vlag in het vertrouwen.",
+          "fr": "Cette mise à jour de l'adaptateur nécessite homebridge dans la version 1.4.x Si vous utilisez le mode global s'il vous plaît mettre à niveau votre Homebridge installé et tous les plugins à cette version avant de mettre à jour l'adaptateur! Pour les modes locaux et d'emballage, veuillez vérifier vos plugins après la mise à jour si une mise à jour est nécessaire et le déclencher en utilisant le drapeau dans la configuration.",
+          "it": "Questo aggiornamento adattatore richiede homebridge nella versione 1.4.x Se si utilizza la modalità globale si prega di aggiornare il Homebridge installato e tutti i plugin per questa versione prima di aggiornare l'adattatore! Per le modalità locali e wrapper si prega di controllare i plugin dopo l'aggiornamento se è necessario un aggiornamento e avviarlo utilizzando la bandiera nella configurazione.",
+          "es": "Esta actualización del adaptador requiere pasarela en la versión 1.4.x Si utiliza el modo global por favor actualice su Homebridge instalado y todos los plugins a esta versión antes de actualizar el adaptador! Para los modos locales y envoltorios, por favor, compruebe sus plugins después de la actualización si una actualización es necesaria y active el uso de la bandera en la configuración.",
+          "pl": "Zastosowanie to wymaga ulepszeń w wersji 1.4x. Jeśli korzystasz z trybu globalnego, ulepszaj swojego zainstalowanego Homebridge'a i wszystkie wtyczki do tej wersji, zanim ulepsza się adapter! W trybach lokalnych i owijanych zadowoli swoje wtyczki po aktualizacji, jeśli uaktualnia jest potrzeba i wyzwala na użycie flagi w konfiguracji.",
+          "zh-cn": "这一适应人员更新需要图表1.4.x。 如果你使用全球模式,请在更新适应者! 对于地方和妻子模式,请在更新后核对你的午餐,如果需要更新,并利用组合的旗帜。."
+        },
+        "level": "warn",
+        "buttons": [
+          "agree",
+          "cancel"
+        ]
+      }
+    ]
   },
   "native": {
     "useGlobalHomebridge": false,

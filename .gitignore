@@ -10,3 +10,5 @@ maps/
 
 # ioBroker dev-server
 .dev-server/
+/src/build
+/src/package-lock.json
