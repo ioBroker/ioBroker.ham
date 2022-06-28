@@ -1,6 +1,6 @@
 import React, { useEffect, useReducer, useState } from 'react';
 
-import { DataTypeProvider, VirtualTableState } from '@devexpress/dx-react-grid';
+import { DataTypeProvider, VirtualTableState, Table } from '@devexpress/dx-react-grid';
 import { Grid as DxGrid, TableHeaderRow, VirtualTable } from '@devexpress/dx-react-grid-material-ui';
 
 import ButtonGroup from '@mui/material/ButtonGroup';
@@ -13,8 +13,9 @@ import Paper from '@mui/material/Paper';
 import Select from '@mui/material/Select';
 import Tooltip from '@mui/material/Tooltip';
 import Typography from '@mui/material/Typography';
-import Build from '@mui/icons-material/Build';
+import CircularProgress from '@mui/material/CircularProgress';
 
+import Build from '@mui/icons-material/Build';
 import DeleteForever from '@mui/icons-material/DeleteForever';
 import GetApp from '@mui/icons-material/GetApp';
 import HelpOutline from '@mui/icons-material/HelpOutline';
@@ -152,6 +153,11 @@ export default ({ adapterConfig, socket, instanceId, onChange, showToast, themeT
         { columnName: 'available', width: 80 },
         { columnName: 'keywords', width: 300 },
     ]);
+    const LoadingState = React.useCallback(() =>
+        <td colSpan={columns.length} style={{ textAlign: 'center', verticalAlign: 'middle' }}>
+            <Typography style={{ marginTop: 30, color: themeType === 'dark' ? 'white' : 'black' }}>{I18n.t('No data')}</Typography>
+        </td>
+    , []);
 
     adapterConfig._tabCache = adapterConfig._tabCache || {};
 
@@ -409,7 +415,7 @@ export default ({ adapterConfig, socket, instanceId, onChange, showToast, themeT
                         skip={skip}
                         getRows={getRemoteRows}
                     />
-                    <VirtualTable columnExtensions={tableColumnExtensions} />
+                    <VirtualTable columnExtensions={tableColumnExtensions} noDataCellComponent={LoadingState}/>
                     <TableHeaderRow />
                 </DxGrid>}
                 {isGlobalMode && <Grid container spacing={3} style={{ height: remainderHeight, padding: 8 }}>
