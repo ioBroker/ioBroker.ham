@@ -18,7 +18,7 @@ const postponedStateValues = {};
 function createHam(options) {
     const dataDir = nodePath.normalize(nodePath.join(utils.controllerDir, require(nodePath.join(utils.controllerDir, 'lib', 'tools.js')).getDefaultDataDir()));
 
-    // you have to call the adapter function and pass a options object
+    // you have to call the adapter function and pass an options object
     // name has to be set and has to be equal to adapters folder name and main file name excluding extension
     // adapter will be restarted automatically every time as the configuration changed, e.g system.adapter.template.0
     const adapter = new utils.Adapter(options);
@@ -115,9 +115,9 @@ function createHam(options) {
                 displayName: name
             }
         });
-        
+
         initializedStateObjects[id] = true;
-        
+
         if (postponedStateValues[id]) {
             adapter.log.debug(`updateState ${id}: set postponed value = ${postponedStateValues[id]}`);
             await adapter.setStateAsync(id, {val: postponedStateValues[id], ack: true});
