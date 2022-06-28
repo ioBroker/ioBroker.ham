@@ -5,7 +5,7 @@ import { ThemeProvider, StyledEngineProvider } from '@mui/material/styles';
 import Utils from '@iobroker/adapter-react-v5/Components/Utils';
 import theme from '@iobroker/adapter-react-v5/Theme';
 
-import TabApp from './tab-app';
+import App from './app';
 
 window.adapterName = 'ham';
 window.sentryDSN = 'https://09f8c0939fd04546aa835b96b5ad426a@sentry.iobroker.net/121';
@@ -18,7 +18,7 @@ function build() {
 
     root.render(<StyledEngineProvider injectFirst>
         <ThemeProvider theme={theme(themeName)}>
-            {<TabApp
+            {<App
                 adapterName="ham"
                 onThemeChange={(_theme) => {
                     themeName = _theme;

@@ -97,6 +97,9 @@ Global Homebridge Config Directory Path:
 -->
 
 ## Changelog
+### **WORK IN PROGRESS**
+* (bluefox) GUI was migrated to mui@v5
+
 ### 5.0.1 (2022-06-28)
 * (Apollon77) Make sure values are set after objects were created
 

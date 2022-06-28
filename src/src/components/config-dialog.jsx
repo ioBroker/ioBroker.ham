@@ -28,7 +28,7 @@ import 'ace-builds/src-noconflict/theme-github';
 
 import I18n from '@iobroker/adapter-react-v5/i18n';
 
-import { TabCache } from './tab-cache';
+import { TabCache } from '../tab-cache';
 import TooltipButton from './tooltip-button';
 
 /*ace.config.set(

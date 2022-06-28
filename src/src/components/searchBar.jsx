@@ -40,6 +40,8 @@ const styles = (theme) => ({
         justifyContent: 'space-between',
     },
     iconButton: {
+        marginTop: 6,
+        height: 34,
         color: theme.palette.action.active,
         transform: 'scale(1, 1)',
         transition: theme.transitions.create(['transform', 'color'], {
@@ -54,7 +56,7 @@ const styles = (theme) => ({
         },
     },
     searchIconButton: {
-        marginRight: theme.spacing(-6),
+        // marginRight: theme.spacing(-6),
     },
     icon: {
         transition: theme.transitions.create(['opacity'], {
@@ -93,6 +95,7 @@ const SearchBar = React.forwardRef(
     ) => {
         const inputRef = React.useRef();
         const [value, setValue] = React.useState(inputProps.value);
+        const [timer, setTimer] = React.useState(null);
 
         React.useEffect(() => {
             setValue(inputProps.value);
@@ -140,22 +143,27 @@ const SearchBar = React.forwardRef(
             }
         }, [onRequestSearch, value]);
 
-        const handleKeyUp = React.useCallback(
-            (e) => {
-                if (e.charCode === 13 || e.key === 'Enter') {
+        const handleKeyUp = React.useCallback(e => {
+            if (e.charCode === 13 || e.key === 'Enter') {
+                if (timer) {
+                    clearTimeout(timer);
+                    setTimer(null);
+                }
+                handleRequestSearch();
+            } else if (cancelOnEscape && (e.charCode === 27 || e.key === 'Escape')) {
+                handleCancel();
+            } else {
+                timer && clearTimeout(timer);
+                setTimer(setTimeout(() => {
+                    setTimer(null);
                     handleRequestSearch();
-                } else if (
-                    cancelOnEscape &&
-                    (e.charCode === 27 || e.key === 'Escape')
-                ) {
-                    handleCancel();
-                }
-                if (inputProps.onKeyUp) {
-                    inputProps.onKeyUp(e);
-                }
-            },
-            [handleRequestSearch, cancelOnEscape, handleCancel, inputProps.onKeyUp]
-        );
+                }, 500));
+            }
+            if (inputProps.onKeyUp) {
+                inputProps.onKeyUp(e);
+            }
+        },
+        [handleRequestSearch, cancelOnEscape, handleCancel, inputProps.onKeyUp]);
 
         React.useImperativeHandle(ref, () => ({
             focus: () => inputRef.current.focus(),
@@ -179,22 +187,20 @@ const SearchBar = React.forwardRef(
                 />
             </div>
             <IconButton
+                size="small"
                 onClick={handleRequestSearch}
-                className={`${classes.iconButton} ${classes.searchIconButton} ${value ? classes.iconButtonHidden : ''}`}
+                className={`${classes.iconButton} ${classes.searchIconButton} ${!value ? classes.iconButtonHidden : ''}`}
                 disabled={disabled}
             >
-                {React.cloneElement(searchIcon, {
-                    classes: { root: classes.icon },
-                })}
+                <SearchIcon />
             </IconButton>
             <IconButton
+                size="small"
                 onClick={handleCancel}
-                className={`${classes.iconButton} ${value ? classes.iconButtonHidden : ''}`}
+                className={`${classes.iconButton} ${!value ? classes.iconButtonHidden : ''}`}
                 disabled={disabled}
             >
-                {React.cloneElement(closeIcon, {
-                    classes: { root: classes.icon },
-                })}
+                <ClearIcon />
             </IconButton>
         </Paper>;
     }
@@ -202,10 +208,8 @@ const SearchBar = React.forwardRef(
 
 SearchBar.defaultProps = {
     className: '',
-    closeIcon: <ClearIcon />,
     disabled: false,
     placeholder: 'Search',
-    searchIcon: <SearchIcon />,
     style: null,
     value: '',
 };
@@ -217,8 +221,6 @@ SearchBar.propTypes = {
     classes: PropTypes.object.isRequired,
     /** Custom top-level class */
     className: PropTypes.string,
-    /** Override the close icon. */
-    closeIcon: PropTypes.node,
     /** Disables text field. */
     disabled: PropTypes.bool,
     /** Fired when the search is cancelled. */
@@ -229,8 +231,6 @@ SearchBar.propTypes = {
     onRequestSearch: PropTypes.func,
     /** Sets placeholder text for the embedded text field. */
     placeholder: PropTypes.string,
-    /** Override the search icon. */
-    searchIcon: PropTypes.node,
     /** Override the inline-styles of the root element. */
     style: PropTypes.object,
     /** The value of the text field. */

@@ -3,7 +3,7 @@ import { withStyles } from '@mui/styles';
 
 import GenericApp from '@iobroker/adapter-react-v5/GenericApp';
 
-import PluginsTable from './plugins-table';
+import PluginsTable from './components/plugins-table';
 
 /**
  * @type {(_theme: Theme) => import("@material-ui/styles").StyleRules}

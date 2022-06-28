@@ -25,7 +25,7 @@ import I18n from '@iobroker/adapter-react-v5/i18n';
 
 import ConfigDialog from './config-dialog';
 import SearchField from './search-field';
-import { TabCache } from './tab-cache';
+import { TabCache } from '../tab-cache';
 import TooltipButton from './tooltip-button';
 
 const VIRTUAL_PAGE_SIZE = 50;
@@ -372,8 +372,8 @@ export default ({ adapterConfig, socket, instanceId, onChange, showToast, themeT
     const isGlobalMode = adapterConfig.useGlobalHomebridge;
 
     const { rows, skip, totalCount, loading, openConfig, installConfig, configReadme, confirmDelete, instances } = state;
-    return <div style={{ height: '100%', paddingRight: 4 }}>
-        <Grid container spacing={3} style={{ marginBottom: 8 }}>
+    return <div style={{ height: '100%' }}>
+        <Grid container spacing={3}>
             {instances.length > 1 && <Grid item xs={3} md={2} xl={1}>
                 <FormControl variant="outlined" fullWidth size="small" style={{ marginTop: 4 }}>
                     <InputLabel id="instanceId-label">{I18n.t('Instance')}</InputLabel>
