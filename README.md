@@ -97,8 +97,7 @@ Global Homebridge Config Directory Path:
 -->
 
 ## Changelog
-
-### __WORK IN PROGRESS__
+### 5.0.1 (2022-06-28)
 * (Apollon77) Make sure values are set after objects were created
 
 ### 5.0.0 (2022-06-27)

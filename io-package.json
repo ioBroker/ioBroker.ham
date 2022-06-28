@@ -1,8 +1,20 @@
 {
   "common": {
     "name": "ham",
-    "version": "5.0.0",
+    "version": "5.0.1",
     "news": {
+      "5.0.1": {
+        "en": "Make sure values are set after objects were created",
+        "de": "Stellen Sie sicher, dass die Werte festgelegt werden, nachdem Objekte erstellt wurden",
+        "ru": "Убедитесь, что значения установлены после создания объектов",
+        "pt": "Certifique-se de que os valores são definidos após os objetos foram criados",
+        "nl": "Zorg ervoor dat er waarden worden geplaatst nadat objecten werden gecreëerd",
+        "fr": "Assurez-vous que les valeurs sont définies après la création des objets",
+        "it": "Assicurarsi che i valori siano impostati dopo che gli oggetti sono stati creati",
+        "es": "Asegúrese de que los valores se establecen después de crear objetos",
+        "pl": "Dokładne wartości zostały ustalone po tym, jak obiekty zostały stworzone",
+        "zh-cn": "创建物体后确定可靠的价值"
+      },
       "5.0.0": {
         "en": "IMPORTANT update homebridge and wrapper to 1.4.1 (latest as of today). IMPORTANT: Requires also homebridge 1.4.x installed when using global mode and local mode will update to 1.4.x too! Check your plugins for updates!\nSync forbidden characters with ioBroker standard - Object IDs might change with this version!\nBasically allow to specify http URLS as plugins in the main configuration list (not the tab!)\nAlso try to register on external accessories like cameras (experimental)\nFix loading issues with the tab",
         "de": "WICHTIG Update Homebridge und Wrapper auf 1.4.1 (letztes bis heute). WICHTIG: Erfordert auch Homebridge 1.4.x installiert, wenn der globale Modus und der lokale Modus auf 1.4.x zu aktualisieren! Überprüfen Sie Ihre Plugins für Updates!\nSync verbotene Zeichen mit ioBroker Standard - Objekt-IDs können mit dieser Version ändern!\nGrundsätzlich erlauben Sie die Angabe von http URLS als Plugins in der Hauptkonfigurationsliste (nicht die Registerkarte!)\nVersuchen Sie auch, sich auf externen Zubehör wie Kameras (experimental) zu registrieren\nLadeprobleme mit der Registerkarte beheben",
@@ -74,18 +86,6 @@
         "es": "actualice el Homebridge en el contenedor a 1.1.6 (el último a partir de hoy)",
         "pl": "zaktualizuj homebridge w opakowaniu do wersji 1.1.6 (najnowsze na dziś)",
         "zh-cn": "将包装器中的homebridge更新为1.1.6（今天为最新）"
-      },
-      "3.0.1": {
-        "en": "set a very high limit (again) on allowed accessories and services because irrelevant",
-        "de": "Setzen Sie (erneut) eine sehr hohe Grenze für zulässiges Zubehör und Serviceleistungen, da diese irrelevant sind",
-        "ru": "установить очень высокий предел (снова) на разрешенные аксессуары и услуги, потому что они неактуальны",
-        "pt": "definir um limite muito alto (novamente) em acessórios e serviços permitidos porque irrelevante",
-        "nl": "stel (opnieuw) een zeer hoge limiet in voor toegestane accessoires en services omdat ze niet relevant zijn",
-        "fr": "fixer une limite très élevée (à nouveau) sur les accessoires et services autorisés, car non pertinents",
-        "it": "impostare un limite molto alto (di nuovo) sugli accessori e servizi ammessi perché irrilevanti",
-        "es": "establecer un límite muy alto (nuevamente) en los accesorios y servicios permitidos porque son irrelevantes",
-        "pl": "ustawić (ponownie) bardzo wysoki limit dozwolonych akcesoriów i usług, ponieważ są one nieistotne",
-        "zh-cn": "再次对允许的附件和服务设置非常高的限制，因为这无关紧要"
       }
     },
     "title": "Homebridge accessories manager",
