@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 
 import I18n from '@iobroker/adapter-react-v5/i18n';
 
-import SearchBar from './searchBar';
+import SearchBar from './search-bar';
 
-export default ({ onSearch }) => {
+const SearchField = ({ onSearch }) => {
     const [search, setSearch] = useState('');
 
     return <SearchBar
@@ -17,4 +17,6 @@ export default ({ onSearch }) => {
             onSearch('');
         }}
     />;
-}
+};
+
+export default SearchField;

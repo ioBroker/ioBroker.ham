@@ -1,6 +1,6 @@
 import React, { useEffect, useReducer, useState } from 'react';
 
-import { DataTypeProvider, VirtualTableState, Table } from '@devexpress/dx-react-grid';
+import { DataTypeProvider, VirtualTableState } from '@devexpress/dx-react-grid';
 import { Grid as DxGrid, TableHeaderRow, VirtualTable } from '@devexpress/dx-react-grid-material-ui';
 
 import ButtonGroup from '@mui/material/ButtonGroup';
@@ -13,7 +13,6 @@ import Paper from '@mui/material/Paper';
 import Select from '@mui/material/Select';
 import Tooltip from '@mui/material/Tooltip';
 import Typography from '@mui/material/Typography';
-import CircularProgress from '@mui/material/CircularProgress';
 
 import Build from '@mui/icons-material/Build';
 import DeleteForever from '@mui/icons-material/DeleteForever';
@@ -122,21 +121,18 @@ function reducer(state, { type, payload }) {
     }
 }
 
-const filterKeywords = keyword => {
-    return !keyword.includes('homebridge') && !keyword.includes('homekit');
-};
+const filterKeywords = keyword =>
+    !keyword.includes('homebridge') && !keyword.includes('homekit');
 
-const cleanModuleName = (name) => {
-    return name
-        .replace('homebridge-', '')
-        .replace('-homebridge', '')
-        .replace(/^@.+?\//, '');
-};
+const cleanModuleName = name => name
+    .replace('homebridge-', '')
+    .replace('-homebridge', '')
+    .replace(/^@.+?\//, '');
 
 const remainderHeight = 'calc(100% - 50px)';
-const Root = (props) => <DxGrid.Root {...props} style={{ height: remainderHeight }} />;
+const Root = props => <DxGrid.Root {...props} style={{ height: remainderHeight }} />;
 
-export default ({ adapterConfig, socket, instanceId, onChange, showToast, themeType }) => {
+const PluginsTable = ({ adapterConfig, socket, instanceId, onChange, showToast, themeType }) => {
     const [state, dispatch] = useReducer(reducer, initialState);
     const [columns] = useState([
         { name: 'name', title: I18n.t('Name'), getCellValue: row => cleanModuleName(row.package.name) },
@@ -157,7 +153,7 @@ export default ({ adapterConfig, socket, instanceId, onChange, showToast, themeT
         <td colSpan={columns.length} style={{ textAlign: 'center', verticalAlign: 'middle' }}>
             <Typography style={{ marginTop: 30, color: themeType === 'dark' ? 'white' : 'black' }}>{I18n.t('No data')}</Typography>
         </td>
-    , []);
+    , [columns, themeType]);
 
     adapterConfig._tabCache = adapterConfig._tabCache || {};
 
@@ -244,6 +240,7 @@ export default ({ adapterConfig, socket, instanceId, onChange, showToast, themeT
                     });
                 })
                 .catch(() => dispatch({ type: 'REQUEST_ERROR' }));
+
             dispatch({ type: 'UPDATE_CACHE', payload: { query, adapterConfig } });
         }
     };
@@ -265,13 +262,11 @@ export default ({ adapterConfig, socket, instanceId, onChange, showToast, themeT
 
     useEffect(() => loadInstances());
 
-    const PackageNameFormatter = ({ value, row }) => {
-        return <Tooltip title={row.package.name}>
-            {row.installed ? <strong>{value}</strong> : <Typography>{value}</Typography>}
-        </Tooltip>;
-    };
+    const PackageNameFormatter = ({ value, row }) => <Tooltip title={row.package.name}>
+        {row.installed ? <strong>{value}</strong> : <Typography>{value}</Typography>}
+    </Tooltip>;
 
-    const onConfigureClicked = (row) => {
+    const onConfigureClicked = row => {
         const versionPostfix = row.installed === UNKNOWN_VERSION ? '' : `@${row.installed}`;
         dispatch({
             type: 'OPEN_CONFIG',
@@ -302,13 +297,13 @@ export default ({ adapterConfig, socket, instanceId, onChange, showToast, themeT
         }
     };
 
-    const onDeleteClicked = row => {
+    const onDeleteClicked = row =>
         dispatch({ type: 'CONFIRM_DELETE', payload: row.package.name });
-    };
 
     const onDeleteConfirmed = ok => {
         const { confirmDelete } = state;
         dispatch({ type: 'CONFIRM_DELETE' }); // closes the dialog by clearing "confirmDelete"
+
         const index = installed.findIndex((m) => m.startsWith(`${confirmDelete}@`) || m === confirmDelete);
         if (ok && index !== -1) {
             showToast(I18n.t('%s will be removed', confirmDelete));
@@ -327,33 +322,30 @@ export default ({ adapterConfig, socket, instanceId, onChange, showToast, themeT
         }
     };
 
-    const ActionsFormatter = ({ row }) => {
-        return <ButtonGroup size="small">
-            <TooltipButton tooltip={I18n.t('Readme')} Icon={HelpOutline} target="_blank" href={row.package.links.homepage} />
-            <TooltipButton
-                tooltip={I18n.t(row.installed ? 'Update' : 'Install')}
-                disabled={row.installed && row.installed === row.package.version}
-                Icon={row.installed ? Update : GetApp}
-                onClick={() => onUpdateOrInstallClicked(row)}
-            />
-            <TooltipButton
-                tooltip={I18n.t('Configure')}
-                disabled={!row.installed}
-                Icon={Build}
-                onClick={() => onConfigureClicked(row)}
-            />
-            <TooltipButton
-                tooltip={I18n.t('Remove')}
-                disabled={!row.installed}
-                Icon={DeleteForever}
-                onClick={() => onDeleteClicked(row)}
-            />
-        </ButtonGroup>;
-    };
+    const ActionsFormatter = ({ row }) => <ButtonGroup size="small">
+        <TooltipButton tooltip={I18n.t('Readme')} Icon={HelpOutline} target="_blank" href={row.package.links.homepage} />
+        <TooltipButton
+            tooltip={I18n.t(row.installed ? 'Update' : 'Install')}
+            disabled={row.installed && row.installed === row.package.version}
+            Icon={row.installed ? Update : GetApp}
+            onClick={() => onUpdateOrInstallClicked(row)}
+        />
+        <TooltipButton
+            tooltip={I18n.t('Configure')}
+            disabled={!row.installed}
+            Icon={Build}
+            onClick={() => onConfigureClicked(row)}
+        />
+        <TooltipButton
+            tooltip={I18n.t('Remove')}
+            disabled={!row.installed}
+            Icon={DeleteForever}
+            onClick={() => onDeleteClicked(row)}
+        />
+    </ButtonGroup>;
 
-    const KeywordsFormatter = ({ value }) => {
-        return value.map(k => <Chip key={k} variant="outlined" size="small" label={k} />);
-    };
+    const KeywordsFormatter = ({ value }) =>
+        value.map((k, i) => <Chip key={`${k}_${i}`} variant="outlined" size="small" label={k} />);
 
     const onDialogClose = ({ save, wrapperConfig, cache }) => {
         const { installConfig } = state;
@@ -378,6 +370,7 @@ export default ({ adapterConfig, socket, instanceId, onChange, showToast, themeT
     const isGlobalMode = adapterConfig.useGlobalHomebridge;
 
     const { rows, skip, totalCount, loading, openConfig, installConfig, configReadme, confirmDelete, instances } = state;
+
     return <div style={{ height: '100%' }}>
         <Grid container spacing={3}>
             {instances.length > 1 && <Grid item xs={3} md={2} xl={1}>
@@ -399,7 +392,7 @@ export default ({ adapterConfig, socket, instanceId, onChange, showToast, themeT
                   xs={instances.length > 1 ? 9 : 12}
                   md={instances.length > 1 ? 10 : 12}
                   xl={instances.length > 1 ? 11 : 12}>
-                {!isGlobalMode && <SearchField onSearch={(search) => dispatch({ type: 'EXECUTE_SEARCH', payload: search })} />}
+                {!isGlobalMode && <SearchField onSearch={search => dispatch({ type: 'EXECUTE_SEARCH', payload: search })} />}
             </Grid>
         </Grid>
         <div style={{ flex: '1 1 auto' }}>
@@ -435,8 +428,9 @@ export default ({ adapterConfig, socket, instanceId, onChange, showToast, themeT
             cache={adapterConfig._tabCache}
             onClose={onDialogClose}
         />
-        {confirmDelete && (
-            <Confirm text={I18n.t('Do you really want to remove %s', confirmDelete)} onClose={onDeleteConfirmed} />
-        )}
+        {confirmDelete &&
+            <Confirm text={I18n.t('Do you really want to remove %s', confirmDelete)} onClose={onDeleteConfirmed} />}
     </div>;
 };
+
+export default PluginsTable;

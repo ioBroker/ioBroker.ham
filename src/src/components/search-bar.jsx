@@ -102,46 +102,34 @@ const SearchBar = React.forwardRef(
         }, [inputProps.value]);
 
         const handleFocus = React.useCallback(
-            (e) => {
-                if (inputProps.onFocus) {
-                    inputProps.onFocus(e);
-                }
-            },
-            [inputProps.onFocus]
+            e => inputProps.onFocus && inputProps.onFocus(e),
+            [inputProps]
         );
 
         const handleBlur = React.useCallback(
-            (e) => {
-                setValue((v) => v.trim());
-                if (inputProps.onBlur) {
-                    inputProps.onBlur(e);
-                }
+            e => {
+                setValue(v => v.trim());
+                inputProps.onBlur && inputProps.onBlur(e);
             },
-            [inputProps.onBlur]
+            [inputProps]
         );
 
         const handleInput = React.useCallback(
-            (e) => {
+            e => {
                 setValue(e.target.value);
-                if (inputProps.onChange) {
-                    inputProps.onChange(e.target.value);
-                }
+                inputProps.onChange && inputProps.onChange(e.target.value);
             },
-            [inputProps.onChange]
+            [inputProps]
         );
 
         const handleCancel = React.useCallback(() => {
             setValue('');
-            if (onCancelSearch) {
-                onCancelSearch();
-            }
+            onCancelSearch && onCancelSearch();
         }, [onCancelSearch]);
 
-        const handleRequestSearch = React.useCallback(() => {
-            if (onRequestSearch) {
-                onRequestSearch(value);
-            }
-        }, [onRequestSearch, value]);
+        const handleRequestSearch = React.useCallback(() =>
+            onRequestSearch && onRequestSearch(value),
+            [onRequestSearch, value]);
 
         const handleKeyUp = React.useCallback(e => {
             if (e.charCode === 13 || e.key === 'Enter') {
@@ -159,11 +147,10 @@ const SearchBar = React.forwardRef(
                     handleRequestSearch();
                 }, 500));
             }
-            if (inputProps.onKeyUp) {
-                inputProps.onKeyUp(e);
-            }
+
+            inputProps.onKeyUp && inputProps.onKeyUp(e);
         },
-        [handleRequestSearch, cancelOnEscape, handleCancel, inputProps.onKeyUp]);
+        [handleRequestSearch, cancelOnEscape, handleCancel, inputProps, timer]);
 
         React.useImperativeHandle(ref, () => ({
             focus: () => inputRef.current.focus(),

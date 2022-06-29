@@ -3,7 +3,7 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import ToggleButton from '@mui/material/ToggleButton';
 
-export default ({ tooltip, toggle, disabled, Icon, ...other }) => {
+const TooltipButton = ({ tooltip, toggle, disabled, Icon, ...other }) => {
     const Btn = toggle ? ToggleButton : Button;
     //const Btn = ToggleButton;
     return !!disabled ?
@@ -17,3 +17,5 @@ export default ({ tooltip, toggle, disabled, Icon, ...other }) => {
             </Btn>
         </Tooltip>;
 };
+
+export default TooltipButton;

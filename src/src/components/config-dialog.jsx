@@ -121,7 +121,7 @@ function reducer(state, { type, payload }) {
 // list of all modules that schema fetch failed, so we don't fetch again from the remote server (only keep this in local memory)
 const skipFetchModules = [];
 
-export default ({ moduleName, isNew, readme, wrapperConfig, cache, onClose, themeType }) => {
+const ConfigDialog = ({ moduleName, isNew, readme, wrapperConfig, cache, onClose, themeType }) => {
     const [state, dispatch] = useReducer(reducer, { ...initialState, wrapperConfig: wrapperConfig });
     const tabCache = new TabCache(cache);
 
@@ -253,19 +253,21 @@ export default ({ moduleName, isNew, readme, wrapperConfig, cache, onClose, them
     const handleDisplayMode = (_event, value) => {
         const { config } = state;
         switch (value) {
-            case 'text':
-                dispatch({
-                    type: 'SWITCH_DISPLAY_MODE',
-                    payload: false,
-                });
-                handleJsonChange(JSON.stringify(config, null, 4));
-                break;
             case 'form':
                 dispatch({
                     type: 'SWITCH_DISPLAY_MODE',
                     payload: true,
                 });
                 // config will already contain the new value
+                break;
+
+            default:
+            case 'text':
+                dispatch({
+                    type: 'SWITCH_DISPLAY_MODE',
+                    payload: false,
+                });
+                handleJsonChange(JSON.stringify(config, null, 4));
                 break;
         }
     };
@@ -354,7 +356,7 @@ export default ({ moduleName, isNew, readme, wrapperConfig, cache, onClose, them
             if (configSchema && formRef.current && formRef.current.formElement) {
                 const root = formRef.current.formElement;
                 if (root && root.firstChild && root.firstChild.firstChild && root.firstChild.firstChild.className === 'unsupported-field') {
-                    const {config} = state;
+                    const { config } = state;
                     console.error('Unsupported schema, switching to text mode');
                     dispatch({
                         type: 'OPEN_DIALOG',
@@ -369,7 +371,7 @@ export default ({ moduleName, isNew, readme, wrapperConfig, cache, onClose, them
                 }
             }
         }, 0);
-    }, [configSchema]);
+    }, [configSchema, moduleName, state]);
 
     return <>
         <Backdrop open={loading} style={{ zIndex: 2000 }}>
@@ -509,3 +511,5 @@ export default ({ moduleName, isNew, readme, wrapperConfig, cache, onClose, them
         </Dialog>
     </>;
 };
+
+export default ConfigDialog;
