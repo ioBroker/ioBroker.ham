@@ -97,7 +97,7 @@ Global Homebridge Config Directory Path:
 -->
 
 ## Changelog
-### **WORK IN PROGRESS**
+### 5.0.2 (2022-07-20)
 * (bluefox) Update tab GUI
 
 ### 5.0.1 (2022-06-28)

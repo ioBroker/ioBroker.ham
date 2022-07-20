@@ -1,8 +1,20 @@
 {
   "common": {
     "name": "ham",
-    "version": "5.0.1",
+    "version": "5.0.2",
     "news": {
+      "5.0.2": {
+        "en": "Update tab GUI",
+        "de": "Registerkarte GUI",
+        "ru": "Обновить вкладку GUI",
+        "pt": "Atualizar guia GUI",
+        "nl": "Vertaling:",
+        "fr": "Mettre à jour l'onglet GUI",
+        "it": "Aggiorna la scheda GUI",
+        "es": "Actualizar ficha GUI",
+        "pl": "Data dostępu",
+        "zh-cn": "最新表格"
+      },
       "5.0.1": {
         "en": "Make sure values are set after objects were created",
         "de": "Stellen Sie sicher, dass die Werte festgelegt werden, nachdem Objekte erstellt wurden",
@@ -74,18 +86,6 @@
         "es": "actualice el homebridge y el contenedor a 1.3.4 (más reciente a partir de hoy). IMPORTANTE: Requiere también la instalación de Homebridge 1.3.x cuando se usa el modo global y el modo local también se actualizará a 1.3.x. ¡Revise sus complementos para ver si hay actualizaciones!\nAgregue una versión experimental de la nueva pestaña de selección y configuración de complementos: ¡PRUÉBELO!\nIMPORTANTE: Las configuraciones en modo local / global con puentes secundarios NO funcionarán porque ioBroker no puede acceder a los datos de los procesos del puente secundario.",
         "pl": "zaktualizuj homebridge i wrapper do wersji 1.3.4 (najnowsze na dziś). WAŻNE: Wymaga również zainstalowania homebridge 1.3.x podczas korzystania z trybu globalnego, a tryb lokalny również zostanie zaktualizowany do wersji 1.3.x! Sprawdź swoje wtyczki pod kątem aktualizacji!\nDodaj eksperymentalną wersję nowej zakładki wyboru i konfiguracji wtyczki - WYPRÓBUJ!\nWAŻNE: Konfiguracje w trybie lokalnym / globalnym z mostami podrzędnymi NIE będą działać, ponieważ ioBroker nie może uzyskać dostępu do danych w procesach mostów podrzędnych!",
         "zh-cn": "将homebridge和wrapper更新为1.3.4（截止到今天）。重要信息：在使用全局模式时，还需要安装homebridge 1.3.x，本地模式也将更新为1.3.x！检查您的插件是否有更新！\n添加新的插件选择和配置标签的实验版-尝试一下！\n重要信息：在本地/全局模式下使用子桥接器的配置将不起作用，因为ioBroker无法访问子桥接器进程上的数据！"
-      },
-      "3.0.2": {
-        "en": "update homebridge in wrapper to 1.1.6 (latest as of today)",
-        "de": "Update der Homebridge im Wrapper auf 1.1.6 (Stand heute)",
-        "ru": "обновите homebridge в оболочке до версии 1.1.6 (последней на сегодня)",
-        "pt": "atualize o homebridge no wrapper para 1.1.6 (o mais recente a partir de hoje)",
-        "nl": "update homebridge in wrapper naar 1.1.6 (laatste vanaf vandaag)",
-        "fr": "mettre à jour homebridge dans le wrapper vers la version 1.1.6 (dernière en date d'aujourd'hui)",
-        "it": "aggiorna homebridge in wrapper alla 1.1.6 (ultimo a partire da oggi)",
-        "es": "actualice el Homebridge en el contenedor a 1.1.6 (el último a partir de hoy)",
-        "pl": "zaktualizuj homebridge w opakowaniu do wersji 1.1.6 (najnowsze na dziś)",
-        "zh-cn": "将包装器中的homebridge更新为1.1.6（今天为最新）"
       }
     },
     "title": "Homebridge accessories manager",
