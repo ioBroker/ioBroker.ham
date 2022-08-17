@@ -90,6 +90,7 @@ Global Homebridge Config Directory Path:
 ## TODO
 * Tests
 * More documentation?!
+* Test and find out if ESM modules will work in which mode (I expect none)
 
 <!--
 	Placeholder for the next version (at the beginning of the line):
@@ -97,6 +98,10 @@ Global Homebridge Config Directory Path:
 -->
 
 ## Changelog
+
+### **WORK IN PROGRESS**
+* IMPORTANT update homebridge and wrapper to 1.5.0 (latest as of today). IMPORTANT: Requires also homebridge 1.5.x installed when using global mode and local mode will update to 1.5.x too! Check your plugins for updates!
+
 ### 5.0.2 (2022-07-20)
 * (bluefox) Update tab GUI
 
