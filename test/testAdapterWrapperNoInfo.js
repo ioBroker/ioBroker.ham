@@ -116,119 +116,119 @@ describe('Test ' + adapterShortName + ' Wrapper adapter No-AccessoryInfo', () =>
             			"platform": "HttpWebHooks",
             			"webhook_port": "61828",
             			"cache_directory": "./.node-persist/storage",
-            			"sensors": [
-            				{
-            				"id": "sensor1",
-            				"name": "Sensor name 1",
-            				"type": "contact"
-            				},
-            				{
-            				"id": "sensor2",
-            				"name": "Sensor name 2",
-            				"type": "motion"
-            				},
-            				{
-            				"id": "sensor3",
-            				"name": "Sensor name 3",
-            				"type": "occupancy"
-            				},
-            				{
-            				"id": "sensor4",
-            				"name": "Sensor name 4",
-            				"type": "smoke"
-            				},
-            				{
-            				"id": "sensor5",
-            				"name": "Sensor name 5",
-            				"type": "temperature"
-            				},
-            				{
-            				"id": "sensor6",
-            				"name": "Sensor name 6",
-            				"type": "humidity"
-            				},
-            				{
-            				"id": "sensor7",
-            				"name": "Sensor name 7",
-            				"type": "airquality"
-            				},
-            				{
-            				"id": "sensor8",
-            				"name": "Sensor name 8",
-            				"type": "airquality"
-            				}
-            			],
-            			"switches": [
-            				{
-            				"id": "switch1",
-            				"name": "Switch name 1",
-            				"on_url": "http://127.0.0.1:9080/switch1?on",
-            				"on_method": "GET",
-            				"off_url": "http://127.0.0.1:9080/switch1?off",
-            				"off_method": "GET"
-            				},
-            				{
-            				"id": "switch2",
-            				"name": "Switch name 2",
-            				"on_url": "http://127.0.0.1:9080/switch2?on",
-            				"on_method": "GET",
-            				"off_url": "http://127.0.0.1:9080/switch2?off",
-            				"off_method": "GET"
-            				},
-            				{
-            				"id": "switch3",
-            				"name": "Switch name 3",
-            				"on_url": "http://127.0.0.1:9080/switch3?on",
-            				"on_method": "GET",
-            				"off_url": "http://127.0.0.1:9080/switch3?off",
-            				"off_method": "GET"
-            				},
-            				{
-            				"id": "switch4",
-            				"name": "Switch name*3",
-            				"on_url": "http://127.0.0.1:9080/switch3-2?on",
-            				"on_method": "GET",
-            				"off_url": "http://127.0.0.1:9080/switch3-2?off",
-            				"off_method": "GET"
-            				}
-            			],
-            			"pushbuttons": [
-            				{
-            				"id": "pushbutton1",
-            				"name": "Push button name 1",
-            				"push_url": "http://127.0.0.1:9080/pushbutton1?push",
-            				"push_method": "GET"
-            				}
-            			],
-            			"lights": [
-            				{
-            				"id": "light1",
-            				"name": "Light name 1",
-            				"on_url": "http://127.0.0.1:9080/light1?on",
-            				"on_method": "GET",
-            				"off_url": "http://127.0.0.1:9080/light1?off",
-            				"off_method": "GET"
-            				}
-            			],
-            			"thermostats": [
-            				{
-            				"id": "thermostat1",
-            				"name": "Thermostat name 1",
-            				"set_target_temperature_url": "http://127.0.0.1:9080/thermostat1?targettemperature=%f",
-            				"set_target_heating_cooling_state_url": "http://127.0.0.1:9080/thermostat1??targetstate=%b"
-            				}
-            			],
-            			"outlets": [
-            				{
-            				"id": "outlet1",
-            				"name": "Outlet name 1",
-            				"on_url": "http://127.0.0.1:9080/outlet1?on",
-            				"on_method": "GET",
-            				"off_url": "http://127.0.0.1:9080/outlet1?off",
-            				"off_method": "GET"
-            				}
-            			]
-            		}
+                        "sensors": [
+                            {
+                                "id": "sensor1",
+                                "name": "Sensor name 1",
+                                "type": "contact"
+                            },
+                            {
+                                "id": "sensor2",
+                                "name": "Sensor name 2",
+                                "type": "motion"
+                            },
+                            {
+                                "id": "sensor3",
+                                "name": "Sensor name 3",
+                                "type": "occupancy"
+                            },
+                            {
+                                "id": "sensor4",
+                                "name": "Sensor name 4",
+                                "type": "smoke"
+                            },
+                            {
+                                "id": "sensor5",
+                                "name": "Sensor name 5",
+                                "type": "temperature"
+                            },
+                            {
+                                "id": "sensor6",
+                                "name": "Sensor name 6",
+                                "type": "humidity"
+                            },
+                            {
+                                "id": "sensor7",
+                                "name": "Sensor name 7",
+                                "type": "airquality"
+                            },
+                            {
+                                "id": "sensor8",
+                                "name": "Sensor name 8",
+                                "type": "airquality"
+                            }
+                        ],
+                        "switches": [
+                            {
+                                "id": "switch1",
+                                "name": "Switch name 1",
+                                "on_url": "http://127.0.0.1:9080/switch1?on",
+                                "on_method": "GET",
+                                "off_url": "http://127.0.0.1:9080/switch1?off",
+                                "off_method": "GET"
+                            },
+                            {
+                                "id": "switch2",
+                                "name": "Switch name 2",
+                                "on_url": "http://127.0.0.1:9080/switch2?on",
+                                "on_method": "GET",
+                                "off_url": "http://127.0.0.1:9080/switch2?off",
+                                "off_method": "GET"
+                            },
+                            {
+                                "id": "switch3",
+                                "name": "Switch name 3",
+                                "on_url": "http://127.0.0.1:9080/switch3?on",
+                                "on_method": "GET",
+                                "off_url": "http://127.0.0.1:9080/switch3?off",
+                                "off_method": "GET"
+                            },
+                            {
+                                "id": "switch4",
+                                "name": "Switch name*3",
+                                "on_url": "http://127.0.0.1:9080/switch3-2?on",
+                                "on_method": "GET",
+                                "off_url": "http://127.0.0.1:9080/switch3-2?off",
+                                "off_method": "GET"
+                            }
+                        ],
+                        "pushbuttons": [
+                            {
+                                "id": "pushbutton1",
+                                "name": "Push button name 1",
+                                "push_url": "http://127.0.0.1:9080/pushbutton1?push",
+                                "push_method": "GET"
+                            }
+                        ],
+                        "lights": [
+                            {
+                                "id": "light1",
+                                "name": "Light name 1",
+                                "on_url": "http://127.0.0.1:9080/light1?on",
+                                "on_method": "GET",
+                                "off_url": "http://127.0.0.1:9080/light1?off",
+                                "off_method": "GET"
+                            }
+                        ],
+                        "thermostats": [
+                            {
+                                "id": "thermostat1",
+                                "name": "Thermostat name 1",
+                                "set_target_temperature_url": "http://127.0.0.1:9080/thermostat1?targettemperature=%f",
+                                "set_target_heating_cooling_state_url": "http://127.0.0.1:9080/thermostat1??targetstate=%b"
+                            }
+                        ],
+                        "outlets": [
+                            {
+                                "id": "outlet1",
+                                "name": "Outlet name 1",
+                                "on_url": "http://127.0.0.1:9080/outlet1?on",
+                                "on_method": "GET",
+                                "off_url": "http://127.0.0.1:9080/outlet1?off",
+                                "off_method": "GET"
+                            }
+                        ]
+                    }
                 ]
             };
 

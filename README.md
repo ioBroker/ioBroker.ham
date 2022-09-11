@@ -98,6 +98,10 @@ Global Homebridge Config Directory Path:
 -->
 
 ## Changelog
+
+### __WORK IN PROGRESS__
+* (Apollon77) make compatible to more plugins
+
 ### 5.1.0 (2022-08-17)
 * IMPORTANT update homebridge and wrapper to 1.5.0 (latest as of today). IMPORTANT: Requires also homebridge 1.5.x installed when using global mode and local mode will update to 1.5.x too! Check your plugins for updates!
 

@@ -12,7 +12,7 @@ const nodePath = require('path');
 const stringArgv = require('string-argv');
 
 const initializedStateObjects = {};
-const postponedStateValues = {};
+const lastRealStateValue = {};
 
 // it is not an object.
 function createHam(options) {
@@ -59,8 +59,11 @@ function createHam(options) {
             adapter.log.debug(`Set value ${JSON.stringify(state.val)} for lookup id ${id}`);
             homebridgeHandler.setValueForCharId(id, state.val, (err, val) => {
                 if (err) {
-                    adapter.log.info(`Error setting value for ${id}: ${err}`);
+                    adapter.log.info(`Error setting value ${JSON.stringify(state.val)} for ${id}: ${err}`);
                 } else {
+                    if (val === undefined) {
+                        val = state.val
+                    }
                     adapter.log.debug(`Set value ${JSON.stringify(val)} for ${id} successful`);
                 }
             });
@@ -118,11 +121,17 @@ function createHam(options) {
 
         initializedStateObjects[id] = true;
 
-        if (postponedStateValues[id]) {
-            adapter.log.debug(`updateState ${id}: set postponed value = ${postponedStateValues[id]}`);
-            await adapter.setStateAsync(id, {val: postponedStateValues[id], ack: true});
-            delete postponedStateValues[id];
-        } else if (value !== undefined) {
+        if (lastRealStateValue[id] && !lastRealStateValue[id].alreadySet) {
+            // When a setState came before objects were initialized set the postponed value now
+            adapter.log.debug(`updateState ${id}: set postponed value = ${lastRealStateValue[id].val}`);
+            lastRealStateValue[id].alreadySet = true;
+            await adapter.setStateAsync(id, {
+                val: lastRealStateValue[id].val,
+                ts: lastRealStateValue[id].ts,
+                ack: true
+            });
+        } else if (value !== undefined && !lastRealStateValue[id]) {
+            // Only set values from object definition if no real queried value exists
             adapter.log.debug(`updateState ${id}: set value = ${value}`);
             await adapter.setStateAsync(id, {val: value, ack: true});
         }
@@ -130,10 +139,20 @@ function createHam(options) {
 
     async function setState(dev_id, ch_id, st_id, value) {
         const id = `${dev_id}.${ch_id}.${st_id}`;
+        adapter.log.debug(`setState ${id}: set value = ${value}`);
         if (!initializedStateObjects[id]) {
-            postponedStateValues[id] = value;
+            lastRealStateValue[id] = {
+                val: value,
+                ts: Date.now(),
+                alreadySet: false
+            };
             return;
         }
+        lastRealStateValue[id] = {
+            val: value,
+            ts: Date.now(),
+            alreadySet: true
+        };
         await adapter.setStateAsync(id, value, true);
     }
 
@@ -327,6 +346,7 @@ function createHam(options) {
             callback && callback();
             return;
         }
+        //return callback && callback();
 
         const lib = npmLibrariesToInstall[0];
         adapter.log.info(`Install/Update ${lib}`);
@@ -394,8 +414,11 @@ function createHam(options) {
                     formerConfig.bridge &&
                     formerConfig.bridge.username &&
                     adapter.config.wrapperConfig &&
+                    // @ts-ignore
                     adapter.config.wrapperConfig.bridge &&
+                    // @ts-ignore
                     adapter.config.wrapperConfig.bridge.username &&
+                    // @ts-ignore
                     adapter.config.wrapperConfig.bridge.username !== formerConfig.bridge.username
                 ) {
                     adapter.log.info('remove homebridge cache directory because Bridge username changed!');
@@ -443,6 +466,7 @@ function createHam(options) {
     return adapter;
 }
 
+// @ts-ignore
 if (!module || !module.parent) {
     createHam('ham');
 } else {
