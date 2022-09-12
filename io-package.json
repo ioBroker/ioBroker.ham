@@ -1,8 +1,20 @@
 {
   "common": {
     "name": "ham",
-    "version": "5.2.0",
+    "version": "5.2.1",
     "news": {
+      "5.2.1": {
+        "en": "make compatible to more plugins",
+        "de": "kompatibel zu mehr plugins",
+        "ru": "сделать совместимость с большим количеством плагинов",
+        "pt": "fazer compatível com mais plugins",
+        "nl": "maak compatibel met meer plugins",
+        "fr": "rendre compatible avec plus de plugins",
+        "it": "rendere compatibile con più plugin",
+        "es": "hacer compatible con más plugins",
+        "pl": "umożliwiają bardziej kompatybilne z wtyczkami",
+        "zh-cn": "使之与更多的卢比"
+      },
       "5.1.0": {
         "en": "IMPORTANT update homebridge and wrapper to 1.5.0 (latest as of today). IMPORTANT: Requires also homebridge 1.5.x installed when using global mode and local mode will update to 1.5.x too! Check your plugins for updates!",
         "de": "WICHTIG update homebridge und wrapper auf 1.5.0 (letzter ab heute). WICHTIG: Erfordert auch Homebridge 1.5.x installiert, wenn der globale Modus und lokale Modus wird auf 1.5.x zu aktualisieren! Überprüfen Sie Ihre Plugins für Updates!",
@@ -74,18 +86,6 @@
         "es": "Actualizar paquetes",
         "pl": "Aktualizuj pakiety",
         "zh-cn": "更新包"
-      },
-      "4.0.2": {
-        "en": "prevent warnings in js-controller 3.3",
-        "de": "Warnungen in js-controller verhindern 3.3",
-        "ru": "предотвратить предупреждения в js-controller 3.3",
-        "pt": "evitar avisos no js-controller 3.3",
-        "nl": "waarschuwingen voorkomen in js-controller 3.3",
-        "fr": "empêcher les avertissements dans js-controller 3.3",
-        "it": "prevenire avvisi in js-controller 3.3",
-        "es": "prevenir advertencias en js-controller 3.3",
-        "pl": "Zapobiegaj ostrzeżeniom w js-controller 3.3",
-        "zh-cn": "防止在js-controller 3.3中出现警告"
       }
     },
     "title": "Homebridge accessories manager",
