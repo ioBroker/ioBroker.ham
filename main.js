@@ -346,7 +346,6 @@ function createHam(options) {
             callback && callback();
             return;
         }
-        //return callback && callback();
 
         const lib = npmLibrariesToInstall[0];
         adapter.log.info(`Install/Update ${lib}`);
