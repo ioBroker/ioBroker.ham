@@ -99,7 +99,7 @@ Global Homebridge Config Directory Path:
 
 ## Changelog
 
-## __WORK IN PROGRESS__
+### __WORK IN PROGRESS__
 * (Apollon77) make compatible to more plugins
 
 ### 5.2.1 (2022-09-12)
