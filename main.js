@@ -192,7 +192,7 @@ function createHam(options) {
         const usedLogger = {
             info: adapter.log.debug.bind(adapter),
             warn: adapter.log.warn.bind(adapter),
-            debug: adapter.log.debug.bind(adapter),
+            debug: adapter.log.silly.bind(adapter),
             silly: adapter.log.silly.bind(adapter)
         };
         if (adapter.config.virtualCommandLine) {
