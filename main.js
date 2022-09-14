@@ -177,7 +177,18 @@ function createHam(options) {
         });
     }
 
-/*
+    function hook_stream(_stream, fn) {
+        // Reference default write method
+        const old_write = _stream.write;
+        // _stream now write with our shiny function
+        _stream.write = fn;
+
+        return function() {
+            // reset to the default write method
+            _stream.write = old_write;
+        };
+    }
+
     //Catch Homebridge Console Logging
     if (process.argv.indexOf('--logs') === -1 && process.argv.indexOf('-l') === -1) {
         console.log = function (logs) {
@@ -188,7 +199,7 @@ function createHam(options) {
 `);
         };
     }
-*/
+
     function main() {
         const usedLogger = {
             info: adapter.log.debug.bind(adapter),
