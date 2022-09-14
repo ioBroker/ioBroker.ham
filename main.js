@@ -192,7 +192,7 @@ function createHam(options) {
         const usedLogger = {
             info: adapter.log.debug.bind(adapter),
             warn: adapter.log.warn.bind(adapter),
-            debug: adapter.log.info.bind(adapter),
+            debug: adapter.log.debug.bind(adapter),
             silly: adapter.log.silly.bind(adapter)
         };
         if (adapter.config.virtualCommandLine) {
@@ -346,7 +346,6 @@ function createHam(options) {
             callback && callback();
             return;
         }
-        return callback && callback();
 
         const lib = npmLibrariesToInstall[0];
         adapter.log.info(`Install/Update ${lib}`);
