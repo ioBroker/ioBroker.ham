@@ -1,8 +1,20 @@
 {
   "common": {
     "name": "ham",
-    "version": "5.2.2",
+    "version": "5.2.3",
     "news": {
+      "5.2.3": {
+        "en": "Optimize Accessory processing",
+        "de": "Optimieren der Zubehörverarbeitung",
+        "ru": "Оптимизация обработки аксессуаров",
+        "pt": "Otimizar o processamento de acessórios",
+        "nl": "Optimize Accessory verwerking",
+        "fr": "Optimiser le traitement des accessoires",
+        "it": "Ottimizzare la lavorazione degli accessori",
+        "es": "Optimize Accessory processing",
+        "pl": "Optimizowanie dostępu",
+        "zh-cn": "减少准入加工"
+      },
       "5.2.2": {
         "en": "make compatible to more plugins",
         "de": "kompatibel zu mehr plugins",
@@ -74,18 +86,6 @@
         "es": "IMPORTANTE actualización casera y envoltorio a 1.4.1 (más tarde de hoy). IMPORTANTE: Requiere también homebridge 1.4.x instalado al utilizar el modo global y el modo local se actualizará a 1.4.x también! Revise sus plugins para actualizaciones!\nSincronización de caracteres prohibidos con el estándar ioBroker - ID de objetos puede cambiar con esta versión!\nBásicamente permite especificar URLS http como plugins en la lista de configuración principal (no la pestaña!)\nTambién trate de registrarse en accesorios externos como cámaras (experimental)\nArreglar los problemas de carga con la pestaña",
         "pl": "IMPORTANT uaktualniło domowe mosty i owijało do 1.4.1 (współcześnie). IMPORTANT: Requires także homebridge 1.4.x zainstalowany w trybie globalnym, a tryb lokalny zaktualizuje 1.4.x! Wykorzystywanie dla aktualizacji!\nSync zabronił postaci z ioBroker standardem – obiekt ID może zmienić się z wersją!\nURLS pozwala na określenie http URLS jako wtyczki na głównym liście konfiguracji (nie tab!)\nPróbuje także zarejestrować się na zewnętrznych akcesoriach, jak kamery (eksperymentalne)\nZaładowanie tabeli z tabeli",
         "zh-cn": "IMPORTANT更新了1.4.1(今天更新)。 IMPORTANT:Requires also Homebridge 1.4.x, 当使用全球模式和当地模式更新1.4.x! 检查你的供给!\nSyncidden特性 with io Broker标准-目标IDs可能与本版本相改变!\n基本上允许在主要组合清单(没有表格!)中具体说明URLS作为Plugins。\n还试图登记像摄影师(experimental)这样的外部接入场。\nA. 将问题与表格挂钩"
-      },
-      "4.0.4": {
-        "en": "Corrected configuration in dark theme",
-        "de": "Korrigierte Konfiguration im dunklen Thema",
-        "ru": "Исправлена настройка в тёмной теме",
-        "pt": "Configuração corrigida no tema escuro",
-        "nl": "Gecorrigeerde configuratie in donker thema",
-        "fr": "Configuration corrigée dans le thème sombre",
-        "it": "Configurazione corretta in tema scuro",
-        "es": "Configuración corregida en tema oscuro",
-        "pl": "Poprawiona konfiguracja w ciemnym motywie",
-        "zh-cn": "更正了深色主题中的配置"
       }
     },
     "title": "Homebridge accessories manager",
