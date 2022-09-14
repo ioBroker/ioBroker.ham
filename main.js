@@ -177,6 +177,7 @@ function createHam(options) {
         });
     }
 
+/*
     //Catch Homebridge Console Logging
     if (process.argv.indexOf('--logs') === -1 && process.argv.indexOf('-l') === -1) {
         console.log = function (logs) {
@@ -187,12 +188,12 @@ function createHam(options) {
 `);
         };
     }
-
+*/
     function main() {
         const usedLogger = {
             info: adapter.log.debug.bind(adapter),
             warn: adapter.log.warn.bind(adapter),
-            debug: adapter.log.silly.bind(adapter),
+            debug: adapter.log.debug.bind(adapter),
             silly: adapter.log.silly.bind(adapter)
         };
         if (adapter.config.virtualCommandLine) {
