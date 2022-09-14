@@ -1,8 +1,20 @@
 {
   "common": {
     "name": "ham",
-    "version": "5.2.1",
+    "version": "5.2.2",
     "news": {
+      "5.2.2": {
+        "en": "make compatible to more plugins",
+        "de": "kompatibel zu mehr plugins",
+        "ru": "сделать совместимость с большим количеством плагинов",
+        "pt": "fazer compatível com mais plugins",
+        "nl": "maak compatibel met meer plugins",
+        "fr": "rendre compatible avec plus de plugins",
+        "it": "rendere compatibile con più plugin",
+        "es": "hacer compatible con más plugins",
+        "pl": "umożliwiają bardziej kompatybilne z wtyczkami",
+        "zh-cn": "使之与更多的卢比"
+      },
       "5.2.1": {
         "en": "make compatible to more plugins",
         "de": "kompatibel zu mehr plugins",
@@ -74,18 +86,6 @@
         "es": "Configuración corregida en tema oscuro",
         "pl": "Poprawiona konfiguracja w ciemnym motywie",
         "zh-cn": "更正了深色主题中的配置"
-      },
-      "4.0.3": {
-        "en": "Update packages",
-        "de": "Pakete aktualisieren",
-        "ru": "Обновление пакетов",
-        "pt": "Atualizar pacotes",
-        "nl": "Pakketten bijwerken",
-        "fr": "Mettre à jour les packages",
-        "it": "Aggiorna pacchetti",
-        "es": "Actualizar paquetes",
-        "pl": "Aktualizuj pakiety",
-        "zh-cn": "更新包"
       }
     },
     "title": "Homebridge accessories manager",
