@@ -1,8 +1,20 @@
 {
   "common": {
     "name": "ham",
-    "version": "5.2.4",
+    "version": "5.3.0",
     "news": {
+      "5.3.0": {
+        "en": "Add option to enable homebridge debug logging",
+        "de": "Option hinzufügen, um homebridge debug Protokollierung zu aktivieren",
+        "ru": "Добавить опцию, чтобы включить гомбридж debug logging",
+        "pt": "Adicionar opção para ativar o registro homebridge debug",
+        "nl": "Voeg optie in staat om huisbridge debug te beschuldigen",
+        "fr": "Ajouter l'option pour activer l'enregistrement de débogage de Homebridge",
+        "it": "Aggiungi l'opzione per attivare il debug homebridge",
+        "es": "Añadir opción para habilitar el registro de depuración casera",
+        "pl": "Addopt for umożliwia homebridge debug loglog",
+        "zh-cn": "增加可使屋顶破裂"
+      },
       "5.2.4": {
         "en": "Prevent crash when accessing a state which is not controllable anymore",
         "de": "Verhindern Sie Crash beim Zugriff auf einen Zustand, der nicht mehr steuerbar ist",
@@ -74,18 +86,6 @@
         "es": "Actualizar ficha GUI",
         "pl": "Data dostępu",
         "zh-cn": "最新表格"
-      },
-      "5.0.1": {
-        "en": "Make sure values are set after objects were created",
-        "de": "Stellen Sie sicher, dass die Werte festgelegt werden, nachdem Objekte erstellt wurden",
-        "ru": "Убедитесь, что значения установлены после создания объектов",
-        "pt": "Certifique-se de que os valores são definidos após os objetos foram criados",
-        "nl": "Zorg ervoor dat er waarden worden geplaatst nadat objecten werden gecreëerd",
-        "fr": "Assurez-vous que les valeurs sont définies après la création des objets",
-        "it": "Assicurarsi che i valori siano impostati dopo che gli oggetti sono stati creati",
-        "es": "Asegúrese de que los valores se establecen después de crear objetos",
-        "pl": "Dokładne wartości zostały ustalone po tym, jak obiekty zostały stworzone",
-        "zh-cn": "创建物体后确定可靠的价值"
       }
     },
     "title": "Homebridge accessories manager",
