@@ -98,8 +98,7 @@ Global Homebridge Config Directory Path:
 -->
 
 ## Changelog
-
-### __WORK IN PROGRESS__
+### 5.2.4 (2022-09-15)
 * (Apollon77) Prevent crash when accessing a state which is not controllable anymore
 
 ### 5.2.3 (2022-09-14)
