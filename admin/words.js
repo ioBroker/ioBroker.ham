@@ -48,4 +48,16 @@ systemDictionary = {
     "Configure %s": {                                "en": "Configure %s",                                    "de": "%s konfigurieren",                                "ru": "Настроить %s",                                    "pt": "Configurar %s",                                   "nl": "Configureer %s",                                  "fr": "Configurer %s",                                   "it": "Configura %s",                                    "es": "Configurar %s",                                   "pl": "Skonfiguruj %s",                                  "zh-cn": "配置 ％s"},
     "Select config for %s": {                        "en": "Select configuration for %s",                     "de": "Konfiguration für %s auswählen",                  "ru": "Выберите конфигурацию для %s",                    "pt": "Selecione a configuração para %s",                "nl": "Selecteer configuratie voor %s",                  "fr": "Sélectionner la configuration pour %s",           "it": "Seleziona config per %s",                         "es": "Seleccionar configuración para %s",               "pl": "Wybierz konfigurację dla %s",                     "zh-cn": "选择 ％s 的配置"},
     "select_config_note_%s": {                       "en": "We couldn't figure out which configuration section belongs to %s. Please choose the type and name of the configuration:", "de": "Wir konnten nicht ermitteln, welcher Konfigurationsabschnitt zu %s gehört. Bitte den Typ und Namen der Konfiguration auswählen:", "ru": "Мы не смогли выяснить, какой раздел конфигурации принадлежит %s. Пожалуйста, выберите тип и имя конфигурации:", "pt": "Não foi possível determinar qual seção de configuração pertence a %s. Selecione o tipo e o nome da configuração:", "nl": "We konden niet achterhalen welke configuratie sectie tot %s behoort. Selecteer a.u.b. het juiste type en naam van de configuratie:", "fr": "Nous n'avons pas pu déterminer quelle section de configuration appartient à %s. Veuillez choisir le type et le nom de la configuration :", "it": "Non siamo riusciti a capire quale sezione di configurazione appartiene a %s. ", "es": "No pudimos averiguar qué sección de configuración pertenece a %s. ", "pl": "Nie mogliśmy ustalić, która sekcja konfiguracji należy do %s. ", "zh-cn": "我们无法确定哪个配置部分属于 ％s。"},
+    "debugModeEnabled": {
+        "en": "Enable the Homebridge Debug Logging",
+        "de": "Homebridge Debug Logging aktivieren",
+        "ru": "Включить гомбридж Debug Logging",
+        "pt": "Habilite o Logging Homebridge Debug",
+        "nl": "De Homebridge Debug Logging",
+        "fr": "Activer le déboîtage Homebridge",
+        "it": "Abilitare il Debug Homebridge Logging",
+        "es": "Activar el depuro de Homebridge Logging",
+        "pl": "Enable the Homebridge Debug Logging (ang.)",
+        "zh-cn": "D. 住房可"
+    }
 };

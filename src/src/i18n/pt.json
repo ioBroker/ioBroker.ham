@@ -45,5 +45,6 @@
   "Installed": "Instalado",
   "Available": "Acessível",
   "Keywords": "Palavras-chave",
-  "No data": "Sem dados"
+  "No data": "Sem dados",
+  "debugModeEnabled": "Habilite o Logging Homebridge Debug"
 }

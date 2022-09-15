@@ -45,5 +45,6 @@
   "Installed": "Geïnstalleerd",
   "Available": "Beschikbaar",
   "Keywords": "Sleutelwoorden",
-  "No data": "Geen gegevens"
+  "No data": "Geen gegevens",
+  "debugModeEnabled": "De Homebridge Debug Logging"
 }

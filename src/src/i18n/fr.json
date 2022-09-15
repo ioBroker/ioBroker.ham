@@ -45,5 +45,6 @@
   "Installed": "Installé",
   "Available": "Disponible",
   "Keywords": "Mots -clés",
-  "No data": "Pas de données"
+  "No data": "Pas de données",
+  "debugModeEnabled": "Activer le déboîtage Homebridge"
 }

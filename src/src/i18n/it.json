@@ -40,5 +40,6 @@
   "Configure %s": "Configura %s",
   "Select config for %s": "Seleziona config per %s",
   "select_config_note_%s": "Non siamo riusciti a capire quale sezione di configurazione appartiene a %s. ",
-  "No data": "Nessun dato"
+  "No data": "Nessun dato",
+  "debugModeEnabled": "Abilitare il Debug Homebridge Logging"
 }

@@ -226,6 +226,7 @@ function createHam(options) {
                         ignoreInfoAccessoryServices: adapter.config.ignoreInfoAccessoryServices,
                         characteristicPollingInterval: adapter.config.characteristicPollingInterval * 1000,
                         insecureAccess: adapter.config.insecureAccess || false,
+                        debugModeEnabled: adapter.config.debugModeEnabled || false,
                         forbiddenCharacters: adapter.FORBIDDEN_CHARS
                     });
                 }
@@ -254,6 +255,7 @@ function createHam(options) {
                         ignoreInfoAccessoryServices: adapter.config.ignoreInfoAccessoryServices,
                         characteristicPollingInterval: adapter.config.characteristicPollingInterval * 1000,
                         insecureAccess: adapter.config.insecureAccess || false,
+                        debugModeEnabled: adapter.config.debugModeEnabled || false,
                         forbiddenCharacters: adapter.FORBIDDEN_CHARS
                     });
                 }
@@ -271,6 +273,7 @@ function createHam(options) {
                         ignoreInfoAccessoryServices: adapter.config.ignoreInfoAccessoryServices,
                         characteristicPollingInterval: adapter.config.characteristicPollingInterval * 1000,
                         insecureAccess: adapter.config.insecureAccess || false,
+                        debugModeEnabled: adapter.config.debugModeEnabled || false,
                         forbiddenCharacters: adapter.FORBIDDEN_CHARS
                     });
                 }

@@ -41,5 +41,6 @@
   "Select config for %s": "选择 ％s 的配置",
   "select_config_note_%s": "我们无法确定哪个配置部分属于 ％s。",
   "Description": "描述",
-  "No data": "没有数据"
+  "No data": "没有数据",
+  "debugModeEnabled": "D. 住房可"
 }

@@ -72,6 +72,7 @@
         if (settings.updateLibraries === undefined) settings.updateLibraries = false;
         if (settings.useGlobalHomebridge === undefined) settings.useGlobalHomebridge = false;
         if (settings.useLocalHomebridge === undefined) settings.useLocalHomebridge = false;
+        if (settings.debugModeEnabled === undefined) settings.debugModeEnabled = false;
 
         settings.homebridgeMode = 'wrapper';
         if (settings.useGlobalHomebridge) {
@@ -264,6 +265,10 @@
                         <input class="value" id="virtualCommandLine" type="text">
                         <label for="virtualCommandLine">virtualCommandLine</label>
                         <span class="translate">virtualCommandLine</span>
+                    </div>
+                    <div class="input-field col s12 m6 l4 xl3">
+                        <input id="debugModeEnabled" type="checkbox" class="value" />
+                        <span for="debugModeEnabled" class="translate">debugModeEnabled</span>
                     </div>
                 </div>
             </div>

@@ -98,6 +98,10 @@ Global Homebridge Config Directory Path:
 -->
 
 ## Changelog
+
+### __WORK IN PROGRESS__
+* (Apollon77) Add option to enable homebridge debug logging
+
 ### 5.2.4 (2022-09-15)
 * (Apollon77) Prevent crash when accessing a state which is not controllable anymore
 

@@ -45,5 +45,6 @@
   "Configure %s": "Configure %s",
   "Select config for %s": "Select configuration for %s",
   "select_config_note_%s": "We couldn't figure out which configuration section belongs to %s. Please choose the type and name of the configuration:",
-  "No data": "No data"
+  "No data": "No data",
+  "debugModeEnabled": "Enable the Homebridge Debug Logging"
 }

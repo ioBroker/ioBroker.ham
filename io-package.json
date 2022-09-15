@@ -205,6 +205,7 @@
     "libraries": "",
     "ignoreInfoAccessoryServices": false,
     "insecureAccess": false,
+    "debugModeEnabled": false,
     "characteristicPollingInterval": 0,
     "wrapperConfig": {
       "description": "Add configuration for your accessories or platforms according to the docs of the plugins.",

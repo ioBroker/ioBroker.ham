@@ -45,5 +45,6 @@
   "Installed": "Installiert",
   "Available": "Verfügbar",
   "Keywords": "Schlüsselwörter",
-  "No data": "Keine Daten"
+  "No data": "Keine Daten",
+  "debugModeEnabled": "Homebridge Debug Logging aktivieren"
 }

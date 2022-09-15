@@ -22,7 +22,7 @@
     "node": ">=10.17.0"
   },
   "dependencies": {
-    "homebridge-plugin-wrapper": "^3.1.0",
+    "homebridge-plugin-wrapper": "^3.2.0",
     "@iobroker/adapter-core": "^2.6.6",
     "string-argv": "^0.3.1"
   },
@@ -31,7 +31,7 @@
     "@alcalzone/release-script": "^3.5.9",
     "@alcalzone/release-script-plugin-iobroker": "^3.5.9",
     "@alcalzone/release-script-plugin-license": "^3.5.9",
-    "@iobroker/adapter-dev": "^1.0.1",
+    "@iobroker/adapter-dev": "^1.1.0",
     "@iobroker/dev-server": "^0.5.0",
     "@iobroker/testing": "^4.1.0",
     "@types/chai": "^4.3.3",

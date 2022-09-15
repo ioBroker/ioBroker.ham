@@ -45,5 +45,6 @@
   "Keywords": "Ключевые слова",
   "Actions": "Действия",
   "Installed": "Установлен",
-  "No data": "Нет данных"
+  "No data": "Нет данных",
+  "debugModeEnabled": "Включить гомбридж Debug Logging"
 }
