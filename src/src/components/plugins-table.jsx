@@ -52,7 +52,8 @@ const initialState = {
 };
 
 function reducer(state, { type, payload }) {
-    //console.log('reducer', type, payload);
+    console.log('reducer', type, payload);
+
     switch (type) {
         case 'UPDATE_ROWS':
             return {
@@ -149,7 +150,7 @@ const PluginsTable = ({ adapterConfig, socket, instanceId, onChange, showToast, 
         { columnName: 'available', width: 80 },
         { columnName: 'keywords', width: 300 },
     ]);
-    const LoadingState = React.useCallback(() =>
+    const NoDataCell = React.useCallback(() =>
         <td colSpan={columns.length} style={{ textAlign: 'center', verticalAlign: 'middle' }}>
             <Typography style={{ marginTop: 30, color: themeType === 'dark' ? 'white' : 'black' }}>{I18n.t('No data')}</Typography>
         </td>
@@ -158,6 +159,7 @@ const PluginsTable = ({ adapterConfig, socket, instanceId, onChange, showToast, 
     adapterConfig._tabCache = adapterConfig._tabCache || {};
 
     const getRemoteRows = (requestedSkip, take) => {
+        console.log('START_LOADING')
         dispatch({ type: 'START_LOADING', payload: { requestedSkip, take } });
     };
 
@@ -371,6 +373,8 @@ const PluginsTable = ({ adapterConfig, socket, instanceId, onChange, showToast, 
 
     const { rows, skip, totalCount, loading, openConfig, installConfig, configReadme, confirmDelete, instances } = state;
 
+    console.log('totalCount: ' + totalCount + ', loading: ' + loading + ', skip: ' + skip);
+
     return <div style={{ height: '100%' }}>
         <Grid container spacing={3}>
             {instances.length > 1 && <Grid item xs={3} md={2} xl={1}>
@@ -406,9 +410,13 @@ const PluginsTable = ({ adapterConfig, socket, instanceId, onChange, showToast, 
                         totalRowCount={totalCount}
                         pageSize={VIRTUAL_PAGE_SIZE}
                         skip={skip}
+                        infiniteScrolling={false}
                         getRows={getRemoteRows}
                     />
-                    <VirtualTable columnExtensions={tableColumnExtensions} noDataCellComponent={LoadingState}/>
+                    <VirtualTable
+                        columnExtensions={tableColumnExtensions}
+                        noDataCellComponent={NoDataCell}
+                    />
                     <TableHeaderRow />
                 </DxGrid>}
                 {isGlobalMode && <Grid container spacing={3} style={{ height: remainderHeight, padding: 8 }}>

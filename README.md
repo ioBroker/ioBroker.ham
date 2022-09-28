@@ -98,6 +98,9 @@ Global Homebridge Config Directory Path:
 -->
 
 ## Changelog
+### **WORK IN PROGRESS**
+* (bluefox) Updated GUI packages
+
 ### 5.3.0 (2022-09-15)
 * (Apollon77) Add option to enable homebridge debug logging
 
