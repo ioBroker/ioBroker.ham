@@ -1,8 +1,20 @@
 {
   "common": {
     "name": "ham",
-    "version": "5.3.0",
+    "version": "5.3.1",
     "news": {
+      "5.3.1": {
+        "en": "Updated GUI packages",
+        "de": "Aktualisierte GUI-Pakete",
+        "ru": "Обновленные пакеты GUI",
+        "pt": "Pacotes de GUI atualizados",
+        "nl": "Update GUI pakketten",
+        "fr": "Paquets GUI mis à jour",
+        "it": "Pacchetti GUI aggiornati",
+        "es": "Paquetes GUI actualizados",
+        "pl": "Pakiet GUI",
+        "zh-cn": "A. 最新古伊一揽子计划"
+      },
       "5.3.0": {
         "en": "Add option to enable homebridge debug logging",
         "de": "Option hinzufügen, um homebridge debug Protokollierung zu aktivieren",
@@ -74,18 +86,6 @@
         "es": "IMPORTANTE actualización casera y envoltorio a 1.5.0 (más tarde de hoy). IMPORTANTE: Requiere también homebridge 1.5.x instalado al utilizar el modo global y el modo local se actualizará a 1.5.x también! Revise sus plugins para actualizaciones!",
         "pl": "IMPORTANT uaktualniło domowe mosty i owijało do 1.5.0. IMPORTANT: Requires również homebridge 1.5.x zainstalowany w trybie globalnym i tryb lokalny będzie aktualizowany do 1,5.x too! Wykorzystywanie dla aktualizacji!",
         "zh-cn": "IMPORTANT更新了屋顶和颈部。 IMPORTANT:Requires also Homebridge 1.5.x, 当使用全球模式和当地模式更新1.5x太! 检查你的供给!"
-      },
-      "5.0.2": {
-        "en": "Update tab GUI",
-        "de": "Registerkarte GUI",
-        "ru": "Обновить вкладку GUI",
-        "pt": "Atualizar guia GUI",
-        "nl": "Vertaling:",
-        "fr": "Mettre à jour l'onglet GUI",
-        "it": "Aggiorna la scheda GUI",
-        "es": "Actualizar ficha GUI",
-        "pl": "Data dostępu",
-        "zh-cn": "最新表格"
       }
     },
     "title": "Homebridge accessories manager",
