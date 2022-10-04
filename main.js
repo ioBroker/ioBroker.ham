@@ -141,6 +141,10 @@ function createHam(options) {
         const id = `${dev_id}.${ch_id}.${st_id}`;
         adapter.log.debug(`setState ${id}: set value = ${value}`);
         if (!initializedStateObjects[id]) {
+            if (value === null || value === 0 || value === false || value === undefined || value === '') {
+                adapter.log.debug(`setState ${id}: discard value because most likely "no value" available right now`);
+                return;
+            }
             lastRealStateValue[id] = {
                 val: value,
                 ts: Date.now(),

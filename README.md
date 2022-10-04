@@ -98,6 +98,10 @@ Global Homebridge Config Directory Path:
 -->
 
 ## Changelog
+
+### __WORK IN PROGRESS__
+* (Apollon77) Optimize value determination on accessory initialization
+
 ### 5.3.1 (2022-09-28)
 * (bluefox) Updated GUI packages
 
