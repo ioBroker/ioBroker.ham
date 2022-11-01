@@ -23,7 +23,7 @@
   },
   "dependencies": {
     "homebridge-plugin-wrapper": "^3.2.0",
-    "@iobroker/adapter-core": "^2.6.6",
+    "@iobroker/adapter-core": "^2.6.7",
     "string-argv": "^0.3.1"
   },
   "description": "Homebridge accessories manager",
