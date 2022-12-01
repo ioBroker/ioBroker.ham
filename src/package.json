@@ -24,7 +24,7 @@
         "@sentry/browser": "^7.22.0",
         "@sentry/integrations": "^7.13.0",
         "@types/react": "^18.0.24",
-        "@types/react-dom": "^18.0.6",
+        "@types/react-dom": "^18.0.9",
         "ace-builds": "^1.12.4",
         "react": "^18.2.0",
         "react-ace": "^10.1.0",
