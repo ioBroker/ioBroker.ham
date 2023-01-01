@@ -14,7 +14,7 @@
         "@devexpress/dx-react-grid": "^3.0.3",
         "@devexpress/dx-react-grid-material-ui": "^3.0.3",
         "@iobroker/adapter-react-v5": "^4.0.2",
-        "@mui/material": "^5.10.16",
+        "@mui/material": "^5.11.2",
         "@mui/styles": "^5.10.16",
         "@mui/icons-material": "^5.10.16",
         "@emotion/react": "^11.10.5",
