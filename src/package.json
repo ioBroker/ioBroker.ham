@@ -22,7 +22,7 @@
         "@rjsf/core": "^4.2.3",
         "@rjsf/material-ui": "^4.2.3",
         "@sentry/browser": "^7.34.0",
-        "@sentry/integrations": "^7.29.0",
+        "@sentry/integrations": "^7.38.0",
         "@types/react": "^18.0.28",
         "@types/react-dom": "^18.0.10",
         "ace-builds": "^1.15.2",
