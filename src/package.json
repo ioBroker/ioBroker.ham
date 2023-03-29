@@ -20,7 +20,7 @@
         "@emotion/react": "^11.10.6",
         "@emotion/styled": "^11.10.6",
         "@rjsf/core": "^4.2.3",
-        "@rjsf/material-ui": "^4.2.3",
+        "@rjsf/material-ui": "^5.4.0",
         "@sentry/browser": "^7.45.0",
         "@sentry/integrations": "^7.45.0",
         "@types/react": "^18.0.28",
