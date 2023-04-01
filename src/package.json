@@ -19,7 +19,7 @@
         "@mui/icons-material": "^5.11.11",
         "@emotion/react": "^11.10.6",
         "@emotion/styled": "^11.10.6",
-        "@rjsf/core": "^4.2.3",
+        "@rjsf/core": "^5.5.0",
         "@rjsf/material-ui": "^4.2.3",
         "@sentry/browser": "^7.45.0",
         "@sentry/integrations": "^7.45.0",
