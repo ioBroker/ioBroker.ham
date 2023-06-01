@@ -17,7 +17,7 @@
         "@mui/material": "^5.11.15",
         "@mui/styles": "^5.11.13",
         "@mui/icons-material": "^5.11.11",
-        "@emotion/react": "^11.10.6",
+        "@emotion/react": "^11.11.0",
         "@emotion/styled": "^11.10.6",
         "@rjsf/core": "^4.2.3",
         "@rjsf/material-ui": "^4.2.3",
