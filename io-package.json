@@ -120,7 +120,10 @@
     "keywords": [
       "homebridge"
     ],
-    "license": "MIT",
+    "licenseInformation": {
+      "type": "free",
+      "license": "MIT"
+    },
     "platform": "Javascript/Node.js",
     "icon": "ham.png",
     "enabled": false,
