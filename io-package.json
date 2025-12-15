@@ -88,7 +88,6 @@
         "zh-cn": "IMPORTANT更新了屋顶和颈部。 IMPORTANT:Requires also Homebridge 1.5.x, 当使用全球模式和当地模式更新1.5x太! 检查你的供给!"
       }
     },
-    "title": "Homebridge accessories manager",
     "titleLang": {
       "en": "Homebridge accessories manager",
       "de": "Homebridge Zubehör Manager",
