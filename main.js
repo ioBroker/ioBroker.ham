@@ -4,11 +4,11 @@
 /* jslint node: true */
 /* jslint esversion: 6 */
 'use strict';
-const nodeFS  = require('fs');
-const child_process = require('child_process');
+const nodeFS  = require('node:fs');
+const child_process = require('node:child_process');
 // you have to require the utils module and call adapter function
 const utils = require('@iobroker/adapter-core'); // Get common adapter utils
-const nodePath = require('path');
+const nodePath = require('node:path');
 const stringArgv = require('string-argv');
 
 const initializedStateObjects = {};

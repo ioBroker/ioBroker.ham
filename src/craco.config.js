@@ -1,6 +1,6 @@
 const CracoEsbuildPlugin = require('craco-esbuild');
 const { ProvidePlugin } = require('webpack');
-const path = require('path');
+const path = require('node:path');
 
 module.exports = {
     plugins: [
