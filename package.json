@@ -19,7 +19,7 @@
     }
   ],
   "engines": {
-    "node": ">=10.17.0"
+    "node": ">=20.17.0"
   },
   "dependencies": {
     "homebridge-plugin-wrapper": "^3.2.0",
