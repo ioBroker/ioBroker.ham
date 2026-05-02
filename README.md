@@ -99,6 +99,9 @@ Global Homebridge Config Directory Path:
 
 ## Changelog
 
+### **WORK IN PROGRESS**
+- (copilot) Adapter requires node.js >= 22 now
+
 ### __WORK IN PROGRESS__
 * (Apollon77) Optimize value determination on accessory initialization
 
