@@ -131,7 +131,6 @@
     "type": "iot-systems",
     "connectionType": "local",
     "dataSource": "push",
-    "materialize": true,
     "materializeTab": true,
     "adminTab": {
       "singleton": true,
@@ -152,7 +151,7 @@
     },
     "dependencies": [
       {
-        "js-controller": ">=2.0.0"
+        "js-controller": ">=6.0.11"
       }
     ],
     "tier": 2,
@@ -195,7 +194,10 @@
           "cancel"
         ]
       }
-    ]
+    ],
+    "adminUI": {
+      "config": "materialize"
+    }
   },
   "native": {
     "useGlobalHomebridge": false,
