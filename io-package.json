@@ -149,8 +149,7 @@
         "pl": "Homebridge",
         "zh-cn": "Homebridge"
       },
-      "link": "",
-      "fa-icon": "home"
+      "link": ""
     },
     "dependencies": [
       {
