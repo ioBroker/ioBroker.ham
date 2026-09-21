@@ -219,6 +219,8 @@ Global Homebridge Config Directory Path:
 ### 0.0.1 (2018.03.24)
 * (kirovilya) initial commit
 
+[Older changelogs can be found there](CHANGELOG_OLD.md)
+
 ## License
 The MIT License (MIT)
 
