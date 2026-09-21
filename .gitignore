@@ -12,3 +12,6 @@ maps/
 .dev-server/
 /src/build
 /src/package-lock.json
+
+#ignore .commitinfo created by ioBroker release script
+.commitinfo
