@@ -99,6 +99,10 @@ Global Homebridge Config Directory Path:
 
 ## Changelog
 
+
+### **WORK IN PROGRESS**
+- (ioBroker-Bot) Adapter requires js-controller >= 6.0.11 now.
+
 ### __WORK IN PROGRESS__
 * (Apollon77) Optimize value determination on accessory initialization
 
