@@ -133,7 +133,6 @@
     "type": "iot-systems",
     "connectionType": "local",
     "dataSource": "push",
-    "materialize": true,
     "materializeTab": true,
     "adminTab": {
       "singleton": true,
@@ -196,7 +195,10 @@
           "cancel"
         ]
       }
-    ]
+    ],
+    "adminUI": {
+      "config": "materialize"
+    }
   },
   "native": {
     "useGlobalHomebridge": false,
