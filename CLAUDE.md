@@ -72,10 +72,6 @@ The JsonConfig `jsonEditor` stores `native.wrapperConfig` as **JSON string**, ol
 
 `console.log` is redirected to the debug log (unless `--logs`/`-l`), `virtualCommandLine` is appended to `process.argv`, `NODE_PATH` is changed, and `uncaughtException` is caught and only logged (plugins throw from their callbacks). That is why the adapter is **not** `compact`.
 
-### Known legacy behaviour (kept on purpose)
-
-- `GlobalHandler.start()` ignores the configured `insecureAccess`.
-
 ### Misc conventions
 
 - Timers only via the injected adapter timers (`this.setTimeout`), never the globals.

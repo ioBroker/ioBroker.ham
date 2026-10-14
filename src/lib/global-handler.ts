@@ -482,13 +482,13 @@ export class GlobalHandler implements HomebridgeHandler {
             // the original code crashed here with a TypeError, when HAP-NodeJS could not be found in init()
             throw new Error('Homebridge / HAP-NodeJS could not be loaded');
         }
-        // The configured insecureAccess is not used here (also not in the original code)
-        const insecureAccess = false;
+
         this.logger.info(`Using Homebridge Config Path: ${this.User.persistPath()}`);
         // Initialize HAP-NodeJS with a custom persist directory
         this.hapStorage.setCustomStoragePath(this.User.persistPath());
 
-        const server = new this.Server.Server(insecureAccess);
+        // Homebridge >= 1.3 expects an options object (like the CLI option -I)
+        const server = new this.Server.Server({ insecureAccess: this.config.insecureAccess });
         this.server = server;
         server.bridgeService.bridge = new this.InterceptedBridge(
             server.config.bridge.name,
