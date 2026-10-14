@@ -74,7 +74,6 @@ The JsonConfig `jsonEditor` stores `native.wrapperConfig` as **JSON string**, ol
 
 ### Known legacy behaviour (kept on purpose)
 
-- `checkLocalMode()` compares the parsed `package.json` of homebridge with the version string, so a local Homebridge is only reinstalled when missing or with `updateLibraries`.
 - `Mapper.mapCharacteristicProperties()` reads `char.validValues` (HAP uses `props.validValues`) with a broken loop — `common.states` is effectively never filled.
 - `GlobalHandler.start()` ignores the configured `insecureAccess`.
 

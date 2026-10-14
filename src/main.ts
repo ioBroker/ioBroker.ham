@@ -385,8 +385,13 @@ class HamAdapter extends utils.Adapter {
         });
     }
 
-    /** Installs the library if it is missing (or always for URLs / updateLibraries). Throws after 3 failed attempts. */
-    private async installNpmLibraryWithRetries(npmLib: string): Promise<void> {
+    /**
+     * Installs the library if it is missing (or always for URLs / updateLibraries / force). Throws after 3 failed attempts.
+     *
+     * @param npmLib npm package (with optional version) or URL
+     * @param force install even if the package already exists (e.g. in another version)
+     */
+    private async installNpmLibraryWithRetries(npmLib: string, force = false): Promise<void> {
         for (let counter = 3; ; counter--) {
             if (counter === 0) {
                 throw new Error(`Library ${npmLib} not installed after 3 attempts`);
@@ -396,7 +401,7 @@ class HamAdapter extends utils.Adapter {
             if (
                 (isUrl && counter === 3) ||
                 (!isUrl && !existsSync(join(ADAPTER_DIR, 'node_modules', libraryDir, 'package.json'))) ||
-                (this.config.updateLibraries && counter === 3)
+                ((this.config.updateLibraries || force) && counter === 3)
             ) {
                 await this.installNpm(npmLib);
             } else {
@@ -471,12 +476,10 @@ class HamAdapter extends utils.Adapter {
 
         const homebridgePackage = join(ADAPTER_DIR, 'node_modules', 'homebridge', 'package.json');
         if (existsSync(homebridgePackage)) {
-            let localHomebridgeVersion: unknown;
+            let localHomebridgeVersion: string;
             try {
-                // BUG (kept from the original code): the whole package.json is compared with the version string,
-                // so installHomebridge is always true. installNpmLibraryWithRetries() skips the installation anyway
-                // when homebridge exists and updateLibraries is not set.
-                localHomebridgeVersion = JSON.parse(readFileSync(homebridgePackage, 'utf-8'));
+                localHomebridgeVersion = (JSON.parse(readFileSync(homebridgePackage, 'utf-8')) as { version: string })
+                    .version;
             } catch {
                 localHomebridgeVersion = '0';
             }
@@ -490,7 +493,8 @@ class HamAdapter extends utils.Adapter {
         if (installHomebridge || this.config.updateLibraries) {
             this.log.info(`Need to install/update homebridge@${INSTALL_LOCAL_HOMEBRIDGE_VERSION}`);
             try {
-                await this.installNpmLibraryWithRetries(`homebridge@${INSTALL_LOCAL_HOMEBRIDGE_VERSION}`);
+                // force: an existing Homebridge in another version must be replaced
+                await this.installNpmLibraryWithRetries(`homebridge@${INSTALL_LOCAL_HOMEBRIDGE_VERSION}`, true);
             } catch (err) {
                 this.log.error(`Can not start in local Mode because Homebridge is not installed: ${err}`);
                 return false;
