@@ -1,0 +1,18 @@
+{
+    "Homebridge adapter mode": "Режим адаптера Homebridge",
+    "Global Mode (start an existing compatible Homebridge service installed globally on your system)": "Глобальный режим (запуск сервиса Homebridge, который уже установлен в системе)",
+    "Local Mode (install a local Homebridge in ioBroker as a bridge)": "Локальный режим (установка локального Homebridge в ioBroker как мост)",
+    "Global Homebridge path": "Глобальный путь к Homebridge",
+    "Global Homebridge config directory path": "Путь к каталогу Global Homebridge Config",
+    "Additional NPM modules": "Дополнительные модули npm",
+    "Update Homebridge plugins from NPM on next start": "Обновление плагинов Homebridge от NPM при следующем запуске",
+    "Configuration file": "Файл конфигурации",
+    "Use insecure Homebridge mode": "Использовать небезопасный режим моста",
+    "Enable the Homebridge Debug Logging": "Включить гомбридж Debug Logging",
+    "Value polling interval (sec)": "Интервал опроса значений (sec)",
+    "Homebridge command line parameters": "Параметры командной строки Homebridge",
+    "Check out the new Admin-tab \"Homebridge\" (needs to be activated manually) for a more convenient way to install Homebridge plugins and configure them (Beta).": "Ознакомьтесь с новой вкладкой на админ-панели - «Homebridge» (необходимо предварительно активировать) для более удобной установки и настройки плагинов (бета).",
+    "If neither the global nor the local mode is selected, the wrapper mode is used: Homebridge plugins run directly in ioBroker, no bridge is advertised.": "Если не выбран ни глобальный, ни локальный режим, используется режим обёртки: плагины Homebridge работают непосредственно в ioBroker, мост не публикуется.",
+    "Ignore Accessory-Information services": "Игнорировать сервисы Accessory-Information",
+    "Options": "Параметры"
+}

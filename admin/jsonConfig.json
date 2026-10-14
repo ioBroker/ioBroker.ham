@@ -1,0 +1,200 @@
+{
+    "i18n": true,
+    "type": "panel",
+    "items": {
+        "_logo": {
+            "type": "staticImage",
+            "src": "ham.png",
+            "style": {
+                "width": "64px"
+            },
+            "xs": 12,
+            "sm": 12,
+            "md": 12,
+            "lg": 12,
+            "xl": 12
+        },
+        "_modeHeader": {
+            "type": "header",
+            "text": "Homebridge adapter mode",
+            "size": 4,
+            "newLine": true,
+            "xs": 12,
+            "sm": 12,
+            "md": 12,
+            "lg": 12,
+            "xl": 12
+        },
+        "useGlobalHomebridge": {
+            "type": "checkbox",
+            "label": "Global Mode (start an existing compatible Homebridge service installed globally on your system)",
+            "onChange": {
+                "alsoDependsOn": ["useLocalHomebridge"],
+                "calculateFunc": "data.useLocalHomebridge ? false : data.useGlobalHomebridge",
+                "ignoreOwnChanges": true
+            },
+            "newLine": true,
+            "xs": 12,
+            "sm": 12,
+            "md": 12,
+            "lg": 12,
+            "xl": 12
+        },
+        "useLocalHomebridge": {
+            "type": "checkbox",
+            "label": "Local Mode (install a local Homebridge in ioBroker as a bridge)",
+            "onChange": {
+                "alsoDependsOn": ["useGlobalHomebridge"],
+                "calculateFunc": "data.useGlobalHomebridge ? false : data.useLocalHomebridge",
+                "ignoreOwnChanges": true
+            },
+            "newLine": true,
+            "xs": 12,
+            "sm": 12,
+            "md": 12,
+            "lg": 12,
+            "xl": 12
+        },
+        "_wrapperModeInfo": {
+            "type": "staticText",
+            "text": "If neither the global nor the local mode is selected, the wrapper mode is used: Homebridge plugins run directly in ioBroker, no bridge is advertised.",
+            "hidden": "data.useGlobalHomebridge || data.useLocalHomebridge",
+            "newLine": true,
+            "xs": 12,
+            "sm": 12,
+            "md": 12,
+            "lg": 12,
+            "xl": 12
+        },
+        "globalHomebridgeBasePath": {
+            "type": "text",
+            "label": "Global Homebridge path",
+            "hidden": "!data.useGlobalHomebridge",
+            "newLine": true,
+            "xs": 12,
+            "sm": 12,
+            "md": 6,
+            "lg": 4,
+            "xl": 3
+        },
+        "globalHomebridgeConfigPath": {
+            "type": "text",
+            "label": "Global Homebridge config directory path",
+            "hidden": "!data.useGlobalHomebridge",
+            "xs": 12,
+            "sm": 12,
+            "md": 6,
+            "lg": 4,
+            "xl": 3
+        },
+        "_reactTabInfo": {
+            "type": "staticText",
+            "text": "Check out the new Admin-tab \"Homebridge\" (needs to be activated manually) for a more convenient way to install Homebridge plugins and configure them (Beta).",
+            "hidden": "data.useGlobalHomebridge",
+            "style": {
+                "fontWeight": "bold"
+            },
+            "newLine": true,
+            "xs": 12,
+            "sm": 12,
+            "md": 12,
+            "lg": 12,
+            "xl": 12
+        },
+        "libraries": {
+            "type": "chips",
+            "label": "Additional NPM modules",
+            "delimiter": " ",
+            "hidden": "data.useGlobalHomebridge",
+            "newLine": true,
+            "xs": 12,
+            "sm": 12,
+            "md": 12,
+            "lg": 12,
+            "xl": 12
+        },
+        "updateLibraries": {
+            "type": "checkbox",
+            "label": "Update Homebridge plugins from NPM on next start",
+            "hidden": "data.useGlobalHomebridge",
+            "newLine": true,
+            "xs": 12,
+            "sm": 12,
+            "md": 6,
+            "lg": 4,
+            "xl": 3
+        },
+        "wrapperConfig": {
+            "type": "jsonEditor",
+            "label": "Configuration file",
+            "doNotApplyWithError": true,
+            "hidden": "data.useGlobalHomebridge",
+            "newLine": true,
+            "xs": 12,
+            "sm": 12,
+            "md": 6,
+            "lg": 4,
+            "xl": 3
+        },
+        "_optionsHeader": {
+            "type": "header",
+            "text": "Options",
+            "size": 4,
+            "newLine": true,
+            "xs": 12,
+            "sm": 12,
+            "md": 12,
+            "lg": 12,
+            "xl": 12
+        },
+        "insecureAccess": {
+            "type": "checkbox",
+            "label": "Use insecure Homebridge mode",
+            "newLine": true,
+            "xs": 12,
+            "sm": 12,
+            "md": 6,
+            "lg": 4,
+            "xl": 3
+        },
+        "ignoreInfoAccessoryServices": {
+            "type": "checkbox",
+            "label": "Ignore Accessory-Information services",
+            "xs": 12,
+            "sm": 12,
+            "md": 6,
+            "lg": 4,
+            "xl": 3
+        },
+        "debugModeEnabled": {
+            "type": "checkbox",
+            "label": "Enable the Homebridge Debug Logging",
+            "xs": 12,
+            "sm": 12,
+            "md": 6,
+            "lg": 4,
+            "xl": 3
+        },
+        "characteristicPollingInterval": {
+            "type": "number",
+            "label": "Value polling interval (sec)",
+            "min": 0,
+            "max": 1000000,
+            "newLine": true,
+            "xs": 12,
+            "sm": 12,
+            "md": 6,
+            "lg": 4,
+            "xl": 3
+        },
+        "virtualCommandLine": {
+            "type": "text",
+            "label": "Homebridge command line parameters",
+            "xs": 12,
+            "sm": 12,
+            "md": 6,
+            "lg": 4,
+            "xl": 3
+        }
+    }
+}

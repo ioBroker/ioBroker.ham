@@ -10,8 +10,12 @@ maps/
 
 # ioBroker dev-server
 .dev-server/
-/src/build
-/src/package-lock.json
+/src-admin/build
+/src-admin/package-lock.json
 
 #ignore .commitinfo created by ioBroker release script
 .commitinfo
+
+# TypeScript build output (io-package.json: common.nogit = true)
+/build
+*.tsbuildinfo

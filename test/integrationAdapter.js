@@ -1,0 +1,231 @@
+'use strict';
+
+const assert = require('node:assert');
+const { execSync } = require('node:child_process');
+const { cpSync, mkdtempSync, rmSync } = require('node:fs');
+const http = require('node:http');
+const os = require('node:os');
+const path = require('node:path');
+const { tests } = require('@iobroker/testing');
+
+const wrapperConfig = require('./fixtures/wrapperConfig.json');
+const localConfig = require('./fixtures/localConfig.json');
+
+/** Port of the fake HTTP device the webhook switches call */
+const HTTP_DEVICE_PORT = 9080;
+/** Port of the homebridge-http-webhooks plugin (see fixtures) */
+const WEBHOOK_PORT = 61828;
+const SWITCH_ID = 'ham.0.Switch-name-1.Switch-name-1.On';
+
+const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
+
+/**
+ * Sets the native config of the instance. harness.changeAdapterConfig() deep-merges the changes and turns
+ * nested arrays (e.g. the sensors of a platform) into objects, so the native attributes are replaced here instead.
+ */
+async function setNative(harness, native) {
+    const obj = await harness.objects.getObjectAsync('system.adapter.ham.0');
+    obj.common.loglevel = 'debug';
+    Object.assign(obj.native, native);
+    await harness.objects.setObjectAsync('system.adapter.ham.0', obj);
+}
+
+/** Waits until all given states exist (plugins are installed from npm on first start, this can take a while) */
+async function waitForStates(harness, ids, timeoutMs) {
+    const end = Date.now() + timeoutMs;
+    for (;;) {
+        const states = await Promise.all(ids.map(id => harness.states.getStateAsync(id)));
+        if (states.every(state => state)) {
+            return;
+        }
+        if (Date.now() > end) {
+            throw new Error(`States not created in time: ${ids.filter((_id, i) => !states[i]).join(', ')}`);
+        }
+        await delay(2000);
+    }
+}
+
+/**
+ * Defines the tests that were executed for every mode by the old legacy tests:
+ * the objects are created and the switch can be controlled from both sides.
+ *
+ * @param suite suite function of @iobroker/testing
+ * @param name name of the suite
+ * @param getNative returns the native config for the instance (may be async)
+ * @param options.withAccessoryInfo whether the Accessory-Information services are expected
+ * @param options.polling whether value polling is enabled (the adapter must survive some polling cycles)
+ */
+function defineModeTests(suite, name, getNative, options) {
+    suite(name, getHarness => {
+        let harness;
+        let httpServer;
+        let lastHTTPRequest = null;
+
+        before(async function () {
+            // plugins (and in local mode Homebridge) are installed from npm on first start
+            this.timeout(15 * 60_000);
+
+            httpServer = http
+                .createServer((req, res) => {
+                    lastHTTPRequest = req.url;
+                    console.log(`HTTP Received: ${lastHTTPRequest}`);
+                    res.writeHead(200, { 'Content-Type': 'text/plain' });
+                    res.end('OK');
+                })
+                .listen(HTTP_DEVICE_PORT);
+
+            harness = getHarness();
+            await setNative(harness, await getNative(harness));
+            await harness.startAdapterAndWait();
+            await waitForStates(harness, [SWITCH_ID, 'ham.0.Sun.Sun.Altitude'], 10 * 60_000);
+            // give Homebridge time to publish the initial values
+            await delay(5000);
+        });
+
+        after(() => {
+            httpServer?.close();
+        });
+
+        it('Verify init', async () => {
+            const switchState = await harness.states.getStateAsync(SWITCH_ID);
+            assert.strictEqual(switchState.val, false);
+
+            const model = await harness.states.getStateAsync('ham.0.Sun.Accessory-Information.Model');
+            if (options.withAccessoryInfo) {
+                assert.strictEqual(model.val, 'Sun Position');
+            } else {
+                assert.strictEqual(model, null);
+            }
+
+            const altitude = await harness.states.getStateAsync('ham.0.Sun.Sun.Altitude');
+            assert.ok(altitude.val !== null && altitude.val !== undefined);
+        }).timeout(10000);
+
+        it('Change from inside', async () => {
+            lastHTTPRequest = null;
+            const response = await fetch(`http://127.0.0.1:${WEBHOOK_PORT}/?accessoryId=switch1&state=true`);
+            assert.strictEqual(response.status, 200);
+            await delay(2000);
+            assert.strictEqual(lastHTTPRequest, null);
+            const state = await harness.states.getStateAsync(SWITCH_ID);
+            assert.strictEqual(state.val, true);
+        }).timeout(10000);
+
+        it('Change via characteristic', async () => {
+            await harness.states.setStateAsync(SWITCH_ID, { val: false, ack: false });
+            await delay(2000);
+            assert.strictEqual(lastHTTPRequest, '/switch1?off');
+            const state = await harness.states.getStateAsync(SWITCH_ID);
+            assert.strictEqual(state.val, false);
+        }).timeout(10000);
+
+        it('Change via characteristic 2', async () => {
+            await harness.states.setStateAsync(SWITCH_ID, { val: true, ack: false });
+            await delay(2000);
+            assert.strictEqual(lastHTTPRequest, '/switch1?on');
+            const state = await harness.states.getStateAsync(SWITCH_ID);
+            assert.strictEqual(state.val, true);
+        }).timeout(10000);
+
+        it('Change from inside 2', async () => {
+            lastHTTPRequest = null;
+            const response = await fetch(`http://127.0.0.1:${WEBHOOK_PORT}/?accessoryId=switch1&state=false`);
+            assert.strictEqual(response.status, 200);
+            await delay(2000);
+            assert.strictEqual(lastHTTPRequest, null);
+            const state = await harness.states.getStateAsync(SWITCH_ID);
+            assert.strictEqual(state.val, false);
+        }).timeout(10000);
+
+        if (options.polling) {
+            it('Survives value polling', async () => {
+                await delay(40000);
+                assert.ok(harness.isAdapterRunning());
+            }).timeout(50000);
+        }
+    });
+}
+
+/**
+ * Global mode needs a Homebridge installation outside the adapter.
+ * Instead of `npm install -g` it is installed into a temporary prefix, which looks the same to the adapter.
+ */
+function prepareGlobalHomebridge(harness) {
+    // like the old CI: remove the plugins the previous suites installed into the adapter directory,
+    // so that the global installation is really used
+    for (const module of ['homebridge-http-webhooks', 'homebridge-sun-position', 'homebridge']) {
+        rmSync(path.join(harness.testAdapterDir, 'node_modules', module), { recursive: true, force: true });
+    }
+
+    const prefix = mkdtempSync(path.join(os.tmpdir(), 'ham-global-'));
+    execSync('npm install --no-save --no-audit --no-fund homebridge@1.5.0 homebridge-http-webhooks homebridge-sun-position', {
+        cwd: prefix,
+        stdio: 'inherit',
+    });
+    // Homebridge writes its persist folder and accessory cache into the config directory
+    const configDir = path.join(prefix, 'homebridge-config');
+    cpSync(path.join(__dirname, 'fixtures', 'globalConfig.json'), path.join(configDir, 'config.json'));
+    return {
+        globalHomebridgeBasePath: `${path.join(prefix, 'node_modules', 'homebridge')}${path.sep}`,
+        globalHomebridgeConfigPath: `${configDir}${path.sep}`,
+    };
+}
+
+// Run tests
+tests.integration(path.join(__dirname, '..'), {
+    defineAdditionalTests({ suite }) {
+        defineModeTests(
+            suite,
+            'Wrapper mode with Accessory-Information',
+            () => ({
+                useGlobalHomebridge: false,
+                useLocalHomebridge: false,
+                libraries: 'homebridge-http-webhooks homebridge-sun-position',
+                ignoreInfoAccessoryServices: false,
+                wrapperConfig,
+            }),
+            { withAccessoryInfo: true },
+        );
+
+        defineModeTests(
+            suite,
+            'Wrapper mode without Accessory-Information (config as JSON string)',
+            () => ({
+                useGlobalHomebridge: false,
+                useLocalHomebridge: false,
+                libraries: 'homebridge-http-webhooks homebridge-sun-position',
+                ignoreInfoAccessoryServices: true,
+                characteristicPollingInterval: 30,
+                // this is how the JsonConfig editor stores the configuration
+                wrapperConfig: JSON.stringify(wrapperConfig, null, 2),
+            }),
+            { withAccessoryInfo: false, polling: true },
+        );
+
+        defineModeTests(
+            suite,
+            'Local mode',
+            () => ({
+                useGlobalHomebridge: false,
+                useLocalHomebridge: true,
+                libraries: 'homebridge-http-webhooks homebridge-sun-position',
+                ignoreInfoAccessoryServices: false,
+                characteristicPollingInterval: 30,
+                wrapperConfig: localConfig,
+            }),
+            { withAccessoryInfo: true, polling: true },
+        );
+
+        defineModeTests(
+            suite,
+            'Global mode',
+            harness => ({
+                useGlobalHomebridge: true,
+                useLocalHomebridge: false,
+                characteristicPollingInterval: 30,
+                ...prepareGlobalHomebridge(harness),
+            }),
+            { withAccessoryInfo: true, polling: true },
+        );
+    },
+});
