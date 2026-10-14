@@ -223,14 +223,14 @@ export class Mapper {
             }
         }
 
-        if (char.validValues && char.validValues.length > 0 && common.type !== 'boolean') {
+        // HAP-NodeJS keeps the allowed values in props.validValues, older versions on the characteristic itself
+        const validValues = char.props.validValues || char.validValues;
+        if (validValues && validValues.length > 0 && common.type !== 'boolean') {
             const states: Record<string, string> = {};
-            common.states = states;
-            // BUG (kept from the original code): the loop compares with the array itself instead of its length,
-            // so it only runs for arrays with exactly one numeric entry. Number() reproduces the JS coercion of `i < array`.
-            for (let i = 0; i < Number(char.validValues); i++) {
-                states[String(char.validValues[i])] = String(char.validValues[i]);
+            for (const value of validValues) {
+                states[String(value)] = String(value);
             }
+            common.states = states;
         }
 
         common.read = char.props.perms.includes('pr');

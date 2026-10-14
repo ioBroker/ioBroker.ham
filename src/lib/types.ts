@@ -11,6 +11,7 @@ export interface HapCharacteristicProps {
     minValue?: number | null;
     maxValue?: number | null;
     perms: string[];
+    validValues?: number[];
 }
 
 export interface HapCharacteristic {
@@ -18,7 +19,7 @@ export interface HapCharacteristic {
     displayName: string;
     value: CharacteristicValue | undefined;
     props: HapCharacteristicProps;
-    /** Not set by HAP-NodeJS (it uses props.validValues) - read for compatibility with the original mapper */
+    /** Not set by current HAP-NodeJS versions (they use props.validValues) */
     validValues?: CharacteristicValue[];
     on(event: 'characteristic-warning', listener: (type: string, message: string, stack?: string) => void): unknown;
     getValue(callback: (err: unknown, value: CharacteristicValue | undefined) => void | Promise<void>): unknown;

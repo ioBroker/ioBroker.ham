@@ -74,7 +74,6 @@ The JsonConfig `jsonEditor` stores `native.wrapperConfig` as **JSON string**, ol
 
 ### Known legacy behaviour (kept on purpose)
 
-- `Mapper.mapCharacteristicProperties()` reads `char.validValues` (HAP uses `props.validValues`) with a broken loop — `common.states` is effectively never filled.
 - `GlobalHandler.start()` ignores the configured `insecureAccess`.
 
 ### Misc conventions
