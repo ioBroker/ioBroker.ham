@@ -6,13 +6,16 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 `iobroker.ham` ("Homebridge accessories manager") runs Homebridge plugins inside ioBroker and mirrors every HomeKit accessory / service / characteristic as ioBroker device / channel / state. Writable characteristics can be controlled from ioBroker.
 
-TypeScript (CommonJS output). Backend sources live in `src/`, the published/runnable code is the compiled `build/` (`package.json` `main` is `build/main.js`). `build/` is gitignored — always run the build before starting the adapter or the integration tests. The admin tab is a separate React app in `src-admin/` whose build output **is committed** in `admin/` (`tab_m.html`, `static/`).
+TypeScript (CommonJS output). Backend sources live in `src/`, the published/runnable code is the compiled `build/` (`package.json` `main` is `build/main.js`). `build/` is gitignored — always run the build before starting the adapter or the integration tests. The admin tab is a separate React app in `src-admin/` whose build output **is committed** in `admin/` (`tab_m.html`, `assets/`).
 
 ## Commands
 
 ```bash
 npm run build-backend                     # tsc -p tsconfig.build.json  -> build/
-npm run build                             # build-backend + React tab (tasks.ts: clean, npm i, craco build, copy, patch)
+npm run build                             # build-backend + check-admin + React tab (tasks.ts: clean, npm i, vite build, copy, patch)
+npm run check-admin                       # type check of the tab (src-admin/tsconfig.json)
+npm run lint-admin                        # eslint of the tab
+cd src-admin && npm start                 # vite dev server on :3000 against the admin on :8081, open http://localhost:3000/?0
 npm run 0-clean / 1-npm / 2-build / 3-copy / 4-patch   # single steps of the tab build
 npm run watch                             # backend in watch mode
 npm run check                             # type check only (tsconfig.json, noEmit)
@@ -42,7 +45,7 @@ There is deliberately **no `prepare` script** — `npm ci`/`npm install` does no
 | `src/lib/types.ts` | minimal shapes of HAP-NodeJS / Homebridge objects, handler interfaces |
 | `src/lib/adapter-config.d.ts` | augments `ioBroker.AdapterConfig` |
 | `src/types/homebridge-plugin-wrapper.d.ts` | typings for the untyped wrapper package |
-| `src-admin/` | React admin tab (CRA + craco): search/install/configure Homebridge plugins |
+| `src-admin/` | React admin tab (Vite, TypeScript, MUI 9, `@iobroker/gui-components` 10, rjsf 6): search/install/configure Homebridge plugins |
 | `admin/jsonConfig.json` | the configuration dialog |
 | `tasks.ts` | build steps of the React tab (`@iobroker/build-tools`) |
 
@@ -66,7 +69,15 @@ Selected in `onReady()` by `useGlobalHomebridge` (wins) / `useLocalHomebridge`, 
 
 ### wrapperConfig
 
-The JsonConfig `jsonEditor` stores `native.wrapperConfig` as **JSON string**, older versions and the React tab as object. `main.ts` (`parseWrapperConfig`) and `src-admin/src/app.jsx` (`getAdapterConfig`) accept both; the tab writes back in the format it found.
+The JsonConfig `jsonEditor` stores `native.wrapperConfig` as **JSON string**, older versions and the React tab as object. `main.ts` (`parseWrapperConfig`) and `src-admin/src/App.tsx` (`getAdapterConfig`) accept both; the tab writes back in the format it found.
+
+### Admin tab (`src-admin/`)
+
+- `App.tsx` extends `GenericApp` (no bottom buttons, saves itself via `onSave(false)` after every change); the theme, including the modern Admin 8 themes, comes from the admin.
+- `Components/PluginsTable.tsx` searches `registry.npmjs.org/-/v1/search` (`keywords:homebridge-plugin`, server side paging) and reads the installed modules from `registry.npmjs.org/<name>/latest`. Installed modules are always on page 1.
+- `Components/ConfigDialog.tsx` loads `config.schema.json` of a plugin from jsDelivr (10 s timeout) and renders it with rjsf; without a schema (or with an unsupported one) it falls back to a JSON editor (Ace).
+- `TabCache.ts` remembers in `native._tabCache` which `platforms`/`accessories` entry belongs to which npm module.
+- `src-admin/package-lock.json` is committed, so the tab build is reproducible.
 
 ### Process-global side effects
 

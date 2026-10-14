@@ -62,7 +62,9 @@
   ],
   "scripts": {
     "build-backend": "tsc -p tsconfig.build.json",
-    "build": "npm run build-backend && ts-node --project tsconfig.tasks.json tasks.ts",
+    "check-admin": "tsc -p src-admin/tsconfig.json",
+    "lint-admin": "cd src-admin && npm run lint",
+    "build": "npm run build-backend && npm run check-admin && ts-node --project tsconfig.tasks.json tasks.ts",
     "watch": "tsc -p tsconfig.build.json --watch",
     "check": "tsc -p tsconfig.json --noEmit",
     "check-tasks": "tsc -p tsconfig.tasks.json",

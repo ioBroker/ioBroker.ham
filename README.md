@@ -104,6 +104,10 @@ Global Homebridge Config Directory Path:
 - (ioBroker-Bot) Adapter requires js-controller >= 6.0.11 now.
 - (bluefox) BREAKING: The adapter was refactored to TypeScript and the configuration dialog to JsonConfig. Admin >= 7.0.0 is required now.
 - (bluefox) The adapter must be compiled and can therefore no longer be installed directly from GitHub, only from npm.
+- (bluefox) The Homebridge tab was migrated to Vite, MUI 9 and the current ioBroker GUI components (Admin 8 look); plugins are searched directly in the npm registry
+- (bluefox) Fixed: a local Homebridge in another version is updated to 1.5.0
+- (bluefox) Fixed: the valid values of characteristics are written to `common.states`
+- (bluefox) Fixed: the option "Use insecure Homebridge mode" is used in global and local mode
 
 ### __WORK IN PROGRESS__
 * (Apollon77) Optimize value determination on accessory initialization
