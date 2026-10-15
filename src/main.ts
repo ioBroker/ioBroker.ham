@@ -5,6 +5,14 @@ import * as utils from '@iobroker/adapter-core';
 import { GlobalHandler } from './lib/global-handler';
 import { WrapperHandler } from './lib/wrapper-handler';
 import type { CharacteristicValue, HamLogger, HandlerConfig, HomebridgeHandler, WrapperConfig } from './lib/types';
+import {
+    completeStateCommon,
+    getLibraryDir,
+    isEmptyValue,
+    isHomebridgeInstallNeeded,
+    parseWrapperConfig,
+    splitLibraries,
+} from './lib/utils';
 
 /** Homebridge version installed into the adapter directory in local mode */
 const INSTALL_LOCAL_HOMEBRIDGE_VERSION = '1.5.0';
@@ -131,22 +139,7 @@ class HamAdapter extends utils.Adapter {
         st_uuid: string,
     ): Promise<void> => {
         const id = `${dev_id}.${ch_id}.${st_id}`;
-        common ||= {};
-        if (common.name === undefined) {
-            common.name = name;
-        }
-        if (common.role === undefined) {
-            common.role = 'state';
-        }
-        if (common.read === undefined && common.write === undefined) {
-            common.read = true;
-        }
-        if (common.type === undefined) {
-            common.type = 'string';
-        }
-        if (common.unit === undefined) {
-            common.unit = '';
-        }
+        common = completeStateCommon(common, name);
 
         this.log.info(`updateState ${id}: value = ${value} /common= ${JSON.stringify(common)}`);
 
@@ -187,7 +180,7 @@ class HamAdapter extends utils.Adapter {
         const id = `${dev_id}.${ch_id}.${st_id}`;
         this.log.debug(`setState ${id}: set value = ${value}`);
         if (!this.initializedStateObjects[id]) {
-            if (value === null || value === 0 || value === false || value === undefined || value === '') {
+            if (isEmptyValue(value)) {
                 this.log.debug(`setState ${id}: discard value because most likely "no value" available right now`);
                 return;
             }
@@ -228,17 +221,10 @@ class HamAdapter extends utils.Adapter {
         return true;
     }
 
-    /**
-     * The JsonConfig editor stores the wrapper configuration as JSON string, older admin versions and the
-     * React tab as object. The handlers always get an object.
-     */
-    private parseWrapperConfig(): WrapperConfig | null {
-        const wrapperConfig = this.config.wrapperConfig;
-        if (typeof wrapperConfig !== 'string') {
-            return wrapperConfig;
-        }
+    /** The handlers always get the wrapper configuration as object (see parseWrapperConfig) */
+    private getWrapperConfig(): WrapperConfig | null {
         try {
-            return JSON.parse(wrapperConfig || '{}') as WrapperConfig;
+            return parseWrapperConfig(this.config.wrapperConfig);
         } catch (e) {
             this.log.error(`Cannot parse the wrapper configuration (JSON): ${(e as Error).message}`);
             return null;
@@ -259,7 +245,7 @@ class HamAdapter extends utils.Adapter {
             parseArgsStringToArgv(this.config.virtualCommandLine).forEach(e => process.argv.push(e));
         }
 
-        const wrapperConfig = this.parseWrapperConfig();
+        const wrapperConfig = this.getWrapperConfig();
         if (!wrapperConfig) {
             return;
         }
@@ -396,7 +382,7 @@ class HamAdapter extends utils.Adapter {
             if (counter === 0) {
                 throw new Error(`Library ${npmLib} not installed after 3 attempts`);
             }
-            const libraryDir = npmLib.split(/(?<!^)@/)[0];
+            const libraryDir = getLibraryDir(npmLib);
             const isUrl = npmLib.includes('://');
             if (
                 (isUrl && counter === 3) ||
@@ -427,7 +413,7 @@ class HamAdapter extends utils.Adapter {
     /** @returns false if the adapter must not continue (it will be restarted because of a config change) */
     private async installAllLibraries(): Promise<boolean> {
         if (this.config?.libraries && !this.config.useGlobalHomebridge) {
-            this.config.libraries.split(/[,;\s]+/).forEach(e => this.npmLibrariesToInstall.push(e.trim()));
+            this.npmLibrariesToInstall.push(...splitLibraries(this.config.libraries));
         }
 
         if (this.npmLibrariesToInstall.length) {
@@ -472,25 +458,18 @@ class HamAdapter extends utils.Adapter {
             }
         }
 
-        let installHomebridge = false;
-
         const homebridgePackage = join(ADAPTER_DIR, 'node_modules', 'homebridge', 'package.json');
+        let packageJson: string | null = null;
         if (existsSync(homebridgePackage)) {
-            let localHomebridgeVersion: string;
             try {
-                localHomebridgeVersion = (JSON.parse(readFileSync(homebridgePackage, 'utf-8')) as { version: string })
-                    .version;
+                packageJson = readFileSync(homebridgePackage, 'utf-8');
             } catch {
-                localHomebridgeVersion = '0';
+                // unreadable: treated like an invalid package.json
+                packageJson = '';
             }
-            if (localHomebridgeVersion !== INSTALL_LOCAL_HOMEBRIDGE_VERSION) {
-                installHomebridge = true;
-            }
-        } else {
-            installHomebridge = true;
         }
 
-        if (installHomebridge || this.config.updateLibraries) {
+        if (isHomebridgeInstallNeeded(packageJson, INSTALL_LOCAL_HOMEBRIDGE_VERSION) || this.config.updateLibraries) {
             this.log.info(`Need to install/update homebridge@${INSTALL_LOCAL_HOMEBRIDGE_VERSION}`);
             try {
                 // force: an existing Homebridge in another version must be replaced

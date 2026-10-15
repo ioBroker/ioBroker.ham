@@ -12,7 +12,8 @@ import {
 } from '@iobroker/gui-components';
 
 import PluginsTable from './Components/PluginsTable';
-import type { HamNative, WrapperConfig } from './types';
+import type { HamNative } from './types';
+import { parseNative, serializeChanges } from './wrapperConfig';
 
 import enLang from './i18n/en.json';
 import deLang from './i18n/de.json';
@@ -58,28 +59,16 @@ export default class App extends GenericApp<GenericAppProps, GenericAppState> {
      */
     private getAdapterConfig(): HamNative {
         const native = this.state.native;
-        if (typeof native.wrapperConfig !== 'string') {
-            return native as HamNative;
-        }
+        // parse only once per native object: the tab keeps its cache in the returned object
         if (this.parsedNative?.source !== native) {
-            let wrapperConfig: WrapperConfig;
-            try {
-                wrapperConfig = JSON.parse(native.wrapperConfig || '{}') as WrapperConfig;
-            } catch (e) {
-                console.error(`Cannot parse wrapperConfig: ${e}`);
-                wrapperConfig = { platforms: [], accessories: [] };
-            }
-            this.parsedNative = { source: native, config: { ...(native as HamNative), wrapperConfig } };
+            this.parsedNative = { source: native, config: parseNative(native) };
         }
         return this.parsedNative.config;
     }
 
     private handleChange(changes: Partial<HamNative>): void {
-        const newChanges: Record<string, unknown> = { ...changes };
-        if (changes.wrapperConfig && typeof this.state.native.wrapperConfig === 'string') {
-            // keep the format of the JsonConfig editor
-            newChanges.wrapperConfig = JSON.stringify(changes.wrapperConfig, null, 2);
-        }
+        // keeps the format of the JsonConfig editor
+        const newChanges = serializeChanges(this.state.native, changes);
         this.setState({ native: { ...this.state.native, ...newChanges } }, () => this.onSave(false));
     }
 

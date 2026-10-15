@@ -37,92 +37,23 @@ import { DialogConfirm, I18n, type AdminConnection, type ThemeType } from '@iobr
 
 import ConfigDialog, { type ConfigDialogResult } from './ConfigDialog';
 import { TabCache } from '../TabCache';
-import type { HamNative, NpmPackage, PluginRow } from '../types';
+import type { HamNative, PluginRow } from '../types';
+import {
+    UNKNOWN_VERSION,
+    buildRows,
+    cleanModuleName,
+    filterKeywords,
+    findInstalled,
+    getInstalledPackages,
+    getInstalledVersions,
+    npmPage,
+    searchPlugins,
+    splitLibraries,
+} from '../npm';
 
-const SEARCH_URL = 'https://registry.npmjs.org/-/v1/search';
-const PACKAGE_URL = 'https://registry.npmjs.org';
-const UNKNOWN_VERSION = '?';
 const ROWS_PER_PAGE = [25, 50, 100];
 /** more keywords are collapsed into a "+n" chip */
 const MAX_KEYWORDS = 8;
-
-interface NpmSearchResult {
-    total: number;
-    objects: { package: NpmPackage }[];
-}
-
-/** package.json as returned by the registry for `<name>/latest` */
-interface NpmManifest {
-    name: string;
-    version: string;
-    description?: string;
-    keywords?: string[];
-    homepage?: string;
-}
-
-const filterKeywords = (keyword: string): boolean => !keyword.includes('homebridge') && !keyword.includes('homekit');
-
-const cleanModuleName = (name: string): string =>
-    name
-        .replace('homebridge-', '')
-        .replace('-homebridge', '')
-        .replace(/^@.+?\//, '');
-
-/** split on @, but not when it is at the very beginning (scoped packages) */
-const splitModule = (module: string): [string, string | undefined] => {
-    const [name, version] = module.split(/(?<!^)@/);
-    return [name, version];
-};
-
-const npmPage = (name: string): string => `https://www.npmjs.com/package/${name}`;
-
-async function searchPlugins(search: string, from: number, size: number): Promise<NpmSearchResult> {
-    const text = `keywords:homebridge-plugin${search ? ` ${search}` : ''}`;
-    const response = await fetch(`${SEARCH_URL}?text=${encodeURIComponent(text)}&from=${from}&size=${size}`);
-    if (!response.ok) {
-        throw new Error(`npm search failed: ${response.status}`);
-    }
-    return (await response.json()) as NpmSearchResult;
-}
-
-/** Reads the latest metadata of the installed modules from npm */
-async function getInstalledPackages(names: string[]): Promise<NpmPackage[]> {
-    return Promise.all(
-        names.map(async (name): Promise<NpmPackage> => {
-            try {
-                const response = await fetch(`${PACKAGE_URL}/${name.replace('/', '%2F')}/latest`);
-                if (!response.ok) {
-                    throw new Error(`${response.status}`);
-                }
-                const manifest = (await response.json()) as NpmManifest;
-                return {
-                    name,
-                    version: manifest.version,
-                    description: manifest.description,
-                    keywords: manifest.keywords,
-                    links: { homepage: manifest.homepage || npmPage(name), npm: npmPage(name) },
-                };
-            } catch (e) {
-                console.warn(`Cannot read ${name} from npm: ${e}`);
-                // e.g. installed from a URL
-                return { name, version: UNKNOWN_VERSION, links: { homepage: npmPage(name) } };
-            }
-        }),
-    );
-}
-
-function matchesSearch(pkg: NpmPackage, search: string): boolean {
-    const terms = search
-        .split(/\s+/)
-        .filter(t => !!t)
-        .map(t => t.toLowerCase());
-    return terms.every(
-        t =>
-            pkg.name.toLowerCase().includes(t) ||
-            (pkg.description || '').toLowerCase().includes(t) ||
-            (pkg.keywords || []).some(k => k.toLowerCase().includes(t)),
-    );
-}
 
 interface PluginsTableProps {
     adapterConfig: HamNative;
@@ -162,7 +93,7 @@ export default function PluginsTable({
     adapterConfig._tabCache ||= {};
 
     const libraries = adapterConfig.libraries || '';
-    const installed = useMemo(() => libraries.split(/[,;\s]+/).filter(p => !!p), [libraries]);
+    const installed = useMemo(() => splitLibraries(libraries), [libraries]);
     const isGlobalMode = adapterConfig.useGlobalHomebridge;
 
     useEffect(() => {
@@ -182,25 +113,17 @@ export default function PluginsTable({
 
         const load = async (): Promise<void> => {
             const result = await searchPlugins(search, page * rowsPerPage, rowsPerPage);
-            const versions: Record<string, string | undefined> = {};
-            installed.forEach(m => {
-                const [name, version] = splitModule(m);
-                versions[name] = version;
-            });
-            const installedNames = Object.keys(versions);
-
-            let newRows: PluginRow[] = result.objects
-                .map(o => o.package)
-                .filter(p => !installedNames.includes(p.name) && !p.name.includes('config-ui-'))
-                .map(p => ({ package: p }));
-
-            if (page === 0 && installedNames.length) {
-                // the installed modules are always shown on the first page
-                const installedPackages = (await getInstalledPackages(installedNames.sort()))
-                    .filter(p => !search || matchesSearch(p, search))
-                    .map(p => ({ package: p, installed: versions[p.name] || UNKNOWN_VERSION }));
-                newRows = [...installedPackages, ...newRows];
-            }
+            const versions = getInstalledVersions(installed);
+            const installedNames = Object.keys(versions).sort();
+            // the installed modules are always shown on the first page
+            const installedPackages =
+                page === 0 && installedNames.length ? await getInstalledPackages(installedNames) : null;
+            const newRows = buildRows(
+                result.objects.map(o => o.package),
+                installedPackages,
+                versions,
+                search,
+            );
             if (!cancelled) {
                 setRows(newRows);
                 setTotalCount(result.total);
@@ -240,7 +163,7 @@ export default function PluginsTable({
         const packageRef = `${row.package.name}@${row.package.version}`;
         if (row.installed) {
             const newInstalled = [...installed];
-            const index = newInstalled.findIndex(m => m.startsWith(`${row.package.name}@`) || m === row.package.name);
+            const index = findInstalled(newInstalled, row.package.name);
             if (index !== -1) {
                 newInstalled[index] = packageRef;
                 showToast(I18n.t('%s will be updated to %s', row.package.name, row.package.version));
@@ -259,7 +182,7 @@ export default function PluginsTable({
         }
 
         const newInstalled = [...installed];
-        const index = newInstalled.findIndex(m => m.startsWith(`${moduleName}@`) || m === moduleName);
+        const index = findInstalled(newInstalled, moduleName);
         if (index === -1) {
             return;
         }

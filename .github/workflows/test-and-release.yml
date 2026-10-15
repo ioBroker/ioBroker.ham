@@ -28,7 +28,11 @@ jobs:
         with:
           node-version: 24.x
           type-checking: true
+          # backend and admin tab (the tab has its own dependencies in src-admin)
+          type-checking-command: 'npm run check && cd src-admin && npm ci && cd .. && npm run check-admin'
           lint: true
+          lint-command: 'npm run lint && npm run lint-admin'
+          test-command: 'npm run test:package && npm run test-admin'
 
   # Runs adapter tests on all supported node versions and OSes
   # (wrapper, local and global mode, see test/integrationAdapter.js)
