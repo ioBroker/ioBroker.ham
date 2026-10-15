@@ -207,6 +207,7 @@
     }
   },
   "native": {
+    "homebridgeMode": "",
     "useGlobalHomebridge": false,
     "useLocalHomebridge": false,
     "globalHomebridgeBasePath": "/usr/local/lib/node_modules/homebridge/",

@@ -1,18 +1,20 @@
 {
+    "Main settings": "主要设置",
     "Homebridge adapter mode": "Homebridge适配器模式",
+    "Wrapper Mode (just run Homebridge plugins in ioBroker, no bridge advertised)": "包装模式（只需在ioBroker中运行Homebridge插件）",
     "Global Mode (start an existing compatible Homebridge service installed globally on your system)": "全局模式（启动兼容的全球安装的Homebridge）",
     "Local Mode (install a local Homebridge in ioBroker as a bridge)": "本地模式（在ioBroker中安装本地Homebridge作为Bridge）",
+    "Use insecure Homebridge mode": "使用不安全的Homebridge模式",
     "Global Homebridge path": "全局Homebridge路径",
     "Global Homebridge config directory path": "全局Homebridge配置目录路径",
+    "Check out the new Admin-tab \"Homebridge\" (needs to be activated manually) for a more convenient way to install Homebridge plugins and configure them (Beta).": "查看新的“管理”标签“ Homebridge”（需要手动激活），以更方便的方式安装插件并对其进行配置（测试版）。",
     "Additional NPM modules": "额外的npm模块",
     "Update Homebridge plugins from NPM on next start": "从NPM更新Homebridge插件",
-    "Configuration file": "配置文件",
-    "Use insecure Homebridge mode": "使用不安全的Homebridge模式",
-    "Enable the Homebridge Debug Logging": "D. 住房可",
     "Value polling interval (sec)": "轮询间隔（秒）",
     "Homebridge command line parameters": "Homebridge命令行参数",
-    "Check out the new Admin-tab \"Homebridge\" (needs to be activated manually) for a more convenient way to install Homebridge plugins and configure them (Beta).": "查看新的“管理”标签“ Homebridge”（需要手动激活），以更方便的方式安装插件并对其进行配置（测试版）。",
-    "If neither the global nor the local mode is selected, the wrapper mode is used: Homebridge plugins run directly in ioBroker, no bridge is advertised.": "如果既未选择全局模式也未选择本地模式，则使用包装器模式：Homebridge 插件直接在 ioBroker 中运行，不会发布桥接。",
+    "Enable the Homebridge Debug Logging": "D. 住房可",
     "Ignore Accessory-Information services": "忽略 Accessory-Information 服务",
-    "Options": "选项"
+    "Configuration file": "配置文件",
+    "Wrapper configuration": "包装配置",
+    "Configuration of the Homebridge plugins (config.json), not used in global mode": "Homebridge 插件的配置 (config.json)，全局模式下不使用"
 }

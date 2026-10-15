@@ -5,6 +5,11 @@ import type { WrapperConfig } from './types';
 declare global {
     namespace ioBroker {
         interface AdapterConfig {
+            /**
+             * Only used by the admin select. Empty for instances that were never saved with JsonConfig; the select then
+             * derives it from the two flags below. The backend only reads `useGlobalHomebridge` / `useLocalHomebridge`.
+             */
+            homebridgeMode: '' | 'wrapper' | 'global' | 'local';
             /** Global mode: start an existing Homebridge installation. Wins over `useLocalHomebridge`. */
             useGlobalHomebridge: boolean;
             /** Local mode: install Homebridge into the adapter directory and run it as a bridge */

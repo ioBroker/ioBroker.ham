@@ -53,7 +53,7 @@ There is deliberately **no `prepare` script** — `npm ci`/`npm install` does no
 
 ### Modes
 
-Selected in `onReady()` by `useGlobalHomebridge` (wins) / `useLocalHomebridge`, neither = wrapper mode. The admin shows them as two checkboxes that deselect each other (`onChange.calculateFunc`).
+Selected in `onReady()` by `useGlobalHomebridge` (wins) / `useLocalHomebridge`, neither = wrapper mode. The admin shows a select bound to `native.homebridgeMode` (UI only, empty for old instances - then `defaultFunc` derives it from the flags); the two hidden flags follow it via `onChange.calculateFunc`. The backend never reads `homebridgeMode`.
 
 - **Wrapper** — `homebridge-plugin-wrapper` bundles its own Homebridge/HAP-NodeJS. Plugins from `native.libraries` are installed into the adapter directory.
 - **Local** — installs `homebridge@1.5.0` (`INSTALL_LOCAL_HOMEBRIDGE_VERSION`) plus the plugins into the adapter directory, writes `wrapperConfig` as `config.json` into `<dataDir>/ham_<instance>/` and publishes a real bridge. A changed `bridge.username` deletes that directory (HomeKit pairing cache).
