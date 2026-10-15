@@ -8,12 +8,8 @@
     "description": "This is an example configuration file with one fake accessory and one fake platform. You can use this as a template for creating your own configuration file containing devices you actually own.",
     "accessories": [
         {
-            "accessory": "SunPosition",
-            "name": "Sun",
-            "location": {
-                "lat": 49.035924,
-                "long": 8.345736
-            }
+            "accessory": "HamTest",
+            "name": "Test"
         }
     ],
     "platforms": [

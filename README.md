@@ -102,10 +102,12 @@ Global Homebridge Config Directory Path:
 
 ### **WORK IN PROGRESS**
 - (ioBroker-Bot) Adapter requires js-controller >= 6.0.11 now.
+- (bluefox) BREAKING: Homebridge 2.4.0 (HAP-NodeJS 2.2.2) in wrapper and local mode. Plugins must be compatible with Homebridge 2 - check your plugins for updates! Plugins that are not maintained anymore (e.g. homebridge-sun-position) may stop working.
+- (bluefox) Global mode supports Homebridge 2 installations (Homebridge 1 still works)
 - (bluefox) BREAKING: The adapter was refactored to TypeScript and the configuration dialog to JsonConfig. Admin >= 7.0.0 is required now.
 - (bluefox) The adapter must be compiled and can therefore no longer be installed directly from GitHub, only from npm.
 - (bluefox) The Homebridge tab was migrated to Vite, MUI 9 and the current ioBroker GUI components (Admin 8 look); plugins are searched directly in the npm registry
-- (bluefox) Fixed: a local Homebridge in another version is updated to 1.5.0
+- (bluefox) Fixed: a local Homebridge in another version is updated to the version of the adapter
 - (bluefox) Fixed: the valid values of characteristics are written to `common.states`
 - (bluefox) Fixed: the option "Use insecure Homebridge mode" is used in global and local mode
 - (bluefox) Fixed: separators at the beginning or end of the additional npm modules do not start an empty `npm install` anymore

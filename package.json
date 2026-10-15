@@ -36,7 +36,7 @@
   },
   "dependencies": {
     "@iobroker/adapter-core": "^3.4.3",
-    "homebridge-plugin-wrapper": "^3.2.0",
+    "homebridge-plugin-wrapper": "github:GermanBluefox/homebridge-plugin-wrapper#homebridge-2",
     "string-argv": "^0.3.2"
   },
   "devDependencies": {

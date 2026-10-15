@@ -15,6 +15,8 @@ declare module 'homebridge-plugin-wrapper' {
         characteristicPollingList?: Record<string, number>;
         insecureAccess?: boolean;
         debugModeEnabled?: boolean;
+        /** since 4.0.0 */
+        customPluginPath?: string;
         [key: string]: unknown;
     }
 

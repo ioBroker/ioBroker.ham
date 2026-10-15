@@ -96,9 +96,13 @@ function createCharacteristic(options) {
         on(event, listener) {
             (this.listeners[event] ||= []).push(listener);
         },
-        getValue(callback) {
+        // HAP-NodeJS >= 0.9 (the only way to read a value since HAP-NodeJS 1.0)
+        async handleGetRequest() {
             this.getValueCalls++;
-            callback(this.getValueError, this.getValueError ? undefined : this.currentValue);
+            if (this.getValueError) {
+                throw this.getValueError;
+            }
+            return this.currentValue;
         },
         setValue(value, callback) {
             this.setValues.push(value);
@@ -111,6 +115,20 @@ function createCharacteristic(options) {
         char.props.validValues = options.validValues;
     }
     return char;
+}
+
+/** Turns the characteristics of an accessory into ones of HAP-NodeJS < 0.9, which have only getValue(callback) */
+function useGetValueCallback(accessory) {
+    for (const service of accessory.services) {
+        for (const char of service.characteristics) {
+            delete char.handleGetRequest;
+            char.getValue = function (callback) {
+                this.getValueCalls++;
+                callback(this.getValueError, this.getValueError ? undefined : this.currentValue);
+            };
+        }
+    }
+    return accessory;
 }
 
 function createService(UUID, displayName, characteristics, subtype) {
@@ -220,6 +238,7 @@ module.exports = {
     createCharacteristic,
     createService,
     createAccessory,
+    useGetValueCallback,
     createLamp,
     createHandlerConfig,
     waitFor,

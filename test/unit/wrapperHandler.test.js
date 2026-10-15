@@ -28,13 +28,14 @@ function setValue(handler, id, value) {
 
 describe('WrapperHandler', () => {
     it('passes the options to the wrapper without the timers', () => {
-        const { config } = createHandlerConfig({ wrapperConfig: { platforms: [] } });
+        const { config } = createHandlerConfig({ wrapperConfig: { platforms: [] }, customPluginPath: '/opt/iobroker/node_modules/iobroker.ham/node_modules' });
         const handler = new WrapperHandler();
         handler.init(config);
         const options = FakeWrapper.last.options;
         assert.strictEqual(options.timers, undefined);
         assert.deepStrictEqual(options.wrapperConfig, { platforms: [] });
         assert.strictEqual(options.homebridgeConfigPath, config.homebridgeConfigPath);
+        assert.strictEqual(options.customPluginPath, '/opt/iobroker/node_modules/iobroker.ham/node_modules');
         assert.strictEqual(FakeWrapper.last.initialized, false);
         handler.start();
         assert.strictEqual(FakeWrapper.last.initialized, true);

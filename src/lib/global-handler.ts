@@ -1,5 +1,6 @@
 import { existsSync } from 'node:fs';
 import { dirname, join } from 'node:path';
+import { pathToFileURL } from 'node:url';
 import { Mapper } from './mapper';
 import { MiniQueue } from './miniqueue';
 import { customStringify } from './utils';
@@ -31,13 +32,14 @@ interface HapBridge {
 
 type HapBridgeConstructor = new (displayName: string, serialNumber: string) => HapBridge;
 
-interface HapModule {
-    Bridge: HapBridgeConstructor;
-    uuid: { generate(data: string): string };
-}
-
 interface HapStorageClass {
     setCustomStoragePath(path: string): void;
+}
+
+interface HapModule {
+    Bridge: HapBridgeConstructor;
+    HAPStorage?: HapStorageClass;
+    uuid: { generate(data: string): string };
 }
 
 interface InterceptedBridge extends HapBridge {
@@ -81,7 +83,52 @@ interface HomebridgeServerModule {
 }
 
 interface HomebridgeLoggerModule {
-    setDebugEnabled(enabled?: boolean): void;
+    /** Homebridge 2 */
+    Logger?: { setDebugEnabled?(enabled?: boolean): void };
+    /** Homebridge 1 */
+    setDebugEnabled?(enabled?: boolean): void;
+}
+
+/**
+ * Loads a module of the Homebridge installation. Homebridge 2 is an ES module in `dist/`, older versions are
+ * CommonJS in `lib/`.
+ *
+ * @param homebridgeBasePath directory of the Homebridge package
+ * @param name module name without extension, e.g. `server`
+ */
+async function loadHomebridgeModule<T>(homebridgeBasePath: string, name: string): Promise<T> {
+    const esmFile = join(homebridgeBasePath, 'dist', `${name}.js`);
+    if (existsSync(esmFile)) {
+        return (await import(pathToFileURL(esmFile).href)) as T;
+    }
+    return require(join(homebridgeBasePath, 'lib', name)) as T;
+}
+
+/**
+ * Whether the value of a characteristic can be read. HAP-NodeJS >= 1.0 rejects reading write-only characteristics
+ * (e.g. Identify) with HAPStatus.WRITE_ONLY_CHARACTERISTIC (-70405).
+ *
+ * @param characteristic the characteristic
+ */
+function isReadable(characteristic: HapCharacteristic): boolean {
+    return !characteristic.props?.perms || characteristic.props.perms.includes('pr');
+}
+
+/**
+ * Reads the current value of a characteristic (calls the get handler of the plugin).
+ * `handleGetRequest()` exists since HAP-NodeJS 0.9, `getValue(callback)` was removed in HAP-NodeJS 1.0.
+ *
+ * @param characteristic the characteristic
+ */
+function readCharacteristic(characteristic: HapCharacteristic): Promise<CharacteristicValue | undefined> {
+    if (characteristic.handleGetRequest) {
+        return characteristic.handleGetRequest();
+    }
+    return new Promise((resolve, reject) =>
+        characteristic.getValue!((err, value) =>
+            err ? reject(err instanceof Error ? err : new Error(err as string)) : resolve(value),
+        ),
+    );
 }
 
 /**
@@ -109,7 +156,7 @@ export class GlobalHandler implements HomebridgeHandler {
     private mapper!: Mapper;
     private miniQueue!: MiniQueue;
 
-    public init(config: HandlerConfig): void {
+    public async init(config: HandlerConfig): Promise<void> {
         this.config = config;
         this.logger = config.logger;
         this.miniQueue = new MiniQueue(config.timers);
@@ -117,44 +164,63 @@ export class GlobalHandler implements HomebridgeHandler {
 
         const homebridgeBasePath = config.homebridgeBasePath || '';
 
-        this.User = (require(join(homebridgeBasePath, 'lib', 'user')) as { User: HomebridgeUserClass }).User;
+        this.User = (await loadHomebridgeModule<{ User: HomebridgeUserClass }>(homebridgeBasePath, 'user')).User;
         this.User.setStoragePath(config.homebridgeConfigPath);
 
-        let hapBasePath: string;
-
-        if (existsSync(join(homebridgeBasePath, 'node_modules/hap-nodejs/dist'))) {
-            hapBasePath = join(homebridgeBasePath, 'node_modules/hap-nodejs/dist');
-        } else if (existsSync(join(homebridgeBasePath, '../hap-nodejs/dist'))) {
-            hapBasePath = join(homebridgeBasePath, '../hap-nodejs/dist');
-        } else {
-            try {
-                hapBasePath = dirname(
-                    require.resolve('hap-nodejs', {
-                        paths: [join(homebridgeBasePath, 'node_modules'), homebridgeBasePath],
-                    }),
-                );
-                this.logger.info(`HAP-NodeJS lookup fallback used: ${hapBasePath}`);
-            } catch {
-                console.log(
-                    `hap-nodejs resolve path: ${JSON.stringify([join(homebridgeBasePath, 'node_modules'), homebridgeBasePath])}`,
-                );
-                return;
-            }
+        const hapBasePath = this.findHapNodeJs(homebridgeBasePath);
+        if (!hapBasePath) {
+            return;
         }
 
         this.hap = require(hapBasePath) as HapModule;
-        this.hapStorage = (
-            require(join(hapBasePath, 'lib/model/HAPStorage')) as { HAPStorage: HapStorageClass }
-        ).HAPStorage;
-        this.Server = require(join(homebridgeBasePath, 'lib/server')) as HomebridgeServerModule;
-        const homebridgeLogger = require(join(homebridgeBasePath, 'lib/logger')) as HomebridgeLoggerModule;
+        // HAP-NodeJS >= 0.9 exports HAPStorage, the path is the fallback for older versions
+        this.hapStorage =
+            this.hap.HAPStorage ||
+            (require(join(hapBasePath, 'lib/model/HAPStorage')) as { HAPStorage: HapStorageClass }).HAPStorage;
+        this.Server = await loadHomebridgeModule<HomebridgeServerModule>(homebridgeBasePath, 'server');
+        const homebridgeLogger = await loadHomebridgeModule<HomebridgeLoggerModule>(homebridgeBasePath, 'logger');
         if (config.debugModeEnabled) {
-            homebridgeLogger.setDebugEnabled(true);
+            // Homebridge 2 has only the static method, Homebridge 1 additionally the exported function
+            if (homebridgeLogger.Logger?.setDebugEnabled) {
+                homebridgeLogger.Logger.setDebugEnabled(true);
+            } else {
+                homebridgeLogger.setDebugEnabled?.(true);
+            }
         }
 
         if (!this.InterceptedBridge) {
             this.InterceptedBridge = this.createInterceptedBridge(this.hap.Bridge);
         }
+    }
+
+    /**
+     * Finds the HAP-NodeJS of the Homebridge installation: `@homebridge/hap-nodejs` (Homebridge >= 1.8) or
+     * `hap-nodejs` (older versions). It must be the same module instance that Homebridge uses.
+     *
+     * @param homebridgeBasePath directory of the Homebridge package
+     * @returns the `dist` directory of HAP-NodeJS or null
+     */
+    private findHapNodeJs(homebridgeBasePath: string): string | null {
+        for (const name of ['@homebridge/hap-nodejs', 'hap-nodejs']) {
+            for (const dir of [join(homebridgeBasePath, 'node_modules', name), join(homebridgeBasePath, '..', name)]) {
+                if (existsSync(join(dir, 'dist'))) {
+                    return join(dir, 'dist');
+                }
+            }
+        }
+        const lookupPaths = [join(homebridgeBasePath, 'node_modules'), homebridgeBasePath];
+        for (const name of ['@homebridge/hap-nodejs', 'hap-nodejs']) {
+            try {
+                const hapBasePath = dirname(require.resolve(name, { paths: lookupPaths }));
+                this.logger.info(`HAP-NodeJS lookup fallback used: ${hapBasePath}`);
+                return hapBasePath;
+            } catch {
+                // try the next name
+            }
+        }
+        this.logger.warn(`HAP-NodeJS not found for Homebridge in ${homebridgeBasePath}`);
+        console.log(`hap-nodejs resolve path: ${JSON.stringify(lookupPaths)}`);
+        return null;
     }
 
     private pollingKey(accessory: HapAccessory, service: HapService, characteristic: HapCharacteristic): string {
@@ -207,33 +273,34 @@ export class GlobalHandler implements HomebridgeHandler {
         }
     }
 
-    private getAndPollCharacteristic(
+    private async getAndPollCharacteristic(
         accessory: HapAccessory,
         service: HapService,
         characteristic: HapCharacteristic,
         isUpdate?: boolean,
     ): Promise<CharacteristicValue | undefined> {
-        return new Promise(resolve =>
-            characteristic.getValue(async (err, value) => {
-                if (!err) {
-                    const key = this.pollingKey(accessory, service, characteristic);
-                    if (!this.characteristicValues[key] || this.characteristicValues[key].val !== value || isUpdate) {
-                        // for accessory updates we should check if we need to repost the value
-                        const oldValue = this.characteristicValues[key]?.val;
-                        this.characteristicValues[key] = {
-                            val: value,
-                            ts: Date.now(),
-                        };
-                        this.logger.debug(`Char value update from polling: ${oldValue} --> ${value}`);
-                        await this.handleCharValue(accessory, service, characteristic, value);
-                    }
-                } else {
-                    value = undefined;
-                }
-                this.handleCharacteristicPolling(accessory, service, characteristic);
-                resolve(value);
-            }),
-        );
+        if (!isReadable(characteristic)) {
+            return undefined;
+        }
+        let value: CharacteristicValue | undefined;
+        try {
+            value = await readCharacteristic(characteristic);
+            const key = this.pollingKey(accessory, service, characteristic);
+            if (!this.characteristicValues[key] || this.characteristicValues[key].val !== value || isUpdate) {
+                // for accessory updates we should check if we need to repost the value
+                const oldValue = this.characteristicValues[key]?.val;
+                this.characteristicValues[key] = {
+                    val: value,
+                    ts: Date.now(),
+                };
+                this.logger.debug(`Char value update from polling: ${oldValue} --> ${value}`);
+                await this.handleCharValue(accessory, service, characteristic, value);
+            }
+        } catch {
+            value = undefined;
+        }
+        this.handleCharacteristicPolling(accessory, service, characteristic);
+        return value;
     }
 
     private async iterateCharArray(
@@ -276,14 +343,13 @@ export class GlobalHandler implements HomebridgeHandler {
             );
 
             await this.config.updateState(dev_idname, sr_idname, ch_idname, ch_name, ch_val, common, ch_id);
-            char.getValue(async (err, value) => {
-                if (err) {
-                    this.logger.warn(`Error while getting current value: ${err as string}`);
-                    return;
-                }
-                await this.handleCharValue(accessory, service, char, value);
-            });
-            this.handleCharacteristicPolling(accessory, service, char);
+            if (isReadable(char)) {
+                readCharacteristic(char).then(
+                    value => this.handleCharValue(accessory, service, char, value),
+                    (err: unknown) => this.logger.warn(`Error while getting current value: ${err as string}`),
+                );
+                this.handleCharacteristicPolling(accessory, service, char);
+            }
         }
     }
 
@@ -309,10 +375,10 @@ export class GlobalHandler implements HomebridgeHandler {
                 super(displayName, serialNumber);
             }
 
-            public publish(info: unknown, allowInsecureRequest?: boolean): void {
+            public publish(info: unknown, allowInsecureRequest?: boolean): unknown {
                 logger.debug(`iobroker.ham Bridge publish ${customStringify(info)}`);
-                // Calling the method of the parent class (its result was not returned in the original code either)
-                super.publish(info, allowInsecureRequest);
+                // Homebridge 2 expects the promise of HAP-NodeJS (`bridge.publish(...).catch(...)`)
+                return super.publish(info, allowInsecureRequest);
             }
 
             public async ___wrapperAccessoryLogic(
@@ -551,7 +617,10 @@ export class GlobalHandler implements HomebridgeHandler {
             return origHandlePublishExternalAccessories.call(server.bridgeService, accessories);
         };
 
-        server.start();
+        // Homebridge 2 starts asynchronously
+        Promise.resolve(server.start()).catch((err: unknown) =>
+            this.logger.warn(`Cannot start Homebridge: ${err as string}`),
+        );
     }
 
     public end(): void {

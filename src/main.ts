@@ -15,7 +15,7 @@ import {
 } from './lib/utils';
 
 /** Homebridge version installed into the adapter directory in local mode */
-const INSTALL_LOCAL_HOMEBRIDGE_VERSION = '1.5.0';
+const INSTALL_LOCAL_HOMEBRIDGE_VERSION = '2.4.0';
 
 /** Root directory of the adapter. This file is compiled to build/main.js, plugins are installed one level up. */
 const ADAPTER_DIR = join(__dirname, '..');
@@ -291,7 +291,7 @@ class HamAdapter extends utils.Adapter {
             // Homebridge's plugin manager reads NODE_PATH to find the globally installed plugins
             process.env.NODE_PATH = nodePathEnv;
             this.homebridgeHandler = new GlobalHandler();
-            this.homebridgeHandler.init({
+            await this.homebridgeHandler.init({
                 ...handlerConfig,
                 homebridgeBasePath: this.config.globalHomebridgeBasePath,
                 homebridgeConfigPath: this.config.globalHomebridgeConfigPath,
@@ -311,7 +311,7 @@ class HamAdapter extends utils.Adapter {
                 return;
             }
             this.homebridgeHandler = new GlobalHandler();
-            this.homebridgeHandler.init({
+            await this.homebridgeHandler.init({
                 ...handlerConfig,
                 homebridgeBasePath: join(ADAPTER_DIR, 'node_modules', 'homebridge'),
                 homebridgeConfigPath: configDir,
@@ -319,10 +319,13 @@ class HamAdapter extends utils.Adapter {
         } else {
             this.log.info('Adapter uses Wrapper mode');
             this.homebridgeHandler = new WrapperHandler();
-            this.homebridgeHandler.init({
+            await this.homebridgeHandler.init({
                 ...handlerConfig,
                 homebridgeConfigPath: configDir,
                 wrapperConfig,
+                // The plugins are installed into the adapter directory, but the wrapper (and with it Homebridge, which
+                // searches relative to itself) is usually hoisted into the node_modules of ioBroker
+                customPluginPath: join(ADAPTER_DIR, 'node_modules'),
             });
         }
 

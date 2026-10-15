@@ -22,7 +22,10 @@ export interface HapCharacteristic {
     /** Not set by current HAP-NodeJS versions (they use props.validValues) */
     validValues?: CharacteristicValue[];
     on(event: 'characteristic-warning', listener: (type: string, message: string, stack?: string) => void): unknown;
-    getValue(callback: (err: unknown, value: CharacteristicValue | undefined) => void | Promise<void>): unknown;
+    /** HAP-NodeJS >= 0.9 */
+    handleGetRequest?(): Promise<CharacteristicValue | undefined>;
+    /** HAP-NodeJS < 1.0 */
+    getValue?(callback: (err: unknown, value: CharacteristicValue | undefined) => void | Promise<void>): unknown;
     setValue(value: CharacteristicValue, callback?: SetValueCallback): unknown;
 }
 
@@ -101,6 +104,8 @@ export interface HandlerConfig {
     homebridgeConfigPath: string;
     /** wrapper mode only */
     wrapperConfig?: WrapperConfig;
+    /** wrapper mode only: additional directory in which Homebridge searches the plugins */
+    customPluginPath?: string;
     updateDev(devId: string, devName: string, devType: number, devUuid: string): Promise<void>;
     updateChannel(devId: string, chId: string, name: string, chUuid: string): Promise<void>;
     updateState(
@@ -122,7 +127,7 @@ export interface HandlerConfig {
 }
 
 export interface HomebridgeHandler {
-    init(config: HandlerConfig): void;
+    init(config: HandlerConfig): void | Promise<void>;
     start(): void;
     end(): void;
     setValueForCharId(id: string, value: CharacteristicValue, callback: SetValueCallback): Promise<void>;
