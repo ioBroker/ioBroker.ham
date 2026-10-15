@@ -33,7 +33,11 @@ export function parseWrapperConfig(wrapperConfig: WrapperConfig | string): Wrapp
 
 /** Splits `native.libraries` (separated by spaces, commas or semicolons) into the single npm modules */
 export function splitLibraries(libraries: string): string[] {
-    return libraries.split(/[,;\s]+/).map(e => e.trim());
+    // empty entries (leading or trailing separators) would run "npm install" without a package
+    return libraries
+        .split(/[,;\s]+/)
+        .map(e => e.trim())
+        .filter(e => !!e);
 }
 
 /** Directory name of an npm module reference like `name@1.2.3` or `@scope/name@1.2.3` */

@@ -60,6 +60,11 @@ describe('utils', () => {
             ]);
         });
 
+        it('ignores leading and trailing separators', () => {
+            assert.deepStrictEqual(splitLibraries(' homebridge-a, '), ['homebridge-a']);
+            assert.deepStrictEqual(splitLibraries(' '), []);
+        });
+
         it('keeps versions, scopes and URLs', () => {
             assert.deepStrictEqual(splitLibraries('a@1.2.3 @scope/b@2 https://host/c.tgz'), [
                 'a@1.2.3',

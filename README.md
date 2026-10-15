@@ -108,6 +108,7 @@ Global Homebridge Config Directory Path:
 - (bluefox) Fixed: a local Homebridge in another version is updated to 1.5.0
 - (bluefox) Fixed: the valid values of characteristics are written to `common.states`
 - (bluefox) Fixed: the option "Use insecure Homebridge mode" is used in global and local mode
+- (bluefox) Fixed: separators at the beginning or end of the additional npm modules do not start an empty `npm install` anymore
 
 ### __WORK IN PROGRESS__
 * (Apollon77) Optimize value determination on accessory initialization
