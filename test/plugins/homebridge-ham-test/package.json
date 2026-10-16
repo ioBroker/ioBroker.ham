@@ -1,0 +1,11 @@
+{
+    "name": "homebridge-ham-test",
+    "version": "1.0.0",
+    "description": "Accessory plugin for the integration tests of iobroker.ham (replaces homebridge-sun-position, which does not work with Homebridge 2)",
+    "main": "index.js",
+    "private": true,
+    "keywords": ["homebridge-plugin"],
+    "engines": {
+        "homebridge": "^1.6.0 || ^2.0.0"
+    }
+}

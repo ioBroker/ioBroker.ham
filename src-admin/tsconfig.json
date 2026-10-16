@@ -1,0 +1,25 @@
+// Specialized tsconfig for the admin tab, includes DOM typings.
+// Vite creates the bundle, tsc is only used for type checking (npm run check-admin in the root)
+{
+    "compilerOptions": {
+        "module": "esnext",
+        "moduleResolution": "bundler",
+        "allowJs": false,
+        "resolveJsonModule": true,
+        "strict": true,
+        "strictNullChecks": true,
+        "useUnknownInCatchVariables": false,
+        "target": "ES2022",
+        "rootDir": ".",
+        "allowSyntheticDefaultImports": true,
+        "noEmit": true,
+        "noImplicitAny": true,
+        "skipLibCheck": true,
+        "verbatimModuleSyntax": true,
+        "lib": ["ES2022", "DOM", "DOM.Iterable"],
+        "jsx": "react-jsx",
+        "types": ["@iobroker/types"]
+    },
+    "include": ["./src/**/*.ts", "./src/**/*.d.ts", "./src/**/*.tsx", "./src/**/*.json", "./package.json"],
+    "exclude": ["**/node_modules", "**/build"]
+}

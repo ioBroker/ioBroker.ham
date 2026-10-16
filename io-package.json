@@ -126,6 +126,7 @@
     "platform": "Javascript/Node.js",
     "icon": "ham.png",
     "enabled": false,
+    "nogit": true,
     "extIcon": "https://raw.githubusercontent.com/ioBroker/ioBroker.ham/master/admin/ham.png",
     "readme": "https://github.com/ioBroker/ioBroker.ham/blob/master/README.md",
     "loglevel": "info",
@@ -133,7 +134,6 @@
     "type": "iot-systems",
     "connectionType": "local",
     "dataSource": "push",
-    "materializeTab": true,
     "adminTab": {
       "singleton": true,
       "name": {
@@ -153,6 +153,11 @@
     "dependencies": [
       {
         "js-controller": ">=6.0.11"
+      }
+    ],
+    "globalDependencies": [
+      {
+        "admin": ">=7.0.0"
       }
     ],
     "tier": 2,
@@ -197,10 +202,12 @@
       }
     ],
     "adminUI": {
-      "config": "materialize"
+      "config": "json",
+      "tab": "materialize"
     }
   },
   "native": {
+    "homebridgeMode": "",
     "useGlobalHomebridge": false,
     "useLocalHomebridge": false,
     "globalHomebridgeBasePath": "/usr/local/lib/node_modules/homebridge/",

@@ -1,0 +1,20 @@
+{
+    "Main settings": "Réglages principaux",
+    "Homebridge adapter mode": "Mode adaptateur Homebridge",
+    "Wrapper Mode (just run Homebridge plugins in ioBroker, no bridge advertised)": "Mode Wrapper (il suffit de lancer les plugins Homebridge dans ioBroker)",
+    "Global Mode (start an existing compatible Homebridge service installed globally on your system)": "Mode Global (démarrer un Homebridge global compatible installé)",
+    "Local Mode (install a local Homebridge in ioBroker as a bridge)": "Mode local (installer un Homebridge local dans ioBroker en tant que pont)",
+    "Use insecure Homebridge mode": "Utilisez le mode Homebridge non sécurisé",
+    "Global Homebridge path": "Global Homebridge Path",
+    "Global Homebridge config directory path": "Global Homebridge Config Directory Path",
+    "Check out the new Admin-tab \"Homebridge\" (needs to be activated manually) for a more convenient way to install Homebridge plugins and configure them (Beta).": "Consultez le nouvel onglet Admin \"Homebridge\" (doit être activé manuellement) pour un moyen plus pratique d'installer des plugins et de les configurer (bêta).",
+    "Additional NPM modules": "Additional npm modules",
+    "Update Homebridge plugins from NPM on next start": "Mettre à jour les plugins Homebridge à partir de NPM",
+    "Value polling interval (sec)": "Intervalle d'interrogation de valeur (sec)",
+    "Homebridge command line parameters": "Paramètres de ligne de commande Homebridge",
+    "Enable the Homebridge Debug Logging": "Activer le déboîtage Homebridge",
+    "Ignore Accessory-Information services": "Ignorer les services Accessory-Information",
+    "Configuration file": "Configuration file",
+    "Wrapper configuration": "Configuration wrapper",
+    "Configuration of the Homebridge plugins (config.json), not used in global mode": "Configuration des plugins Homebridge (config.json), non utilisée en mode global"
+}
