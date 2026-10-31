@@ -101,6 +101,7 @@ Global Homebridge Config Directory Path:
 
 
 ### **WORK IN PROGRESS**
+- (copilot) Adapter requires node.js >= 22.19.0 now
 - (ioBroker-Bot) Adapter requires js-controller >= 6.0.11 now.
 
 ### __WORK IN PROGRESS__
